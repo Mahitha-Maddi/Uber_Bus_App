@@ -28,6 +28,7 @@ function getAuthorisation() {
   if (typeof Storage !== 'undefined') {
       try {
         var keys = JSON.parse(localStorage.getItem(localStorageAuthKey));
+        console.log(keys);
         return keys;
 
       } catch (ex) {
@@ -176,9 +177,11 @@ const SignIn = () => {
         // save to local storage
         console.log("received these keys in return:")
         console.log(data);
+        console.log(data[0].access_token);
+        console.log(data[0].refresh_token);
         saveAuthorisation({
-          access: data[0][0],
-          refresh: data[0][1],
+          access: data[0].access_token,
+          refresh: data[0].refresh_token,
         });
 
         // back to landing page!

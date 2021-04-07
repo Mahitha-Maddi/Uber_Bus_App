@@ -55,36 +55,64 @@ const SignUp = () => {
   //const intl = useIntl()
   const history = useHistory()
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [cpassword, setCpassword] = useState('')
+  const [dob, setDob] = useState('')
+  const [contact, setContact] = useState('')
   //const { setAuthMenuOpen } = useContext(MenuContext)
+  const postUser = async (username, password, email, contact, dob) => {
+    const paramdict = {
+      'username': username,
+      'password': password,
+      'email': email,
+      'contact': contact,
+      'dob': dob,
+    }
+    try {
+      const config = {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paramdict)
+      }
+      const response = await fetch("http://localhost:5000/signup", config);
+      //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
+      //const response = await fetch("/tweet", config);
+      //const json = await response.json()
+      if (response.ok) {
+          //return json
+          //return response
+          console.log("success on send.");
+          
+      } else {
+          alert("response: " + response.toString());
+      }
+
+      try {
+        const data = await response.json();
+        console.log("on reply:")
+        console.log(data);
+        alert(data);
+        // back to landing page!
+        history.push("/");
+      } catch (err) {
+        console.log(err);
+        alert("exception on reply!");
+      }
+
+    } catch (error) {
+      console.log(error);
+      alert("exception on send");
+    }
+  };
+
 
   function handleSubmit(event) {
     event.preventDefault()
-
-    // fwo: register new user!
-    //.. return userid
-
-    // save more: name, group, userid
-    authenticate({
-      displayName: 'User',
-      email: username,
-    })
-  }
-
-  const authenticate = (user) => {
-    saveAuthorisation(user)
-    let _location = history.location
-    let isAuth = isAuthorised()
-    //setAuthMenuOpen(false)
-    if (isAuth) {
-      let _route = '/home'
-      if (_location.state && _location.state.from) {
-        _route = _location.state.from.pathname
-        history.push(_route)
-      } else {
-        history.push(_route)
-      }
-    }
+    postUser(username, password, email, contact, dob);
   }
 
   return (
@@ -118,8 +146,8 @@ const SignUp = () => {
               autoFocus
             />
             <TextField
-              value={username}
-              onInput={(e) => setUsername(e.target.value)}
+              value={email}
+              onInput={(e) => setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -143,8 +171,8 @@ const SignUp = () => {
               autoComplete="current-password"
             />
             <TextField
-              value={password}
-              onInput={(e) => setPassword(e.target.value)}
+              value={cpassword}
+              onInput={(e) => setCpassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -154,6 +182,30 @@ const SignUp = () => {
               type="password"
               id="password_confirm"
               autoComplete="current-password"
+            />
+            <TextField
+              value={dob}
+              onInput={(e) => setDob(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="dob"
+              label={'Date of Birth(MM/DD/YYYY)'}
+              id="dob"
+              autoComplete="DOB"
+            />
+            <TextField
+              value={contact}
+              onInput={(e) => setContact(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="contact"
+              label={'Contact Number'}
+              id="contact"
+              autoComplete="contact"
             />
             <Button
               type="submit"

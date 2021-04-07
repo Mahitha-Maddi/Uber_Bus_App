@@ -59,14 +59,14 @@ def set_env_var():
     if 'refresh_token_expiration' not in g:
         g['refresh_token_expiration'] = os.environ.get("REFRESH_TOKEN_EXPIRATION", 2592000)
     if 'users' not in g:
-        users = os.environ.get("USERS", 'Elon Musk,Bill Gates,Jeff Bezos')
-        print('users=', users)
-        print('g.users=', list(users.split(',')))
-        g['users'] = list(users.split(','))
+        # users = os.environ.get("USERS", 'Elon Musk,Bill Gates,Jeff Bezos')
+        # print('users=', users)
+        # print('g.users=', list(users.split(',')))
+        g['users'] = find_users() #list(users.split(','))
         print('g.users=', g['users'])
     if 'passwords' not in g:
-        passwords = os.environ.get("PASSWORDS", 'Tesla,Clippy,Blue Horizon')
-        g['passwords'] = list(passwords.split(','))
+        #passwords = os.environ.get("PASSWORDS", 'Tesla,Clippy,Blue Horizon')
+        g['passwords'] = find_passwords() #list(passwords.split(','))
         print("g['passwords']=", g['passwords'])
         # Once hashed, the value is irreversible. However in the case of 
         # validating logins a simple hashing of candidate password and 
@@ -190,8 +190,8 @@ def login():
 @app.route("/fastlogin", methods=["POST"])
 def fastlogin():
     try:
-        access_token = request.json['access-token']
-        refresh_token = request.json['refresh-token']
+        access_token = request.json['access']
+        refresh_token = request.json['refresh']
 
         if not access_token or not refresh_token:
             return jsonify(("Missing token(s)!", status.HTTP_401_UNAUTHORIZED))
@@ -199,15 +199,18 @@ def fastlogin():
             try:
                 # first, with access token:
                 userid = decode_token(access_token)
+                print("my test userid: ",userid)
 
-                if not userid or not userid in get_env_var('userids'):
+                #if not userid or not userid in get_env_var('userids'):
+                if not userid in get_env_var('userids'):
+                    print("User ID test: ",get_env_var('userids'))
                     return jsonify(("User unknown, please login with username and password.", status.HTTP_401_UNAUTHORIZED))
 
                 try:
                     # second, with refresh token
                     userid2 = decode_token(refresh_token)
-
-                    if not userid2 or userid2 != userid:
+                    print("user id 2 test: ",userid2)
+                    if userid2 != userid:
                         return jsonify(("User unknown, please login with username and password.", status.HTTP_401_UNAUTHORIZED))
 
                     # issue a new access token, keep the same refresh token
@@ -298,6 +301,117 @@ def insert_one(r):
     microseconds_doing_mongo_work = (datetime.now() - start_time).microseconds
     print("*** It took " + str(microseconds_doing_mongo_work) + " microseconds to insert_one.")
 
+# method to insert user record
+def insert_one_user(r):
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+
+        print("...insert_one() to mongo: ", r)
+        try:
+            mongo_collection = db['users']
+            result = mongo_collection.insert_one(r)
+            print("inserted _ids: ", result.inserted_id)
+        except Exception as e:
+            print(e)
+
+    microseconds_doing_mongo_work = (datetime.now() - start_time).microseconds
+    print("*** It took " + str(microseconds_doing_mongo_work) + " microseconds to insert_one.")
+
+# method to find users --returns usernames
+def find_users():
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+        mongo_collection = db['users']
+        myquery = {}
+        cursor = dict()
+        result = []
+        #cursor = mongo_collection.find(myquery,{"_id":0, "username": 1})
+        for x in mongo_collection.find(myquery,{"_id":0, "username": 1}):
+            print(x["username"])
+            result.append(x["username"])
+
+        howmany = len(result)
+        print("results: ",result)
+        print('found ' + str(howmany) + ' users with entered email ID!')
+        #sorted_records = sorted(records,key=lambda t: t['source'])
+        #print(type(sorted_records))
+    return result
+
+# method to find passwords --returns passwords
+def find_passwords():
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+        mongo_collection = db['users']
+        myquery = {}
+        cursor = dict()
+        result = []
+        #cursor = mongo_collection.find(myquery,{"_id":0, "username": 1})
+        for x in mongo_collection.find(myquery,{"_id":0, "password": 1}):
+            print(x["password"])
+            result.append(x["password"])
+
+        howmany = len(result)
+        print("results: ",result)
+        print('found ' + str(howmany) + ' users with entered email ID!')
+        #sorted_records = sorted(records,key=lambda t: t['source'])
+        #print(type(sorted_records))
+    return result
+
+# method to find user by emailID
+def find_user(email):
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+
+        print("...searching in mongo: ", email)
+        mongo_collection = db['users']
+        myquery = {"email": { "$regex": str(email) }}
+        cursor = dict()
+        cursor = mongo_collection.find(myquery,{"_id": 0})
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + ' users with entered email ID!')
+        #sorted_records = sorted(records,key=lambda t: t['source'])
+        #print(type(sorted_records))
+    return howmany
+
+# method to find user by user name
+def find_user1(username):
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+
+        print("...searching in mongo: ", username)
+        mongo_collection = db['users']
+        myquery = {"username": { "$regex": str(username) }}
+        cursor = dict()
+        cursor = mongo_collection.find(myquery,{"_id": 0})
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + ' users with entered user name!')
+        #sorted_records = sorted(records,key=lambda t: t['source'])
+        #print(type(sorted_records))
+    return howmany
+
+
 def tryexcept(requesto, key, default):
     lhs = None
     try:
@@ -342,7 +456,7 @@ def book_bus():
     date = request.json['date']
     startTime = request.json['startTime']
     endTime = request.json['endTime']
-    user = request.json['user']
+    # user = request.json['user']
     busnumber = request.json['busnumber']
 
     access_token = request.json['accesstoken']
@@ -355,13 +469,34 @@ def book_bus():
     else:
         print('access token accepted!')
     
-    booking = dict(user=user, source=source, destination=destination,busnumber=busnumber,
+    booking = dict( source=source, destination=destination,busnumber=busnumber,
                 date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                _id=str(ObjectId()))
 
     insert_one(booking)
     return jsonify(booking)
+
+# endpoint to create new user
+@app.route("/signup", methods=["POST"])
+def user_signup():
+    username = request.json['username']
+    password = request.json['password']
+    email = request.json['email']
+    dob = request.json['dob']
+    contact = request.json['contact']
+
+    howmany = find_user(email)
+    howmany2 = find_user1(username)
+    if not howmany and not howmany2: 
+        user = dict(username=username, password=password, email=email,dob=dob,contact=contact,_id=str(ObjectId()))
+        insert_one_user(user)
+        return jsonify(user)
+
+    else:
+        print('User Name or Email is already registered!!')
+        return jsonify(("User with given email ID is already present!!", status.HTTP_401_UNAUTHORIZED))
    
+# endpoint to view all the bookings
 @app.route("/bookings-results", methods=["GET"])
 def get_tweets_results():
     global bookings
@@ -420,12 +555,12 @@ def home1():
 # Used to bootstrap our collections
 @app.before_first_request
 def before_first_request_func():
-    set_env_var()
     applyCollectionLevelUpdates()
 
 # This runs once before any request
 @app.before_request
 def before_request_func():
+    set_env_var()
     applyRecordLevelUpdates()
 
 

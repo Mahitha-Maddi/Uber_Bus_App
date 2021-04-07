@@ -16,9 +16,10 @@ class Book extends React.Component {
       destination: '',
       date: '',
       availableBuses: '',
-      user: '',
-      formErrors: { source: '', destination: '', user: '', date: '' },
-      userValid: false,
+      //user: '',
+      formErrors: { source: '', destination: '', //user: '', 
+      date: '' },
+      //userValid: false,
       sourceValid: false,
       destinationValid: false,
       dateValid: false,
@@ -58,7 +59,7 @@ class Book extends React.Component {
 
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
-    let userValid = this.state.userValid;
+    //let userValid = this.state.userValid;
     let sourceValid = this.state.sourceValid;
     let destinationValid = this.state.destinationValid;
     let dateValid = this.state.dateValid;
@@ -73,10 +74,10 @@ class Book extends React.Component {
         destinationValid = (value.length === 0 || reg.test(value)) && this.state.source != this.state.destination
         fieldValidationErrors.destination = destinationValid ? '' : ' is too short or invalid';
         break;
-      case 'user':
+      /* case 'user':
         userValid = (value.length === 0 || reg.test(value));
         fieldValidationErrors.user = userValid ? '' : ' is too short or invalid';
-        break;
+        break; */
       case 'date':
         dateValid = value.length === 0 || (!reg.test(value) && regDate.test(value));
         fieldValidationErrors.date = dateValid ? '' : ' is too short or invalid';
@@ -88,13 +89,14 @@ class Book extends React.Component {
       formErrors: fieldValidationErrors,
       sourceValid: sourceValid,
       destinationValid: destinationValid,
-      userValid: userValid,
+     // userValid: userValid,
       dateValid: dateValid
     }, this.validateForm);
   }
 
   validateForm() {
-    this.setState({ formValid: this.state.sourceValid && this.state.destinationValid && this.state.userValid && this.state.dateValid });
+    this.setState({ formValid: this.state.sourceValid && this.state.destinationValid && //this.state.userValid && 
+      this.state.dateValid });
   }
 
 
@@ -106,7 +108,7 @@ class Book extends React.Component {
  
     var keys = JSON.parse(localStorage.getItem(this.state.localStorageAuthKey));
     alert("hi");
-    //console.log("keys: ",keys.access);
+    console.log("keys: ",keys);
     // keys.access;
 
     if(keys==null){
@@ -119,8 +121,8 @@ class Book extends React.Component {
         'Content-Type': 'application/json'
       }, body: JSON.stringify({
         source: item.source, destination: item.destination, busnumber: item.busnumber, date: item.date,
-        startTime: item.startTime, endTime: item.endTime, user: this.state.user, 
-        accesstoken: (keys!==null)?keys.access:0,//()=>{this.getAccessToken()}
+        startTime: item.startTime, endTime: item.endTime, //user: this.state.user, 
+        accesstoken: (keys!==null)?keys.access:0//()=>{this.getAccessToken()}
       })
     })
       .then(response => {
@@ -132,7 +134,7 @@ class Book extends React.Component {
         //  alert(data);
        // }
        // else{
-        alert("Booked successfully! " + data);
+        alert(data);//"Booked successfully! " + 
         //}
 
       })
@@ -145,7 +147,8 @@ class Book extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { source, destination, user, date } = this.state;
+    const { source, destination, //user, 
+      date } = this.state;
 
     fetch('http://localhost:5000/checkAvailability', {
       method: 'POST', headers: {
@@ -189,7 +192,7 @@ class Book extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="panel panel-default">
                 <FormErrors formErrors={this.state.formErrors} />
-              </div>
+              </div>{/* 
               <div className={`form-group ${this.errorClass(this.state.formErrors.user)}`}>
                 <TextField
                   value={this.state.user}
@@ -199,7 +202,7 @@ class Book extends React.Component {
                   placeholder="User"
                   variant="outlined"
                   margin="normal"
-                /></div><br></br>
+                /></div><br></br> */}
               <div className={`form-group ${this.errorClass(this.state.formErrors.source)}`}>
                 <TextField
                   className="form-control"
