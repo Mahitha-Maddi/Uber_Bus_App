@@ -14,28 +14,32 @@ class Book extends React.Component {
     this.state = {
       source: '',
       destination: '',
-      date: '',
+      depart: '',
+      return: '',
+      selectedOption: 'oneway',
       availableBuses: '',
       //user: '',
-      formErrors: { source: '', destination: '', //user: '', 
-      date: '' },
+      formErrors: {
+        source: '', destination: '', //user: '', 
+        depart: '', return: ''
+      },
       //userValid: false,
       sourceValid: false,
       destinationValid: false,
       dateValid: false,
       formValid: false,
-      localStorageAuthKey : 'twtr:auth'
+      localStorageAuthKey: 'twtr:auth'
     }
     // this._handleSubmit = this._handleSubmit.bind(this);
   }
 
- 
+
   getAccessToken() {
     if (typeof Storage !== 'undefined') {
       try {
         var keys = JSON.parse(localStorage.getItem(this.state.localStorageAuthKey));
         alert("hi");
-        console.log("keys: ",keys.access);
+        console.log("keys: ", keys.access);
         return keys.access;
         // the refresh token is keys.refresh
 
@@ -55,6 +59,13 @@ class Book extends React.Component {
     this.setState({ [name]: value },
       () => { this.validateField(name, value) });
   }
+
+  
+handleOptionChange= (e) => {
+  this.setState({
+    selectedOption: e.target.value
+  });
+}
 
 
   validateField(fieldName, value) {
@@ -89,14 +100,16 @@ class Book extends React.Component {
       formErrors: fieldValidationErrors,
       sourceValid: sourceValid,
       destinationValid: destinationValid,
-     // userValid: userValid,
+      // userValid: userValid,
       dateValid: dateValid
     }, this.validateForm);
   }
 
   validateForm() {
-    this.setState({ formValid: this.state.sourceValid && this.state.destinationValid && //this.state.userValid && 
-      this.state.dateValid });
+    this.setState({
+      formValid: this.state.sourceValid && this.state.destinationValid && //this.state.userValid && 
+        this.state.dateValid
+    });
   }
 
 
@@ -105,13 +118,13 @@ class Book extends React.Component {
   }
 
   book(item) {
- 
+
     var keys = JSON.parse(localStorage.getItem(this.state.localStorageAuthKey));
     alert("hi");
-    console.log("keys: ",keys);
+    console.log("keys: ", keys);
     // keys.access;
 
-    if(keys==null){
+    if (keys == null) {
       alert("Please login!!");
       return;
     }
@@ -122,7 +135,7 @@ class Book extends React.Component {
       }, body: JSON.stringify({
         source: item.source, destination: item.destination, busnumber: item.busnumber, date: item.date,
         startTime: item.startTime, endTime: item.endTime, //user: this.state.user, 
-        accesstoken: (keys!==null)?keys.access:0//()=>{this.getAccessToken()}
+        accesstoken: (keys !== null) ? keys.access : 0//()=>{this.getAccessToken()}
       })
     })
       .then(response => {
@@ -132,8 +145,8 @@ class Book extends React.Component {
       .then(data => {
         //if(data.contains("401")){
         //  alert(data);
-       // }
-       // else{
+        // }
+        // else{
         alert(data);//"Booked successfully! " + 
         //}
 
@@ -190,6 +203,30 @@ class Book extends React.Component {
               {''}
             </Typography>
             <form onSubmit={this.handleSubmit}>
+              <div className="radio">
+                <label>
+                  <input type="radio" value="oneway"
+                    checked={this.state.selectedOption === 'oneway'}
+                    onChange={this.handleOptionChange} />
+                    One way
+                 </label>
+              </div>
+              <div className="radio">
+                <label>
+                  <input type="radio" value="round"
+                    checked={this.state.selectedOption === 'round'}
+                    onChange={this.handleOptionChange} />
+                    Round trip
+                </label>
+              </div>
+              <div className="radio">
+                <label>
+                  <input type="radio" value="multicity"
+                    checked={this.state.selectedOption === 'multicity'}
+                    onChange={this.handleOptionChange} />
+                    Multi-city
+                </label>
+              </div>
               <div className="panel panel-default">
                 <FormErrors formErrors={this.state.formErrors} />
               </div>{/* 
@@ -222,6 +259,17 @@ class Book extends React.Component {
                   onChange={this.handleUserInput}
                   type="text"
                   placeholder="Destination"
+                  variant="outlined"
+                  margin="normal"
+                /><br /><br /></div>
+              <div className={`form-group ${this.errorClass(this.state.formErrors.date)}`}>
+                <TextField
+                  name="date"
+                  className="form-control"
+                  value={this.state.date}
+                  onChange={this.handleUserInput}
+                  type="text"
+                  placeholder="date"
                   variant="outlined"
                   margin="normal"
                 /><br /><br /></div>

@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Router, Route, Link, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import './App.css';
+
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -35,6 +38,8 @@ import PasswordChange from "../pages/PasswordChange/PasswordChange";
 import THome from "../pages/Bookings/Home";
 import Book from "../pages/Book/Book";
 import NotFoundPage from "../pages/Book/NotFoundPage";
+import RouteSelection from './RouteSelection/RouteSelection';///RouteSelection/RouteSelection';
+import SeatSelection from './SeatSelection/SeatSelection';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -279,7 +284,9 @@ export default function Dashboard() {
           <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/bookings" exact component={THome} />
-          <Route path="/Book" exact component={Book} />
+         {/*  <Route path="/Book" exact component={Book} /> */}
+          <Route path="/Book" exact render={props => <RouteSelection {...props} />} /> 
+          <Route path="/seatSelection/" exact render={props => <SeatSelection {...props} />} /> 
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/password_reset" component={PasswordReset} />

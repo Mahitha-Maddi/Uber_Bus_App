@@ -437,10 +437,12 @@ def check_availability():
         db = mongo_client['Uber']
         mongo_collection = db['available']
         print(source)
+        print(destination)
+        print(date)
 
         myquery = {"source": { "$regex": str(source) },"destination": { "$regex": str(destination) },"date": {"$regex": str(date)}}
         cursor = dict()
-        cursor = mongo_collection.find(myquery,{"_id": 0})
+        cursor = mongo_collection.find(myquery)
         records = list(cursor)
         howmany = len(records)
         print('found ' + str(howmany) + ' bookings!')
@@ -508,6 +510,20 @@ def get_tweets_results():
         records = list(cursor)
         howmany = len(records)
         print('found ' + str(howmany) + ' bookings!')
+        sorted_records = sorted(records,key=lambda t: t['source'])
+    return jsonify(sorted_records)
+
+# endpoint to view all the available seats
+@app.route("/availableseats", methods=["GET"])
+def get_seats_results():
+    with mongo_client:
+        db = mongo_client['Uber']
+        mongo_collection = db['available']
+
+        cursor = mongo_collection.find({})
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + ' buses!')
         sorted_records = sorted(records,key=lambda t: t['source'])
     return jsonify(sorted_records)
 
