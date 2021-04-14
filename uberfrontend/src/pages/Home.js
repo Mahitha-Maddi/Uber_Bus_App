@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import PayPal from "../components/PaymentTab/PayPal";
+import home from "../icons/home.jpeg"
 
 const styles = theme => ({
   root: {
@@ -20,22 +21,11 @@ function Home(props) {
   const [checkout, setCheckOut] = useState(false);
   return (
       <div className={classes.root}>
-        <h1>Landing page</h1>
-        <div className="App">
-      {checkout ? (
-        <PayPal />
-      ) : (
-        <button
-          onClick={() => {
-            setCheckOut(true);
-          }}
-        >
-          Checkout
-        </button>
-      )}
-    </div>
-  );
-      </div>
+        <h1>Welcome to UberBus</h1>
+        <div>
+        <img src={home} alt="home"/></div>
+        </div>
+        
   );
 }
 

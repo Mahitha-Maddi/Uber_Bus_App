@@ -286,6 +286,7 @@ export default function Dashboard() {
           <Route path="/" exact component={Home} />
           <Route path="/bookings" exact component={THome} />
          {/*  <Route path="/Book" exact component={Book} /> */}
+         {/* <Route path="/bookings" exact component={ListUserComponent} /> */}
           <Route path="/Book" exact render={props => <RouteSelection {...props} />} /> 
           <Route path="/seatSelection/" exact render={props => <SeatSelection {...props} />} />
           <Route path="/payment/" exact render={props => <PayPal {...props} />} />
