@@ -8,7 +8,38 @@ export default function Paypal() {
   const [error, setError] = useState(null);
 
 
-  
+  saveBookedSeats=()=>{
+    console.log(localStorage.getItem('selectedBusId'))
+    const seat1A=0;
+    
+    const paramdict = {
+        'busid': localStorage.getItem('selectedBusId'),
+        ''
+    }
+    const config = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paramdict)
+    }
+    fetch("http://localhost:5000/availableseats", config)
+        .then(res => res.json())
+        .then(data => {
+            setFA(data[0].FA)
+            //console.log("date: ",data)
+            // console.log("FA",data[0].FA)
+            setFB(data[0].FB)
+            setFC(data[0].FC)
+            setSA(data[0].SA)
+            setSB(data[0].SB)
+            setSC(data[0].SC)
+            setTA(data[0].TA)
+            setTB(data[0].TB)
+            setTC(data[0].TC)
+         
+  }
   useEffect(() => {
     const price=localStorage.getItem('busPrice');
     console.log("price: ",price)
@@ -50,8 +81,13 @@ export default function Paypal() {
   }, []);
 
   if (paidFor) {
+     saveBookedSeats();
+
+
     return (
       <div>
+        
+    <br/><br/><br/><br/><br/><br/>
         <h1>Congrats, you booking is successful!</h1>
         {/* <img alt={product.description} src={gif} /> */}
       </div>
@@ -60,6 +96,8 @@ export default function Paypal() {
 
   return (
     <div>
+      
+    <br/><br/><br/><br/><br/><br/>
       {error && <div>Uh oh, an error occurred! {error.message}</div>}
       {/* <h1>
         {product.description} for ${product.price}

@@ -346,7 +346,9 @@ export default function SeatSelection() {
                               {/*   <button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">
                                     Save and pay
                             </button> */}
+
                                 <div className="App">
+                                   
                                     {checkout ? (<PayPal />) : (<button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">checkout
                                         </button>)}
                                 </div>

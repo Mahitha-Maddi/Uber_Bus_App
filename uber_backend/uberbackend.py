@@ -514,13 +514,14 @@ def get_tweets_results():
     return jsonify(sorted_records)
 
 # endpoint to view all the available seats
-@app.route("/availableseats", methods=["GET"])
+@app.route("/availableseats", methods=["POST"])
 def get_seats_results():
+    busid = request.json['busid']
     with mongo_client:
         db = mongo_client['Uber']
         mongo_collection = db['available']
-
-        cursor = mongo_collection.find({})
+        myquery = {"_id": { "$regex": str(busid) }}
+        cursor = mongo_collection.find(myquery)
         records = list(cursor)
         howmany = len(records)
         print('found ' + str(howmany) + ' buses!')
