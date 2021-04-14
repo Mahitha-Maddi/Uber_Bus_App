@@ -40,7 +40,7 @@ import Book from "../pages/Book/Book";
 import NotFoundPage from "../pages/Book/NotFoundPage";
 import RouteSelection from './RouteSelection/RouteSelection';///RouteSelection/RouteSelection';
 import SeatSelection from './SeatSelection/SeatSelection';
-// import ListUserComponent from '../pages/BookingService/listBooking';
+import PayPal from './PaymentTab/PayPal';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -284,11 +284,11 @@ export default function Dashboard() {
           {/* menu paths */}
           <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/bookings" exact component={THome} /> 
-          {/* <Route path="/bookings" exact component={ListUserComponent} /> */}
+          <Route path="/bookings" exact component={THome} />
          {/*  <Route path="/Book" exact component={Book} /> */}
           <Route path="/Book" exact render={props => <RouteSelection {...props} />} /> 
-          <Route path="/seatSelection/" exact render={props => <SeatSelection {...props} />} /> 
+          <Route path="/seatSelection/" exact render={props => <SeatSelection {...props} />} />
+          <Route path="/payment/" exact render={props => <PayPal {...props} />} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/password_reset" component={PasswordReset} />

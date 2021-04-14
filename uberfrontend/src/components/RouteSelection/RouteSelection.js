@@ -59,9 +59,9 @@ export default function RouteSelection({ history }) {
                 </ul>
 
                 <div className="tab-content">
-                    <div className="tab-pane container active mn-box" id="home"><RouteSelector /></div>{/* 
-                    <div className="tab-pane container fade mn-box" id="menu1"><SeatSelection /></div> */}
-                   {/*  <div className="tab-pane container fade mn-box" id="menu2"><PaymentTab /></div> */}
+                    <div className="tab-pane container active mn-box" id="home"><RouteSelector /></div>
+                    {/* <div className="tab-pane container fade mn-box" id="menu1"><SeatSelection /></div> */}
+                    {/* <div className="tab-pane container fade mn-box" id="menu2"><PaymentTab /></div> */}
                 </div>
             </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import { FaAngleDoubleDown } from "react-icons/fa";
+import { useHistory } from 'react-router-dom'
 import './busList.css'
 export default function BusList({ value: dataInp }) {
 
@@ -16,14 +17,16 @@ export default function BusList({ value: dataInp }) {
     }, [dataInp])
 
 
-    const handleSubmit = bId => {
+    const history = useHistory()
+    const handleSubmit = (bId,busPrice) => {
         localStorage.setItem("selectedBusId", bId)
+        localStorage.setItem("busPrice", busPrice)
         SetClas(false)
         setArrowDown(true)
         alert("Hello")
-        //history.push('/seatSelection/');
-        /* 
-        return  <Redirect  to="/seatSelection/" /> */
+        history.push('/seatSelection/');
+        
+        return ( <Redirect  to="/seatSelection/" /> )
     }
 
 /* 
@@ -48,6 +51,7 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">BusNum</div>
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">startTime</div>
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">endTime</div>
+                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">price</div>
 
                         <div class="w-100 d-none d-md-block"></div>
 
@@ -56,9 +60,10 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mb-4">{bus.busnumber}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.startTime}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.endTime}</div>
+                        <div class="col-6 col-sm-3 mb-4">{bus.price}</div>
                         <div class="col-6 col-sm-4 mb-2 ml-0">
                         <Link to="/seatSelection">Book</Link>
-                        <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} onClick={(bId) => { handleSubmit(bus._id) }} >Book Now</button>
+                      <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} onClick={(bId,busPrice) => { handleSubmit(bus._id,bus.price) }} >Book Now</button> 
                         </div>
                       {/*   <div class="col-6 col-sm-4 mb-2 ml-0">
                             <span className={reset ? "badge badge-danger ml-5" : "disabled"} onClick={e => handleReset(e)}>Reset</span>

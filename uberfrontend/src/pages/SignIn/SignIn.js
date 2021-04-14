@@ -12,10 +12,12 @@ import { Link } from 'react-router-dom'
 
 // save keys to local storage
 const localStorageAuthKey = 'twtr:auth';
-function saveAuthorisation(keys) {
+function saveAuthorisation(keys,userid,username) {
   if (typeof Storage !== 'undefined') {
       try {
           localStorage.setItem(localStorageAuthKey, JSON.stringify(keys));
+          localStorage.setItem('userid',userid);
+          localStorage.setItem('username',username);
 
       } catch (ex) {
           console.log(ex);
@@ -42,6 +44,8 @@ function logout() {
   if (typeof Storage !== 'undefined') {
     try {
         localStorage.removeItem(localStorageAuthKey);
+        localStorage.removeItem('userid');
+        localStorage.removeItem('username');
     } catch (ex) {
         console.log(ex);
     }
@@ -140,7 +144,7 @@ const SignIn = () => {
         saveAuthorisation({
           access: data[0].access_token,
           refresh: data[0].refresh_token,
-        });
+        },data[0].userid,data[0].username);
 
         // back to landing page!
         history.push("/");
@@ -182,7 +186,7 @@ const SignIn = () => {
         saveAuthorisation({
           access: data[0].access_token,
           refresh: data[0].refresh_token,
-        });
+        },data[0].userid,data[0].username);
 
         // back to landing page!
         history.push("/");

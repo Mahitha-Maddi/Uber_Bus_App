@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import PayPal from "../components/PaymentTab/PayPal";
 
 const styles = theme => ({
   root: {
@@ -13,12 +14,27 @@ const styles = theme => ({
   }
 });
 
+
 function Home(props) {
   const { classes } = props;
-
+  const [checkout, setCheckOut] = useState(false);
   return (
       <div className={classes.root}>
-        <h1>Uber Bus</h1>
+        <h1>Landing page</h1>
+        <div className="App">
+      {checkout ? (
+        <PayPal />
+      ) : (
+        <button
+          onClick={() => {
+            setCheckOut(true);
+          }}
+        >
+          Checkout
+        </button>
+      )}
+    </div>
+  );
       </div>
   );
 }
