@@ -131,6 +131,7 @@ export default function Paypal() {
           alert(passengers);
           console.log(passengers);
           passengers.map((passenger) => {
+          console.log(passenger)
           alert(passenger);
           savePassengerDetails(passenger.passengerName,passenger.passengerGender);
           });
