@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import PayPal from "../components/PaymentTab/PayPal";
 import home from "../icons/home.jpeg"
+//import '../styles/home.css';
 
 const styles = theme => ({
   root: {
@@ -11,7 +11,7 @@ const styles = theme => ({
     justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
-    marginTop: '100px'
+    marginTop: '200px'
   }
 });
 
@@ -21,10 +21,15 @@ function Home(props) {
   const [checkout, setCheckOut] = useState(false);
   return (
       <div className={classes.root}>
-        <h1>Welcome to UberBus</h1>
-        <div>
-        <img src={home} alt="home"/></div>
+        <h1 className="heading" color="black">Welcome to UberBus</h1>
+        <img src={home} alt="home"/>
         </div>
+        // <div className={classes.root}>    
+        // <img src={home} />
+        // <h2 className="heading">Welcome to UberBus</h2>  
+        // </div>            
+        
+   // </div>
         
   );
 }
@@ -34,3 +39,4 @@ Home.propTypes = {
 };
 
 export default withStyles(styles)(Home);
+//export default Home;
