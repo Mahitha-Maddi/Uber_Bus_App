@@ -41,6 +41,8 @@ import NotFoundPage from "../pages/Book/NotFoundPage";
 import RouteSelection from './RouteSelection/RouteSelection';///RouteSelection/RouteSelection';
 import SeatSelection from './SeatSelection/SeatSelection';
 import PayPal from './PaymentTab/PayPal';
+import aboutus from '../pages/AboutUs';
+import contactus from '../pages/ContactUs'
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -229,6 +231,35 @@ export default function Dashboard() {
 
           {/* Left pane menu items */}
           <List>
+            {/* Home menu item*/}
+            <ListItem button component={Link} to="/" onClick={onItemClick('Home')}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+              { title === 'Home' && 
+                <ListItemIcon>
+                  <IconButton onClick={handleDrawerCollapsed}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </ListItemIcon>
+              }
+            </ListItem>
+
+            {/* About Us menu item*/}
+            <ListItem button component={Link} to="/aboutus" onClick={onItemClick('AboutUs')}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="AboutUs" />
+              { title === 'AboutUs' && 
+                <ListItemIcon>
+                  <IconButton onClick={handleDrawerCollapsed}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </ListItemIcon>
+              }
+            </ListItem>
 
             {/* Bookings menu item*/}
             <ListItem button component={Link} to="/bookings" onClick={onItemClick('Bookings')}>
@@ -274,6 +305,21 @@ export default function Dashboard() {
                 </ListItemIcon>
               }
             </ListItem>
+            
+            {/* ContactUs menu item */}
+            <ListItem button component={Link} to="/contactus" onClick={onItemClick('ContactUs')}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="ContactUs" />
+              { title === 'ContactUs' && 
+                <ListItemIcon>
+                  <IconButton onClick={handleDrawerCollapsed}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </ListItemIcon>
+              }
+            </ListItem>
   
           </List>
         </Drawer>
@@ -294,6 +340,8 @@ export default function Dashboard() {
           <Route path="/signup" component={SignUp} />
           <Route path="/password_reset" component={PasswordReset} />
           <Route path="/password_change" component={PasswordChange} />
+          <Route path="/aboutus" component={aboutus} />
+          <Route path="/contactus" component={contactus} />
           <Route path="*" exact component={NotFoundPage} />
           </Switch>
         </main>
