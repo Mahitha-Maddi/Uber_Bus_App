@@ -172,6 +172,9 @@ def login():
             response_object = {
                 "access_token": access_token,
                 "refresh_token": refresh_token,
+                "userid": userid,
+                "username": user
+
             }
             #return response_object, 200
             #return response_object
@@ -218,6 +221,8 @@ def fastlogin():
                     response_object = {
                         "access_token": access_token,
                         "refresh_token": refresh_token,
+                        "userid": userid,
+                        "username": get_env_var('users')[userid]
                     }
                     return jsonify((response_object, status.HTTP_200_OK))
 
@@ -293,6 +298,27 @@ def insert_one(r):
         print("...insert_one() to mongo: ", r)
         try:
             mongo_collection = db['bookings']
+            result = mongo_collection.insert_one(r)
+            print("inserted _ids: ", result.inserted_id)
+        except Exception as e:
+            print(e)
+
+    microseconds_doing_mongo_work = (datetime.now() - start_time).microseconds
+    print("*** It took " + str(microseconds_doing_mongo_work) + " microseconds to insert_one.")
+    return result.inserted_id
+
+# method to insert one passenger record
+def insert_one_passenger(r):
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+
+        print("...insert_one() to mongo: ", r)
+        try:
+            mongo_collection = db['passengers']
             result = mongo_collection.insert_one(r)
             print("inserted _ids: ", result.inserted_id)
         except Exception as e:
@@ -450,33 +476,59 @@ def check_availability():
         print(type(sorted_records))
     return jsonify(sorted_records)
 
+# endpoint to update reserved seats in available
+@app.route("/saveBookedSeats", methods=["POST"])
+def reserve_seats():
+    busid = request.json['busid']
+    FA = int(request.json['seat1A'])
+    FB = int(request.json['seat1B'])
+    FC = int(request.json['seat1C'])
+    SA = int(request.json['seat2A'])
+    SB = int(request.json['seat2B'])
+    SC = int(request.json['seat2C'])
+    TA = int(request.json['seat3A'])
+    TB = int(request.json['seat3B'])
+    TC = int(request.json['seat3C'])
+    with mongo_client:
+        db = mongo_client['Uber']
+        try:
+            print(SC)
+            mongo_collection = db['available']
+            mongo_collection.update_one({"_id" : busid},
+                {"$set":{"FA": FA, "FB": FB,"FC": FC,"SA": SA, "SB": SB,"SC": SC,"TA": TA, "TB": TB,"TC": TC}},
+                upsert=True)
+            print("...update_one() bus for reserved seats to mongo acknowledged:")#, result.modified_count)
+            return jsonify("successfully updated!")
+        except Exception as e:
+            print(e)
+    return jsonify("successfully updated!")
+
 # endpoint to create new booking
-@app.route("/book", methods=["POST"])
+@app.route("/saveBooking", methods=["POST"])
 def book_bus():
     source = request.json['source']
     destination = request.json['destination']
     date = request.json['date']
     startTime = request.json['startTime']
     endTime = request.json['endTime']
-    # user = request.json['user']
+    user = request.json['user']
     busnumber = request.json['busnumber']
-
-    access_token = request.json['accesstoken']
-    print("access_token:", access_token)
-    permission = verify_token(access_token)
-    if not permission[0]: 
-        print("tweet submission denied due to invalid token!")
-        print(permission[1])
-        return permission[1]
-    else:
-        print('access token accepted!')
+    numOfSeats = request.json['numOfSeats']
+    totalPrice = request.json['totalPrice']
     
-    booking = dict( source=source, destination=destination,busnumber=busnumber,
-                date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-               _id=str(ObjectId()))
+    booking = dict( source=source, destination=destination,busnumber=busnumber,user=user,numOfSeats=numOfSeats,totalPrice=totalPrice,date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),_id=str(ObjectId()))
+    result1=insert_one(booking)
+    return jsonify(result1)
 
-    insert_one(booking)
-    return jsonify(booking)
+# endpoint to create new passenger
+@app.route("/savePassengerDetails", methods=["POST"])
+def add_passenger():
+    bookingID = request.json['bookingID']
+    fullname = request.json['fullname']
+    gender = request.json['gender']
+    passenger = dict(bookingID=bookingID, fullname=fullname, gender=gender,_id=str(ObjectId()))
+    insert_one_passenger(passenger)
+    return jsonify("saved passenger!!")
 
 # endpoint to create new user
 @app.route("/signup", methods=["POST"])

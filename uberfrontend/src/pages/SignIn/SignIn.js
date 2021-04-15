@@ -18,6 +18,7 @@ function saveAuthorisation(keys,userid,username) {
           localStorage.setItem(localStorageAuthKey, JSON.stringify(keys));
           localStorage.setItem('userid',userid);
           localStorage.setItem('username',username);
+          console.log("username: ",localStorage.getItem('username'));
 
       } catch (ex) {
           console.log(ex);

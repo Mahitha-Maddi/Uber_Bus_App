@@ -18,9 +18,16 @@ export default function BusList({ value: dataInp }) {
 
 
     const history = useHistory()
-    const handleSubmit = (bId,busPrice) => {
+    const handleSubmit = (bId,busPrice,source,destination,startTime,endTime,BusNum,busDate) => {
         localStorage.setItem("selectedBusId", bId)
         localStorage.setItem("busPrice", busPrice)
+        localStorage.setItem("source",source)
+        localStorage.setItem("destination",destination)
+        localStorage.setItem("startTime",startTime)
+        localStorage.setItem("endTime",endTime)
+        localStorage.setItem("BusNum",BusNum)
+        localStorage.setItem("busDate",busDate)
+        
         SetClas(false)
         setArrowDown(true)
         alert("Hello")
@@ -55,7 +62,7 @@ export default function BusList({ value: dataInp }) {
 
                         <div class="w-100 d-none d-md-block"></div>
 
-                        {console.log(bus.seatArray)}{/* 
+                        {/* {console.log(bus.seatArray)}
                         <div class="col-6 col-sm-3 mb-4">{bus.companyName}</div> */}
                         <div class="col-6 col-sm-3 mb-4">{bus.busnumber}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.startTime}</div>
@@ -63,7 +70,9 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mb-4">{bus.price}</div>
                         <div class="col-6 col-sm-4 mb-2 ml-0">
                         <Link to="/seatSelection">Book</Link>
-                      <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} onClick={(bId,busPrice) => { handleSubmit(bus._id,bus.price) }} >Book Now</button> 
+                      <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} 
+                      onClick={(bId,busPrice,source,destination,startTime,endTime,BusNum,busDate) => { handleSubmit(bus._id,bus.price,bus.source,bus.destination,bus.startTime,bus.endTime,bus.busnumber,bus.date) }} >
+                        Book Now</button> 
                         </div>
                       {/*   <div class="col-6 col-sm-4 mb-2 ml-0">
                             <span className={reset ? "badge badge-danger ml-5" : "disabled"} onClick={e => handleReset(e)}>Reset</span>

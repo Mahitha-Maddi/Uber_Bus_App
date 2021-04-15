@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './Tab.css';
 import PayPal from "../PaymentTab/PayPal";
 export default function SeatSelection() {
@@ -75,34 +75,43 @@ export default function SeatSelection() {
                 setTA(data[0].TA)
                 setTB(data[0].TB)
                 setTC(data[0].TC)
-              /*   const list = []
-                if (data[0].FA === 1) {
-                    list.push("1A")
-                }
-                if (data[0].FB === 1) {
-                    list.push("1B")
-                }
-                if (data[0].FC == 1) {
-                    list.push("1C")
-                }
-                if (data[0].SA == 1) {
-                    list.push("2A")
-                }
-                if (data[0].SB == 1) {
-                    list.push("2B")
-                }
-                if (data[0].SC == 1) {
-                    list.push("2C")
-                }
-                if (data[0].TA == 1) {
-                    list.push("3A")
-                }
-                if (data[0].TB == 1) {
-                    list.push("3B")
-                }
-                if (data[0].TC == 1) {
-                    list.push("3C")
-                } */
+                localStorage.setItem("1A", data[0].FA)
+                localStorage.setItem("1B", data[0].FB)
+                localStorage.setItem("1C", data[0].FC)
+                localStorage.setItem("2A", data[0].SA)
+                localStorage.setItem("2B", data[0].SB)
+                localStorage.setItem("2C", data[0].SC)
+                localStorage.setItem("3A", data[0].TA)
+                localStorage.setItem("3B", data[0].TB)
+                localStorage.setItem("3C", data[0].TC)
+                /*   const list = []
+                  if (data[0].FA === 1) {
+                      list.push("1A")
+                  }
+                  if (data[0].FB === 1) {
+                      list.push("1B")
+                  }
+                  if (data[0].FC == 1) {
+                      list.push("1C")
+                  }
+                  if (data[0].SA == 1) {
+                      list.push("2A")
+                  }
+                  if (data[0].SB == 1) {
+                      list.push("2B")
+                  }
+                  if (data[0].SC == 1) {
+                      list.push("2C")
+                  }
+                  if (data[0].TA == 1) {
+                      list.push("3A")
+                  }
+                  if (data[0].TB == 1) {
+                      list.push("3B")
+                  }
+                  if (data[0].TC == 1) {
+                      list.push("3C")
+                  } */
 
                 //setReservedSeat(list)
 
@@ -243,14 +252,55 @@ export default function SeatSelection() {
         }
         //console.log(x)
         //setPassengers(x)
-        localStorage.setItem('passengers', JSON.stringify(x));
-        localStorage.setItem('seatNumber', JSON.stringify(seatNumber));
+        localStorage.setItem('passengers', x);
+        localStorage.setItem('seatNumber', seatNumber);
         localStorage.setItem('numOfSeats', x.length);
-        console.log("x:length: ",x.length);
-        console.log("LOCAL: ",localStorage.getItem('passengers'));
+        console.log("x:length: ", x.length);
+        console.log("Passengers: ", localStorage.getItem('passengers'));
+        //seatNumber.forEach(d => console.log("mine:", { d }))
+        seatNumber.map((seat) => {
+            console.log("minemap:", { seat: seat });
+            if (seat.includes("1A")) {
+                localStorage.setItem("1A", 1);
+                alert("1A: "+localStorage.getItem("1A"))
+            }
+            if (seat.includes("1B")) {
+                localStorage.setItem("1B", 1);
+                alert("1B: "+localStorage.getItem("1B"))
+            }
+            if (seat.includes("1C")) {
+                localStorage.setItem("1C", 1);
+                alert("1C: "+localStorage.getItem("1C"))
+            }
+            if (seat.includes("2A")) {
+                localStorage.setItem("2A", 1);
+                alert("2A: "+localStorage.getItem("2A"))
+            }
+            if (seat.includes("2B")) {
+                localStorage.setItem("2B", 1);
+                alert("2B: "+localStorage.getItem("2B"))
+            }
+            if (seat.includes("2C")) {
+                localStorage.setItem("2C", 1);
+                alert("2C: "+localStorage.getItem("2C"))
+            }
+            if (seat.includes("3A")) {
+                localStorage.setItem("3A", 1);
+                alert("3A: "+localStorage.getItem("3A"))
+            }
+            if (seat.includes("3B")) {
+                localStorage.setItem("3B", 1);
+                alert("3B: "+localStorage.getItem("3B"))
+            }
+            if (seat.includes("3C")) {
+                localStorage.setItem("3C", 1);
+                alert("3C: "+localStorage.getItem("3C"))
+            }
 
+
+        })
         history.push('/payment/');
-        return ( <Redirect  to="/payment/" /> )
+        return (<Redirect to="/payment/" />)
     }
 
     const renderPassengerData = (seatArray) => {
@@ -343,14 +393,14 @@ export default function SeatSelection() {
                                 {renderPassengerData(seatNumber)}
                             </form>
                             <div>
-                              {/*   <button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">
+                                {/*   <button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">
                                     Save and pay
                             </button> */}
 
                                 <div className="App">
-                                   
+
                                     {checkout ? (<PayPal />) : (<button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">checkout
-                                        </button>)}
+                                    </button>)}
                                 </div>
                             </div>
                             <div className={arrowDown ? "activeArrow2" : "nonActive"}>
