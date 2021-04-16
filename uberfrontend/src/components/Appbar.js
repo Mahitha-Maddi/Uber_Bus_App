@@ -42,7 +42,8 @@ import RouteSelection from './RouteSelection/RouteSelection';///RouteSelection/R
 import SeatSelection from './SeatSelection/SeatSelection';
 import PayPal from './PaymentTab/PayPal';
 import aboutus from '../pages/AboutUs';
-import contactus from '../pages/ContactUs'
+import contactus from '../pages/ContactUs';
+import profile from '../pages/Profile/index'
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -320,6 +321,21 @@ export default function Dashboard() {
                 </ListItemIcon>
               }
             </ListItem>
+
+            {/* User Profile menu item */}
+            <ListItem button component={Link} to="/userprofile" onClick={onItemClick('User Profile')}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="User Profile" />
+              { title === 'User Profile' && 
+                <ListItemIcon>
+                  <IconButton onClick={handleDrawerCollapsed}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </ListItemIcon>
+              }
+            </ListItem>
   
           </List>
         </Drawer>
@@ -342,6 +358,7 @@ export default function Dashboard() {
           <Route path="/password_change" component={PasswordChange} />
           <Route path="/aboutus" component={aboutus} />
           <Route path="/contactus" component={contactus} />
+          <Route path="/userprofile" component={profile} />
           <Route path="*" exact component={NotFoundPage} />
           </Switch>
         </main>
