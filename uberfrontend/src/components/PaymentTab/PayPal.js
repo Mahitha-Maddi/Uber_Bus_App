@@ -123,18 +123,20 @@ export default function Paypal() {
           });
         },
         onApprove: async (data, actions) => {
-          const order = await actions.order.capture();
           setPaidFor(true);
           saveBookedSeats();
           saveBooking();
-          const passengers=localStorage.getItem('passengers');
+          const passengers=JSON.parse(localStorage.getItem("passengers") || "[]");
           alert(passengers);
-          console.log(passengers);
+          console.log("passengers length: ",passengers.length);
+          //passengers.forEach(d => console.log("mine:", { d }))
           passengers.map((passenger) => {
-          console.log(passenger)
-          alert(passenger);
-          savePassengerDetails(passenger.passengerName,passenger.passengerGender);
+            console.log(passenger);
+            console.log(passenger.passengerName);
+            console.log(passenger.passengerGender);
+            savePassengerDetails(passenger.passengerName,passenger.passengerGender);
           });
+          const order = await actions.order.capture();
           console.log(order);
         },
         onError: (err) => {

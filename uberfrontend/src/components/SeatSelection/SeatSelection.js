@@ -252,7 +252,7 @@ export default function SeatSelection() {
         }
         //console.log(x)
         //setPassengers(x)
-        localStorage.setItem('passengers', x);
+        localStorage.setItem('passengers', JSON.stringify(x));
         localStorage.setItem('seatNumber', seatNumber);
         localStorage.setItem('numOfSeats', x.length);
         console.log("x:length: ", x.length);
