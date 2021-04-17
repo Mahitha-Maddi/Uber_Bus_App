@@ -541,6 +541,25 @@ def reserve_seats():
             print(e)
     return jsonify("successfully updated!")
 
+# endpoint to update user details
+@app.route("/updateUser", methods=["POST"])
+def update_user():
+    user = request.json['user']
+    contact = request.json['contact']
+    password = request.json['password']
+    with mongo_client:
+        db = mongo_client['Uber']
+        try:
+            mongo_collection = db['users']
+            mongo_collection.update_one({"username" : user},
+                {"$set":{"contact": contact, "password": password}},
+                upsert=True)
+            print("...update_one() user:")#, result.modified_count)
+            return jsonify("successfully updated!")
+        except Exception as e:
+            print(e)
+    return jsonify("successfully updated!")
+
 # endpoint to create new booking
 @app.route("/saveBooking", methods=["POST"])
 def book_bus():
@@ -597,13 +616,31 @@ def get_bookings_results():
     with mongo_client:
         db = mongo_client['Uber']
         mongo_collection = db['bookings']
-        myquery = {"user":"sayali"} #{ "$regex": str(user) }}
-        cursor = mongo_collection.find({})
+        myquery = {"user":str(user) }
+        cursor = mongo_collection.find(myquery)
         records = list(cursor)
         howmany = len(records)
         print('found ' + str(howmany) + ' bookings!')
         sorted_records = sorted(records,key=lambda t: t['date'])
     return jsonify(sorted_records)
+
+
+
+# endpoint to fetch user profile
+@app.route("/userDetails", methods=["POST"])
+def get_userDetails():
+    user = request.json['user']
+    print("user profile:", user)
+    global bookings
+    with mongo_client:
+        db = mongo_client['Uber']
+        mongo_collection = db['users']
+        myquery = {"username":str(user) }
+        cursor = mongo_collection.find(myquery)
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + ' users!')
+    return jsonify(records)
 
 # endpoint to delete the booking
 @app.route("/cancelBooking", methods=["POST"])
