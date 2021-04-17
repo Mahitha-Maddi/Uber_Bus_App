@@ -23,41 +23,43 @@ export default function Profile() {
 
   useEffect(() => {
     const username=localStorage.getItem('username');
-    alert(username);
-    fetch('http://localhost:5000/userDetails', {
-      method: 'POST', headers: {
-        'Content-Type': 'application/json'
-      }, body: JSON.stringify({user:username })
-    })
-      .then(response => {
-        console.log(response);
-        return response.json();
+    const fetchData = async () => {
+      fetch('http://localhost:5000/userDetails', {
+        method: 'POST', headers: {
+          'Content-Type': 'application/json'
+        }, body: JSON.stringify({user:username })
       })
-      .then(data => {
-        console.log("our date:",data)
-        setUsername(data[0].username)
-        setEmail(data[0].email)
-        setDob(data[0].dob)
-        setContact(data[0].contact)
-        setPassword(data[0].password)
+        .then(response => {
+          console.log(response);
+          return response.json();
         })
-      .catch(error => {
-        console.log('Request failed', error)
-        alert(error);
-      });
-
-      
-  }
-
-)
+        .then(data => {
+          console.log("our date:",data)
+          console.log("contact: ",data[0].contact)
+          setUsername(data[0].username)
+          setEmail(data[0].email)
+          setDob(data[0].dob)
+          setContact(data[0].contact)
+          setPassword(data[0].password)
+          })
+        .catch(error => {
+          console.log('Request failed', error)
+          alert(error);
+        });
+  
+    
+    };
+    fetchData();
+  }, []
+  );
 
    
-const handlenewPasswordChange = e => {
-  setNpassword({ npassword: e.target.value })
+const handlenewPasswordChange = (val) => {
+  setNpassword(val)
 }
 
-const handleconfirmPasswordChange = e => {
-  setCpassword({ cpassword: e.target.value })
+const handleconfirmPasswordChange = (val) => {
+  setCpassword(val)
 }
 /* 
 const handleContactChange = e => {
@@ -66,16 +68,17 @@ const handleContactChange = e => {
 
 const handleSave = (val) => {
   setContact(val)
+  console.log("contactval: ",val);
 
 }
 
 const handleSubmit = e => {
   e.preventDefault()
-
+  const passwrd =(cpassword==='')?password:cpassword;
   fetch('http://localhost:5000/updateUser', {
     method: 'POST', headers: {
       'Content-Type': 'application/json'
-    }, body: JSON.stringify({user:localStorage.getItem('username'), contact:contact , password:(cpassword==='')?password:cpassword
+    }, body: JSON.stringify({user:localStorage.getItem('username'), contact:contact , password:passwrd
   })})
     .then(response => {
       console.log(response);
@@ -106,11 +109,13 @@ const handleSubmit = e => {
         Email:<input name="email" type="email" placeholder="Email address" value={email} disabled = {true}/>
         Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/>
         {/* Contact Number:<input name="contact"   onChange={(e) => {handleContactChange(e)}} /> */}
-       Contact Number:<EdiText name="contact"  onSave={handleSave} submitOnEnter placeholder="Contact Number"  /> 
-        Password:<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/>
-        {/* New Password<EdiText name="password" type="password" placeholder="New password" value={npassword} onChange={(e) => {handlenewPasswordChange(e)}} />
-        Confirm Password:<EdiText name="confirmPassword" type="password" placeholder="Confirm new password" value={cpassword} onChange={(e) => {handleconfirmPasswordChange(e)}}/>
- */}
+       Contact Number:<EdiText name="contact" value={contact} onSave={handleSave} submitOnEnter placeholder="Contact Number"  />
+
+        Password:<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
+
+        New Password<EdiText name="password" type="password"  value={npassword} onSave={handlenewPasswordChange} submitOnEnter placeholder="New password" />
+        Confirm Password:<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/>
+
         <button type="submit">Update profile</button>
       </form> 
 
