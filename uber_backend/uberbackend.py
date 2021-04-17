@@ -469,6 +469,24 @@ def ssm():
     midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
     return str((now - midnight).seconds)
 
+# endpoint to check overlap between bookings of a user
+@app.route("/overlapCheck", methods=["POST"])
+def check_overlap():
+    date = request.json['date']
+    user = request.json['user']
+    with mongo_client:
+        db = mongo_client['Uber']
+        mongo_collection = db['bookings']
+        myquery = {"date": { "$regex": str(date) },"user": { "$regex": str(user) }}
+        cursor = dict()
+        cursor = mongo_collection.find(myquery)
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + ' bookings!')
+        sorted_records = sorted(records,key=lambda t: t['source'])
+        print(type(sorted_records))
+    return jsonify(sorted_records)
+
 # endpoint to check availability
 @app.route("/checkAvailability", methods=["POST"])
 def check_availability():

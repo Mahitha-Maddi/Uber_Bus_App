@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { useHistory } from 'react-router-dom'
 import './busList.css'
@@ -16,35 +16,71 @@ export default function BusList({ value: dataInp }) {
         setObj(dataInp)
     }, [dataInp])
 
+    const getBookedRecords = (user, busDate, startTime, endTime) => {
+        var overlapCount=0;
+        fetch('http://localhost:5000/overlapCheck', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({
+                date: busDate, startTime: startTime, endTime: endTime, user: user
+            })
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log("our date:", data)
+              //overlapCount=parseInt(JSON.stringify(data));
+              data.map((booking) => {
+                  if((startTime>=booking.startTime && startTime<booking.endTime) || (endTime>booking.startTime && endTime<=booking.endTime)){
+                    overlapCount++;
+                  }
+              })
+
+            })
+            .catch(error => {
+                console.log('Request failed', error);
+                alert(error);
+            });
+            return overlapCount;
+    }
+
 
     const history = useHistory()
-    const handleSubmit = (bId,busPrice,source,destination,startTime,endTime,BusNum,busDate) => {
+    const handleSubmit = (bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => {
+        const user = localStorage.getItem('username');
+        if (getBookedRecords(user, busDate, startTime, endTime)>0) {
+            alert("Your bookings might overlap with each other!!");
+            window.location.reload();
+            return;
+        }
         localStorage.setItem("selectedBusId", bId)
         localStorage.setItem("busPrice", busPrice)
-        localStorage.setItem("source",source)
-        localStorage.setItem("destination",destination)
-        localStorage.setItem("startTime",startTime)
-        localStorage.setItem("endTime",endTime)
-        localStorage.setItem("BusNum",BusNum)
-        localStorage.setItem("busDate",busDate)
-        
+        localStorage.setItem("source", source)
+        localStorage.setItem("destination", destination)
+        localStorage.setItem("startTime", startTime)
+        localStorage.setItem("endTime", endTime)
+        localStorage.setItem("BusNum", BusNum)
+        localStorage.setItem("busDate", busDate)
+
         SetClas(false)
         setArrowDown(true)
         alert("Hello")
         history.push('/seatSelection/');
-        
-        return ( <Redirect  to="/seatSelection/" /> )
+
+        return (<Redirect to="/seatSelection/" />)
     }
 
-/* 
-    const handleReset = (e) => {
-        if (clas === false) {
-            Setreset(true)
-            SetClas(true)
-            setArrowDown(false)
-        }
-        localStorage.removeItem("selectedBusId")
-    } */
+    /* 
+        const handleReset = (e) => {
+            if (clas === false) {
+                Setreset(true)
+                SetClas(true)
+                setArrowDown(false)
+            }
+            localStorage.removeItem("selectedBusId")
+        } */
 
 
     const renderFunction = () => {
@@ -52,7 +88,7 @@ export default function BusList({ value: dataInp }) {
             // let bId = bus._id
             return (
                 <div key={idx} className="card mt-5 buslist">
-                    <br/><br/><br/><br/>
+                    <br /><br /><br /><br />
                     <div class="row ml-3">{/* 
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Brand</div> */}
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Bus Number</div>
@@ -69,11 +105,11 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mb-4">{bus.endTime}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.price}</div>
                         <div class="col-6 col-sm-4 mb-2 ml-0">
-                      <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} 
-                      onClick={(bId,busPrice,source,destination,startTime,endTime,BusNum,busDate) => { handleSubmit(bus._id,bus.price,bus.source,bus.destination,bus.startTime,bus.endTime,bus.busnumber,bus.date) }} >
-                        Book Now</button> 
+                            <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"}
+                                onClick={(bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => { handleSubmit(bus._id, bus.price, bus.source, bus.destination, bus.startTime, bus.endTime, bus.busnumber, bus.date) }} >
+                                Book Now</button>
                         </div>
-                      {/*<div class="col-6 col-sm-4 mb-2 ml-0">
+                        {/*<div class="col-6 col-sm-4 mb-2 ml-0">
                             <span className={reset ? "badge badge-danger ml-5" : "disabled"} onClick={e => handleReset(e)}>Reset</span>
                         </div> */}
                     </div>
