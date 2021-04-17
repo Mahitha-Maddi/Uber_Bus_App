@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
+import EdiText from 'react-editext';
+
 // import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 
 // import { updateProfileRequest } from '~/store/modules/user/actions';
-//  import { logout } from '../SignIn/SignIn.js';
 
 import AvatarInput from './AvatarInput';
 
@@ -17,26 +18,27 @@ export default function Profile() {
     // dispatch(updateProfileRequest(data));
   }
 
-  function handleSignOut() {
-    // dispatch(logout());
+
+  function onSave (val) {
+    console.log('Edited Value -> ', val)
   }
 
   return (
     <Container>
       <Form  onSubmit={handleSubmit}>
         <AvatarInput name="avatar_id" /> 
-
-        <Input name="username" placeholder="Username" />
-        <Input name="email" type="email" placeholder="Email address" />
-        <Input name="dob" type="date" placeholder="Birth Date" />
-        <hr />
-        <Input
+      {/* Update the value field to the value from db. */}
+        UserName:<input name="username" placeholder="Username" value="username" disabled = {true}/>
+        Email:<input name="email" type="email" placeholder="Email address" value="email" disabled = {true}/>
+        Date Of Birth:<input name="dob" type="date" placeholder="Birth Date" disabled = {true}/>
+        Contact Number:<EdiText name="contact" type="number" value="617-818-1578" placeholder="Contact Number" />
+        Password:<Input
           name="oldPassword"
           type="password"
           placeholder="Current password"
-        />
-        <Input name="password" type="password" placeholder="New password" />
-        <Input
+          disabled = {true}/>
+        New Password<EdiText name="password" type="password" placeholder="New password" />
+        Confirm Password:<EdiText
           name="confirmPassword"
           type="password"
           placeholder="Confirm new password"
@@ -45,9 +47,7 @@ export default function Profile() {
         <button type="submit">Update profile</button>
       </Form> 
 
-      <button type="button" onClick={handleSignOut}>
-        Sign out
-      </button>
+    
     </Container>
   );
 }
