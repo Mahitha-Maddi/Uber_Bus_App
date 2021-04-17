@@ -90,7 +90,8 @@ handleOptionChange= (e) => {
         fieldValidationErrors.user = userValid ? '' : ' is too short or invalid';
         break; */
       case 'date':
-        dateValid = value.length === 0 || (!reg.test(value) && regDate.test(value));
+        var today = new Date();
+        dateValid = value.length === 0 || (!reg.test(value) && regDate.test(value) && this.state.date >= today) ;
         fieldValidationErrors.date = dateValid ? '' : ' is too short or invalid';
         break;
       default:
@@ -104,6 +105,8 @@ handleOptionChange= (e) => {
       dateValid: dateValid
     }, this.validateForm);
   }
+
+  
 
   validateForm() {
     this.setState({
