@@ -323,7 +323,7 @@ export default function Dashboard() {
             </ListItem>
 
             {/* User Profile menu item */}
-         { /*  <ListItem button component={Link} to="/userprofile" onClick={onItemClick('User Profile')}>
+          <ListItem button component={Link} to="/userprofile" onClick={onItemClick('User Profile')}>
               <ListItemIcon>
                 <LayersIcon />
               </ListItemIcon>
@@ -335,7 +335,7 @@ export default function Dashboard() {
                   </IconButton>
                 </ListItemIcon>
               }
-            </ListItem> */}
+            </ListItem> 
   
           </List>
         </Drawer>
@@ -357,8 +357,8 @@ export default function Dashboard() {
           <Route path="/password_reset" component={PasswordReset} />
           <Route path="/password_change" component={PasswordChange} />
           <Route path="/aboutus" component={aboutus} />
-          <Route path="/contactus" component={contactus} />{/* 
-          <Route path="/userprofile" component={profile} /> */}
+          <Route path="/contactus" component={contactus} /> 
+          <Route path="/userprofile" component={profile} /> 
           <Route path="*" exact component={NotFoundPage} />
           </Switch>
         </main>

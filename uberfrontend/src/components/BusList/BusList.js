@@ -55,10 +55,10 @@ export default function BusList({ value: dataInp }) {
                     <br/><br/><br/><br/>
                     <div class="row ml-3">{/* 
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Brand</div> */}
-                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">BusNum</div>
-                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">startTime</div>
-                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">endTime</div>
-                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">price</div>
+                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Bus Number</div>
+                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Start Time</div>
+                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">End Time</div>
+                        <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Price per seat</div>
 
                         <div class="w-100 d-none d-md-block"></div>
 
@@ -69,12 +69,11 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mb-4">{bus.endTime}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.price}</div>
                         <div class="col-6 col-sm-4 mb-2 ml-0">
-                        <Link to="/seatSelection">Book</Link>
                       <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"} 
                       onClick={(bId,busPrice,source,destination,startTime,endTime,BusNum,busDate) => { handleSubmit(bus._id,bus.price,bus.source,bus.destination,bus.startTime,bus.endTime,bus.busnumber,bus.date) }} >
                         Book Now</button> 
                         </div>
-                      {/*   <div class="col-6 col-sm-4 mb-2 ml-0">
+                      {/*<div class="col-6 col-sm-4 mb-2 ml-0">
                             <span className={reset ? "badge badge-danger ml-5" : "disabled"} onClick={e => handleReset(e)}>Reset</span>
                         </div> */}
                     </div>

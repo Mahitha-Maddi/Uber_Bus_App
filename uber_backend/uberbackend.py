@@ -437,6 +437,22 @@ def find_user1(username):
         #print(type(sorted_records))
     return howmany
 
+def validation2(user,source,destination,date):
+    start_time = datetime.now()
+    with mongo_client:
+        #start_time_db = datetime.now()
+        db = mongo_client['Uber']
+        #microseconds_caching_db = (datetime.now() - start_time_db).microseconds
+        #print("*** It took " + str(microseconds_caching_db) + " microseconds to cache mongo handle.")
+
+        mongo_collection = db['bookings']
+        myquery1 = {"source": { "$regex": str(source) },"destination": { "$regex": str(destination) },"date": {"$regex": str(date)},"user": {"$regex": str(user)}}
+        cursor1 = dict()
+        cursor1 = mongo_collection.find(myquery1)
+        records1 = list(cursor1)
+        howmany1 = len(records1)
+    return howmany1
+
 
 def tryexcept(requesto, key, default):
     lhs = None
@@ -459,13 +475,17 @@ def check_availability():
     source = request.json['source']
     destination = request.json['destination']
     date = request.json['date']
+    user = request.json['user']
     with mongo_client:
         db = mongo_client['Uber']
         mongo_collection = db['available']
         print(source)
         print(destination)
         print(date)
-
+        count=validation2(user,source,destination,date)
+        if(count>0):
+          return jsonify((status.HTTP_401_UNAUTHORIZED))
+        
         myquery = {"source": { "$regex": str(source) },"destination": { "$regex": str(destination) },"date": {"$regex": str(date)}}
         cursor = dict()
         cursor = mongo_collection.find(myquery)

@@ -7,15 +7,23 @@ export default function Routeselector() {
     const [startCity, setStartCity] = useState('')
     const [destination, setDestination] = useState('')
     const [date, setDate] = useState('')
+    const [error, setError] = useState('')
     const handleToCity = e => {
         e.preventDefault()
         setDestination({ destination: e.target.value })
         localStorage.setItem("destination", e.target.value)
     }
     const renderBusList = (dataInp) => {
+        
+        if(error.length!==0){
+            
+            return (<div>Overlapping period!!</div>)
+        }
+        else 
         if (Object.keys(dataInp).length > 0) {
             return (<BusList value={dataInp} />)
         }
+        
     }
     const handleFromCity = e => {
         e.preventDefault()
@@ -44,7 +52,8 @@ export default function Routeselector() {
             fetch('http://localhost:5000/checkAvailability', {
                 method: 'POST', headers: {
                   'Content-Type': 'application/json'
-                }, body: JSON.stringify({ source: startCity.startCity, destination:destination.destination, date: date.date })
+                }, body: JSON.stringify({ source: startCity.startCity, destination:destination.destination, date: date.date, 
+                    user:localStorage.getItem('username') })
               })
                 .then(response => {
                   console.log(response);
@@ -53,6 +62,13 @@ export default function Routeselector() {
                 .then(data => {
                   console.log("our date:",data)
                   setData(data)
+                  
+                  if(data===401){
+                      setError("invalid");
+                  }
+                  else{
+                    setError('');
+                  }
 
                   /* this.setState({
                     availableBuses: <tbody>{data.map((item, index) => (<tr><td key={index}>{item.source}</td><td key={index}>{item.destination}</td><td key={index}>{item.busnumber}</td><td key={index}>{item.date}</td><td key={index}>{item.startTime}</td><td key={index}>{item.endTime}</td>
@@ -65,12 +81,17 @@ export default function Routeselector() {
                 .catch(error => {
                  // this.setState({ availableBuses: "This is an error page!!" })
                   console.log('Request failed', error)
+                  alert(error);
+                  //setError(error);
                 });
     }
 
   
     
-    return (<div className="rdc">
+    return (
+      
+    
+    <div className="rdc">
             <div className="form-group inline"></div>
             <div className="main-container">
                 <form className="form-inline" onSubmit={e => getRoutes(e)}>
@@ -90,12 +111,14 @@ export default function Routeselector() {
                     <input onChange={e => { handleDate(e) }} type="date"></input>
                     <input type="submit" className=" btn btn-primary btn-md getRoute" />
                 </form>
-
+                
                 <div>
-                    {renderBusList(dataInp)}
+                     {renderBusList(dataInp)}
                 </div>
+            
             </div>
         </div>
     )
+    
     
 }
