@@ -25,6 +25,9 @@ export default function RouteSelection({ history }) {
     } */
     
     return (
+        (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div>
+            <br/><br/><br/><br/><br/><br/>Please login!</div>):
+            (
         <div className="container">
          {/*    <div>
                 <nav className="mb-4 navbar navbar-expand-lg navbar-dark bg-unique hm-gradient">
@@ -66,5 +69,5 @@ export default function RouteSelection({ history }) {
             </div>
 
         </div>
-    )
+    ))
 }

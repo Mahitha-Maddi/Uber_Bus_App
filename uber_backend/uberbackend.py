@@ -551,19 +551,33 @@ def user_signup():
         return jsonify(("User with given email ID is already present!!", status.HTTP_401_UNAUTHORIZED))
    
 # endpoint to view all the bookings
-@app.route("/bookings-results", methods=["GET"])
-def get_tweets_results():
+@app.route("/bookings-results", methods=["POST"])
+def get_bookings_results():
+    user = request.json['user']
+    print("user in bookings:", user)
     global bookings
     with mongo_client:
         db = mongo_client['Uber']
         mongo_collection = db['bookings']
-
+        myquery = {"user":"sayali"} #{ "$regex": str(user) }}
         cursor = mongo_collection.find({})
         records = list(cursor)
         howmany = len(records)
         print('found ' + str(howmany) + ' bookings!')
-        sorted_records = sorted(records,key=lambda t: t['source'])
+        sorted_records = sorted(records,key=lambda t: t['date'])
     return jsonify(sorted_records)
+
+# endpoint to delete the booking
+@app.route("/cancelBooking", methods=["POST"])
+def cancel_booking():
+    bookingid = request.json['bookingid']
+    global bookings
+    with mongo_client:
+        db = mongo_client['Uber']
+        mongo_collection = db['bookings']
+        myquery = {"_id": { "$regex": str(bookingid) }}
+        mongo_collection.remove(myquery)
+    return jsonify("Booking canceled!")
 
 # endpoint to view all the available seats
 @app.route("/availableseats", methods=["POST"])

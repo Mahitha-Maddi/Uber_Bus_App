@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 // import TweetList from "./TweetList";
@@ -8,7 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core/";
+import { Grid, Link } from "@material-ui/core/";
 //import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -27,18 +28,86 @@ const useStyles = makeStyles(theme => ({
 }
 }));
 
+const getCurrentDate=(separator='/')=>{
+
+  let newDate = new Date()
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  const m=(month<10)?('0'+month):(''+month);
+  const d=(date<10)?('0'+date):(''+date);
+  const result=year+'-'+m+'-'+d;
+  console.log("dateresult:",result);
+  return result;
+  }
+
+const checkDisabled = (dateOfTravel) =>{
+  console.log("dateOfTravel:",dateOfTravel)
+  var d1 = Date.parse(dateOfTravel);
+  var d22 = getCurrentDate('/');
+  var d2 = Date.parse(d22);
+  console.log("d1:",d1);
+  console.log("d2:",d2);
+  if (d1 <= d2) {
+    console.log("checkDisabled:",1);
+      return 1;
+  }
+  else{
+    console.log("checkDisabled:",0);
+    return 0;
+  }
+}
+
+
 const THome = () => {
   const classes = useStyles();
   const [tweets, setTweets] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [todayDate,setTodayDate] = React.useState('');
+
+  const cancelBooking = (e,bookingid) =>{
+    e.preventDefault();
+    const paramdict = {
+      'bookingid': bookingid
+    }
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paramdict)
+    }
+    fetch("http://localhost:5000/cancelBooking", config)
+      .then(res => res.json())
+      .then(data => {
+        setLoading(false);
+        //alert("Booking canceled successfully!!")
+        window.location.reload();
+      })
+  }  
 
   useEffect(() => {
+    console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
-      const res = await fetch("http://34.194.238.35:5000/bookings-results");
-      const { results } = await res.json();
-      console.log(results);
-      setTweets([...results]);
+      
+      fetch("http://localhost:5000/bookings-results", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( {
+          'user': localStorage.getItem('username')
+      })
+    })  .then(res => res.json())
+    .then(data =>{
+      console.log(data);
+      setTweets([...data]);
+      //setTodayDate(getCurrentDate);
       setLoading(false);
+     }) 
+    
     };
     fetchData();
   }, []);
@@ -53,7 +122,9 @@ const THome = () => {
     //     />
     //   ) : (
         // <TweetList tweets={tweets} />
-        <div className={classes.card}>
+        (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
+        Please login!</div>):
+       ( <div className={classes.card}>
         <Grid
             container
             spacing={2}
@@ -85,6 +156,13 @@ const THome = () => {
                 <Typography gutterBottom variant="h6" component="h6">
                   Date of Journey : {link.date}
                 </Typography>
+                <Typography gutterBottom variant="h6" component="h6">
+                  Total Price : {link.totalPrice}
+                </Typography>
+                <Typography gutterBottom variant="h6" component="h6">
+                  Number of seats booked: {link.numOfSeats}
+                </Typography>
+                <button disabled={checkDisabled(link.date)} onClick={(e,bookingid)=>cancelBooking(e,link._id)} >cancel</button>
               </CardContent>
             </Card>
           </Grid>
@@ -94,7 +172,7 @@ const THome = () => {
       
     //   )}
     // </ScrollView>
-  );
+  ))
 };
 
 const styles = StyleSheet.create({
