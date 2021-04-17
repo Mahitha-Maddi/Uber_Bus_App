@@ -32,7 +32,7 @@ g = dict()
 
 # mongo
 #mongo_client = MongoClient('mongodb://localhost:27017/')
-mongo_client = MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test")
+mongo_client = MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE")
 
 app = Flask(__name__)
 #CORS(app)
@@ -282,7 +282,7 @@ def atlas_connect():
     # });
 
     # Python
-    client = pymongo.MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test")
+    client = pymongo.MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE")
     db = client.test
 
 
