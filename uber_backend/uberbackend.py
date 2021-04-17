@@ -472,12 +472,12 @@ def ssm():
 # endpoint to check overlap between bookings of a user
 @app.route("/overlapCheck", methods=["POST"])
 def check_overlap():
-    date = request.json['date']
+    #date = request.json['date']
     user = request.json['user']
     with mongo_client:
         db = mongo_client['Uber']
         mongo_collection = db['bookings']
-        myquery = {"date": { "$regex": str(date) },"user": { "$regex": str(user) }}
+        myquery = {"user": { "$regex": str(user) }}
         cursor = dict()
         cursor = mongo_collection.find(myquery)
         records = list(cursor)

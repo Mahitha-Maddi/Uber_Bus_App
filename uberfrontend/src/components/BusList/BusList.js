@@ -16,13 +16,14 @@ export default function BusList({ value: dataInp }) {
         setObj(dataInp)
     }, [dataInp])
 
-    const getBookedRecords = (user, busDate, startTime, endTime) => {
-        var overlapCount=0;
+    const history = useHistory()
+    const handleSubmit = (bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => {
+        const user = localStorage.getItem('username');
         fetch('http://localhost:5000/overlapCheck', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({
-                date: busDate, startTime: startTime, endTime: endTime, user: user
+                user: user
             })
         })
             .then(response => {
@@ -31,45 +32,41 @@ export default function BusList({ value: dataInp }) {
             })
             .then(data => {
                 console.log("our date:", data)
-              //overlapCount=parseInt(JSON.stringify(data));
-              data.map((booking) => {
-                  if((startTime>=booking.startTime && startTime<booking.endTime) || (endTime>booking.startTime && endTime<=booking.endTime)){
-                    overlapCount++;
-                  }
-              })
+                var overlap=0;
+                data.map((booking) => {
+                    if ((Date.parse(startTime) >= Date.parse(booking.startTime) && Date.parse(startTime) < Date.parse(booking.endTime)) ||
+                        (Date.parse(endTime) > Date.parse(booking.startTime) && Date.parse(endTime) <= Date.parse(booking.endTime))) {
+                        alert("Your bookings might overlap with each other!!");
+                        overlap++;
+                        window.location.reload();
+                        return;
+                    }
+                })
+               if(overlap==0){
+                localStorage.setItem("selectedBusId", bId)
+                localStorage.setItem("busPrice", busPrice)
+                localStorage.setItem("source", source)
+                localStorage.setItem("destination", destination)
+                localStorage.setItem("startTime", startTime)
+                localStorage.setItem("endTime", endTime)
+                localStorage.setItem("BusNum", BusNum)
+                localStorage.setItem("busDate", busDate)
+
+                SetClas(false)
+                setArrowDown(true)
+                alert("Hello")
+                history.push('/seatSelection/');
+
+                return (<Redirect to="/seatSelection/" />)
+               }
 
             })
             .catch(error => {
                 console.log('Request failed', error);
                 alert(error);
+
             });
-            return overlapCount;
-    }
 
-
-    const history = useHistory()
-    const handleSubmit = (bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => {
-        const user = localStorage.getItem('username');
-        if (getBookedRecords(user, busDate, startTime, endTime)>0) {
-            alert("Your bookings might overlap with each other!!");
-            window.location.reload();
-            return;
-        }
-        localStorage.setItem("selectedBusId", bId)
-        localStorage.setItem("busPrice", busPrice)
-        localStorage.setItem("source", source)
-        localStorage.setItem("destination", destination)
-        localStorage.setItem("startTime", startTime)
-        localStorage.setItem("endTime", endTime)
-        localStorage.setItem("BusNum", BusNum)
-        localStorage.setItem("busDate", busDate)
-
-        SetClas(false)
-        setArrowDown(true)
-        alert("Hello")
-        history.push('/seatSelection/');
-
-        return (<Redirect to="/seatSelection/" />)
     }
 
     /* 
