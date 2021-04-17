@@ -1,4 +1,4 @@
-import React, { useState, useStyles} from 'react'
+import React, { useState, useStyles } from 'react'
 import './Routeselector.css'
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
@@ -14,57 +14,61 @@ export default function Routeselector() {
     const [destination, setDestination] = useState("Destination")
     const [date, setDate] = useState('')
     const [error, setError] = useState('')
+    const [error1, setError1] = useState('')
     const [errorText, setErrorText] = useState("");
     const [errorsource, setErrorsource] = useState(false);
     const [errordestination, setErrordestination] = useState(false);
     const [helpersource, setHelpersource] = useState("");
-  const [helperdestination, setHelperdestination] = useState("");
-  
+    const [helperdestination, setHelperdestination] = useState("");
+
     const handleToCity = e => {
         // e.preventDefault()
-        
+
         if (e.target.value == "") {
             setErrordestination(true);
             setHelperdestination("Please select the destination");
-          } else {
+        } else {
             setErrordestination(false);
             setHelperdestination("");
-          }
-         // setDestination({ destination: e.target.value })
-          setDestination(e.target.value )
+        }
+        // setDestination({ destination: e.target.value })
+        setDestination(e.target.value)
         localStorage.setItem("destination", e.target.value)
-        console.log("destination",e.target.value)
+        console.log("destination", e.target.value)
     }
 
     const renderBusList = (dataInp) => {
-        
-        if(error.length!==0){
-            
+
+        if(errorText.length!==0){
+            return (<div>Source and destination cannot be same!</div>)
+        }
+        else if (error1.length !== 0) {
+
             return (<div>Overlapping period!!</div>)
         }
-        else 
-        if (Object.keys(dataInp).length > 0) {
-            return (<BusList value={dataInp} />)
-        }
-        
+        else
+            if (Object.keys(dataInp).length > 0) {
+                return (<BusList value={dataInp} />)
+            }
+
     }
 
     const handleFromCity = e => {
-         e.preventDefault()
-        
+        e.preventDefault()
+
         console.log(startCity)
 
         if (e.target.value == "") {
             setErrorsource(true);
             setHelpersource("Please select the origin");
-          } else {
+        } else {
             setErrorsource(false);
             setHelpersource("");
-          }
-          
-          setStartCity(e.target.value)
+        }
+
+        setStartCity(e.target.value)
         localStorage.setItem("start", e.target.value)
-        console.log("start",e.target.value)
+        console.log("start", e.target.value)
     }
 
     const handleDate = e => {
@@ -77,87 +81,83 @@ export default function Routeselector() {
 
     const getRoutes = e => {
         e.preventDefault()
-         console.log(startCity,destination)
-         alert("hi")
-       /*  apiCall.getRoutesFromApi(startCity.startCity, destination.destination)
-            .then(response => response.data)
+        console.log(startCity, destination)
+
+        if (startCity === "Source") {
+            setErrorsource(true);
+            setHelpersource("Please select the origin");
+            return;
+        }
+        if (destination === "Destination") {
+            setErrordestination(true);
+            setHelperdestination("Please select the destination");
+            return;
+        }
+
+        if (startCity === destination) {
+            setError(true);
+            setErrorText("Source and Destination should be different");
+            return;
+        } else {
+            setError(false);
+            setErrorText("");
+        }
+
+
+        fetch('http://localhost:5000/checkAvailability', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({
+                source: startCity, destination: destination, date: date.date,
+                user: localStorage.getItem('username')
+            })
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
             .then(data => {
-                setData(data.bus)
-            }) */
-   
-    if (startCity=== "Source") {
-      setErrorsource(true);
-      setHelpersource("Please select the origin");
-      return;
-    }
-    if (destination === "Destination") {
-      setErrordestination(true);
-      setHelperdestination("Please select the destination");
-      return;
-    }
-    alert()
-    if (startCity === destination) {
-      setError(true);
-      setErrorText("Source and Destination should be different");
-      return;
-    } else {
-      setError(false);
-      setErrorText("");
-    }
+                console.log("our date:", data)
+                setData(data)
 
+                if (data === 401) {
+                    setError1("invalid");
+                }
+                else {
+                    setError1('');
+                }
 
-            fetch('http://localhost:5000/checkAvailability', {
-                method: 'POST', headers: {
-                  'Content-Type': 'application/json'
-                }, body: JSON.stringify({ source: startCity, destination:destination, date: date.date, 
-                    user:localStorage.getItem('username') })
-              })
-                .then(response => {
-                  console.log(response);
-                  return response.json();
+                /* this.setState({
+                  availableBuses: <tbody>{data.map((item, index) => (<tr><td key={index}>{item.source}</td><td key={index}>{item.destination}</td><td key={index}>{item.busnumber}</td><td key={index}>{item.date}</td><td key={index}>{item.startTime}</td><td key={index}>{item.endTime}</td>
+                    <td><input type="button" value="Book" onClick={this.book.bind(this, item)} /></td></tr>))}</tbody>
                 })
-                .then(data => {
-                  console.log("our date:",data)
-                  setData(data)
-                  
-                  if(data===401){
-                      setError("invalid");
-                  }
-                  else{
-                    setError('');
-                  }
+                console.log('Request successful', data);
+                //alert(data); */
 
-                  /* this.setState({
-                    availableBuses: <tbody>{data.map((item, index) => (<tr><td key={index}>{item.source}</td><td key={index}>{item.destination}</td><td key={index}>{item.busnumber}</td><td key={index}>{item.date}</td><td key={index}>{item.startTime}</td><td key={index}>{item.endTime}</td>
-                      <td><input type="button" value="Book" onClick={this.book.bind(this, item)} /></td></tr>))}</tbody>
-                  })
-                  console.log('Request successful', data);
-                  //alert(data); */
-          
-                })
-                .catch(error => {
-                 // this.setState({ availableBuses: "This is an error page!!" })
-                  console.log('Request failed', error)
-                  alert(error);
-                  //setError(error);
-                });
+            })
+            .catch(error => {
+                // this.setState({ availableBuses: "This is an error page!!" })
+                console.log('Request failed', error)
+                alert(error);
+                //setError(error);
+            });
     }
     function formatDate(date) {
         var d = new Date(date),
-          month = "" + (d.getMonth() + 1),
-          day = "" + d.getDate(),
-          year = d.getFullYear();
-    
+            month = "" + (d.getMonth() + 1),
+            day = "" + d.getDate(),
+            year = d.getFullYear();
+
         if (month.length < 2) month = "0" + month;
         if (day.length < 2) day = "0" + day;
-    
+
         return [year, month, day].join("-");
-      }      
-    
+    }
+
     return (
-      
-    
-    <div className="rdc">
+
+
+        <div className="rdc">
             <div className="form-group inline"></div>
             <div className="main-container">
                 <form className="form-inline" onSubmit={e => getRoutes(e)}>
@@ -167,36 +167,36 @@ export default function Routeselector() {
                         <option>Bangalore</option>
                     </select> */}
                     <FormControl
-                 // className={classes.formControl}
-                  error={errorsource}
-                >
-                  <InputLabel id="demo-simple-select-helper-label">
-                    Source City
+                        // className={classes.formControl}
+                        error={errorsource}
+                    >
+                        <InputLabel id="demo-simple-select-helper-label">
+                            Source City
                   </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={startCity}
-                    onChange={e => { handleFromCity(e) }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"Chennai"}>Chennai</MenuItem>
-                    <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
-                    <MenuItem value={"Bangalore"}>Bangalore</MenuItem>
-                   
-                  </Select>
-                  <FormHelperText>{helpersource}</FormHelperText>
-                </FormControl>
-              
-              <div
-                style={{
-                  display: "inline",
-                  float: "right",
-                  paddingLeft: "200px",
-                }}
-              ></div>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={startCity}
+                            onChange={e => { handleFromCity(e) }}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={"Chennai"}>Chennai</MenuItem>
+                            <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
+                            <MenuItem value={"Bangalore"}>Bangalore</MenuItem>
+
+                        </Select>
+                        <FormHelperText>{helpersource}</FormHelperText>
+                    </FormControl>
+
+                    <div
+                        style={{
+                            display: "inline",
+                            float: "right",
+                            paddingLeft: "200px",
+                        }}
+                    ></div>
                     {/* <select name="ad_account_selected" data-style="btn-new" class="selectpicker" onChange={e => { handleToCity(e) }}>
                         <option>TO</option>
                         <option>Hyderabad</option>
@@ -207,54 +207,54 @@ export default function Routeselector() {
                     </select>
                     <input onChange={e => { handleDate(e) }} type="date"></input> */}
                     <FormControl
-                //   className={classes.formControl}
-                  error={errordestination}
-                >
-                  <InputLabel id="demo-simple-select-helper-label">
-                    Destination City
+                        //   className={classes.formControl}
+                        error={errordestination}
+                    >
+                        <InputLabel id="demo-simple-select-helper-label">
+                            Destination City
                   </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={destination}
-                    onChange={e => { handleToCity(e) }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
-                    <MenuItem value={"Coimbatore"}>Coimbatore</MenuItem>
-                    <MenuItem value={"Bangalore"}>Bangalore</MenuItem> 
-                  </Select>
-                  <FormHelperText>{helperdestination}</FormHelperText>
-                </FormControl>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={destination}
+                            onChange={e => { handleToCity(e) }}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
+                            <MenuItem value={"Coimbatore"}>Coimbatore</MenuItem>
+                            <MenuItem value={"Bangalore"}>Bangalore</MenuItem>
+                        </Select>
+                        <FormHelperText>{helperdestination}</FormHelperText>
+                    </FormControl>
                     <div style={{ paddingLeft: "200px" }} >
-              <TextField
-                id="date"
-                label="Date of Journey"
-                type="date"
-                onChange={e => { handleDate(e) }}
-                defaultValue={date}
-                // className={classes.textField}
-                inputProps={{
-                  min: formatDate(new Date()),
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                required
-              />
-            </div>
+                        <TextField
+                            id="date"
+                            label="Date of Journey"
+                            type="date"
+                            onChange={e => { handleDate(e) }}
+                            defaultValue={date}
+                            // className={classes.textField}
+                            inputProps={{
+                                min: formatDate(new Date()),
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            required
+                        />
+                    </div>
                     <input type="submit" className=" btn btn-primary btn-md getRoute" />
-                </form>
-                <div>{errorText}</div>
+                </form>{/* 
+                <div>{errorText}</div> */}
                 <div>
-                     {renderBusList(dataInp)}
+                    {renderBusList(dataInp)}
                 </div>
-            
+
             </div>
         </div>
     )
-    
-    
+
+
 }
