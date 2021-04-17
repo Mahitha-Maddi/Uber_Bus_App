@@ -24,12 +24,13 @@ function Home(props) {
         <h1 className="heading" color="black">Welcome to UberBus</h1>
         <img src={home} alt="home"/>
         </div>
-        // <div className={classes.root}>    
-        // <img src={home} />
-        // <h2 className="heading">Welcome to UberBus</h2>  
-        // </div>            
+  //       // <div className={classes.root}>    
+  //       // <img src={home} />
+  //       // <h2 className="heading">Welcome to UberBus</h2>  
+  //       // </div>            
         
-   // </div>
+  //  // </div>
+ 
         
   );
 }
