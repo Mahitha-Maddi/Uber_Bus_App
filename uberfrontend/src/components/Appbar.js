@@ -179,7 +179,7 @@ export default function Dashboard() {
       <CssBaseline />
 
       {/* This is the header AppBar */}
-      <AppBar position="absolute" className={clsx(classes.appBar, 
+      <AppBar style={{backgroundColor:'black'}} position="absolute" className={clsx(classes.appBar, 
           open && classes.appBarShift, collapsed && classes.appBar)}>
         <Toolbar title={title} className={classes.toolbar}>
 
