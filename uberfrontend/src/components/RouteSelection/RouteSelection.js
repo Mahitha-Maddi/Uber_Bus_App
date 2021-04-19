@@ -10,6 +10,9 @@ export default function RouteSelection({ history }) {
         history.push('/profile')
     }
 
+
+    
+
     const handleSignOut = e => {
         e.preventDefault()
         sessionStorage.removeItem('authToken')
