@@ -14,10 +14,10 @@ export const Container = styled.div`
       height: 44px;
       margin-top: 10px;
       padding: 0 15px;
-      border: 0;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.1);
-      color: #fff;
+      border: 1;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      color: #000;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
@@ -36,16 +36,14 @@ export const Container = styled.div`
       margin-top: 10px;
       border: 0;
       border-radius: 4px;
-      background: #3b9eff;
+    
       color: #fff;
       font-weight: bold;
       font-size: 16px;
       transition: background 0.2s;
-
-      &:hover {
-        
-      }
     }
+
+     
 
     hr {
       border: 0;
@@ -70,22 +68,27 @@ export const Container = styled.div`
         }
       }
     }
-  }
 
-  > button {
-    width: 100%;
-    height: 44px;
-    margin-top: 20px;
-    border: 0;
-    border-radius: 4px;
-    background: #f64c75;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-    transition: background 0.2s;
+    EdiText {
+      height: 44px;
+      margin-top: 10px;
+      padding: 0 15px;
+      border: 1;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      color: #000;
 
-    &:hover {
-      
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+    }
+    EdiText + span {
+      align-self: flex-start;
+      margin: 5px 15px 0;
+      font-weight: bold;
+      color: #fb6f91;
     }
   }
+
 `;

@@ -40,7 +40,7 @@ export default class FormContact extends Component{
     <FormGroup controlId="formControlsTextarea">
       <FormControl componentClass="textarea" placeholder="Message" />
     </FormGroup>
-    <Button bsStyle="primary" type="submit">Send Message</Button>
+    <Button style={{backgroundColor:'black'}}type="submit">Send Message</Button>
       </Form>
     )
   }

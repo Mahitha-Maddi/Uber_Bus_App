@@ -2,8 +2,8 @@
     margin-left: -15px;
     height: auto;
     width: auto;
-    border: 1px solid #00acee;
-    background-color: #00abeeb0;
+    border: 1px solid #000;
+    background-color: 	#EDEAE8 ;
 }
 
 .dropdown:hover>.dropdown-menu {

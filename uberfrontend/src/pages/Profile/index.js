@@ -116,7 +116,7 @@ const handleSubmit = e => {
         New Password<EdiText name="password" type="password"  value={npassword} onSave={handlenewPasswordChange} submitOnEnter placeholder="New password" />
         Confirm Password:<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/>
 
-        <button type="submit">Update profile</button>
+        <button type="submit"  style={{backgroundColor:'black'}} >Update profile</button>
       </form> 
 
     

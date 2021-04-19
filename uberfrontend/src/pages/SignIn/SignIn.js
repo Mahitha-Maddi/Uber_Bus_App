@@ -215,7 +215,7 @@ const SignIn = () => {
             {'Sign Out'}
           </Typography> 
           <Typography gutterBottom>If you are not the only one on this device.</Typography>
-          <Button fullWidth variant="contained" margin="normal" color="secondary" onClick={handleSignOut} className={classes.buttonPadding}>
+          <Button fullWidth variant="contained" margin="normal" color="secondary" style={{backgroundColor:'gray'}} onClick={handleSignOut} className={classes.buttonPadding}>
             {'Sign Out'}
           </Button>
 
@@ -223,8 +223,8 @@ const SignIn = () => {
             {'Fast Sign In'}
           </Typography>
           <Typography gutterBottom>If this is your device.</Typography>
-          <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleFastSignIn} className={classes.buttonPadding}>
-            {'Sign In'}
+          <Button fullWidth variant="contained" margin="normal" color="primary" style={{backgroundColor:'black'}} onClick={handleFastSignIn} className={classes.buttonPadding}>
+            {'Sign In'} 
           </Button>
 
           <Typography component="h1" variant="h5">
@@ -263,6 +263,7 @@ const SignIn = () => {
               fullWidth
               variant="contained"
               color="primary"
+              style={{backgroundColor:'black'}}
               className={classes.submit}
             >
               {'Sign in'}

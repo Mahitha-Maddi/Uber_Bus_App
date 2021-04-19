@@ -245,7 +245,7 @@ export default function Routeselector() {
                             required
                         />
                     </div>
-                    <input type="submit" className=" btn btn-primary btn-md getRoute" />
+                    <input type="submit" className=" btn btn-dark btn-md getRoute" />
                 </form>{/* 
                 <div>{errorText}</div> */}
                 <div>
