@@ -90,8 +90,8 @@ const THome = () => {
   useEffect(() => {
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
-      
-      fetch("http://localhost:5000/bookings-results", {
+      //removed localhost
+      fetch("/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -122,8 +122,8 @@ const THome = () => {
     //     />
     //   ) : (
         // <TweetList tweets={tweets} />
-        (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
-        Please login!</div>):
+     /*    (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
+        Please login!</div>): */
        ( <div className={classes.card}>
         <Grid
             container
