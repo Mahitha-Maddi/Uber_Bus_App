@@ -91,14 +91,14 @@ const THome = () => {
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
       //removed localhost
-      fetch("/bookings-results", {
+      fetch("http://localhost:5000/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify( {
-          'user': localStorage.getItem('username')
+          'user': 'mahitha'//localStorage.getItem('username')//change this later
       })
     })  .then(res => res.json())
     .then(data =>{
