@@ -16,7 +16,7 @@ export const Container = styled.div`
       padding: 0 15px;
       border: 1;
       border-radius: 12px;
-      background: rgba(0, 0, 0, 0.2);
+      // background: rgba(0, 0, 0, 0.2);
       color: #000;
 
       &::placeholder {
