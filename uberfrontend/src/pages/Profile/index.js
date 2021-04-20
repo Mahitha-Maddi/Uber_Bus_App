@@ -3,6 +3,7 @@ import EdiText from 'react-editext';
 
 // import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
+import TextField from '@material-ui/core/TextField';
 
 // import { updateProfileRequest } from '~/store/modules/user/actions';
 
@@ -105,11 +106,57 @@ const handleSubmit = e => {
       <form  onSubmit={e => handleSubmit(e)}>
         <AvatarInput name="avatar_id" /> 
       {/* Update the value field to the value from db. */}
-        UserName:<input name="username" placeholder="Username" value={username} disabled = {true}/>
+      <TextField
+              value={username}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label={'Username'}
+              name="username"
+              autoComplete="username"
+              autoFocus
+              disabled = {true}
+            />
+          <TextField
+              value={email}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label={'Email'}
+              name="email"
+              autoComplete="email"
+              autoFocus
+              disabled = {true}
+            />
+            <TextField
+              value={dob}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="dob"
+              label={'Birth Date'}
+              name="dob"
+              autoComplete="dob"
+              autoFocus
+              disabled = {true}
+            />
+            
+        {/* UserName:<input name="username" placeholder="Username" value={username} disabled = {true}/>
         Email:<input name="email" type="email" placeholder="Email address" value={email} disabled = {true}/>
-        Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/>
+        Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/> */}
         {/* Contact Number:<input name="contact"   onChange={(e) => {handleContactChange(e)}} /> */}
-       Contact Number:<EdiText name="contact" value={contact} onSave={handleSave} submitOnEnter placeholder="Contact Number"  />
+       Contact Number:<EdiText name="contact" variant="outlined"
+              margin="normal"
+              required
+              fullWidth 
+              autoFocus
+              label={'Contact Number'}
+              value={contact} onSave={handleSave} submitOnEnter placeholder="Contact Number"  />
 
         Password:<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
 

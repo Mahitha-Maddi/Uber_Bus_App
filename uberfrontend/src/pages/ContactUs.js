@@ -6,8 +6,11 @@ import '../styles/contact.css'
 export default class Home extends Component{
     render(){
         return(<div>
-            <div className="content-wrapper">    
-                <Image src="/assets/img/contact.jpg" />
+            <div className="content-wrapper" style={{
+    paddingTop: '80px'
+    
+  }} >    
+                <Image src="/assets/img/contact.jpg"/>
                 <h2 className="heading">Contact Us</h2>              
                 
             </div>
