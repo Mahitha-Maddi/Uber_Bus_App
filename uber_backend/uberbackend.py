@@ -32,7 +32,7 @@ g = dict()
 
 # mongo
 #mongo_client = MongoClient('mongodb://localhost:27017/')
-mongo_client = MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE")
+mongo_client = MongoClient("mongodb://Mahitha-Maddi:Mahitha%4042@cluster0-shard-00-00.1z0g8.mongodb.net:27017,cluster0-shard-00-01.1z0g8.mongodb.net:27017,cluster0-shard-00-02.1z0g8.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-k8czna-shard-0&authSource=admin&retryWrites=true&w=majority")
 
 app = Flask(__name__)
 #CORS(app)
@@ -282,7 +282,7 @@ def atlas_connect():
     # });
 
     # Python
-    client = pymongo.MongoClient("mongodb+srv://Mahitha-Maddi:Mahitha%4042@cluster0.1z0g8.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE")
+    client = pymongo.MongoClient("mongodb://Mahitha-Maddi:Mahitha%4042@cluster0-shard-00-00.1z0g8.mongodb.net:27017,cluster0-shard-00-01.1z0g8.mongodb.net:27017,cluster0-shard-00-02.1z0g8.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-k8czna-shard-0&authSource=admin&retryWrites=true&w=majority")
     db = client.test
 
 
