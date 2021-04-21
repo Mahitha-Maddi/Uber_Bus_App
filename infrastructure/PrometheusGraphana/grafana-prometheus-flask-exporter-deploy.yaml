@@ -1,0 +1,75 @@
+metadata: 
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: grafana
+  namespace: monitoring 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels: 
+      app: grafana
+  template: 
+    metadata:
+      name: grafana 
+      labels:
+        app: grafana 
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest 
+        ports:
+        - name: grafana
+          containerPort: 3000 
+        resources:
+          limits:
+            memory: "2Gi" 
+            cpu: "1000m"
+          requests: 
+            memory: "1Gi" 
+            cpu: "500m"
+      volumeMounts:
+      - mountPath: /var/lib/grafana
+      name: grafana-storage
+      - mountPath: /var/lib/grafana/dashboards
+      name: grafana-dashboards-var-lib
+      readOnly: false
+      - mountPath: /var/lib/grafana/dashboards/example.json
+      name: grafana-dashboards-example
+      - mountPath: /etc/grafana/provisioning/datasources
+      name: grafana-datasources
+      readOnly: false
+      - mountPath: /etc/grafana/provisioning/datasources/default.yaml
+      name: grafana-datasources-default
+      - mountPath: /etc/grafana/provisioning/dashboards
+      name: grafana-dashboards
+      readOnly: false
+      - mountPath: /etc/grafana/provisioning/dashboards/default.yaml
+      name: grafana-dashboards-default
+      - mountPath: /etc/grafana/grafana.ini
+      name: grafana-config-ini
+      volumes:
+        - name: grafana-storage
+        emptyDir: {}
+        - name: grafana-dashboards-var-lib
+        hostPath:
+        # Ensure the file directory is created.
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana/dashboards" type: DirectoryOrCreate
+        - name: grafana-dashboards-example hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana/dashboards/example.json"
+        type: FileOrCreate
+        - name: grafana-datasources
+        hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana" type: DirectoryOrCreate
+        - name: grafana-datasources-default hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana/datasource.yaml"
+        type: FileOrCreate
+        - name: grafana-dashboards
+        hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana" type: DirectoryOrCreate
+        - name: grafana-dashboards-default hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana/dashboard.yaml"
+        type: FileOrCreate
+        - name: grafana-config-ini
+        hostPath:
+        path: "D:/user/docs/NU/_Csye7220.fa20/Lecture 7/labs/aks-cluster20/grafana/config.ini" type: FileOrCreate
