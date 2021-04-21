@@ -212,6 +212,7 @@ const SignUp = () => {
               fullWidth
               variant="contained"
               color="primary"
+              style={{backgroundColor:'black'}}
               className={classes.submit}
             >
               {'Sign up'}
