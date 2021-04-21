@@ -91,7 +91,7 @@ const THome = () => {
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
       //removed localhost
-      fetch("http://localhost:5000/bookings-results", {
+      fetch("http://uberappbe:5000/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
