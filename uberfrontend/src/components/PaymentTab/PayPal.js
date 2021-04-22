@@ -33,7 +33,7 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/saveBookedSeats", config)
+    fetch("/saveBookedSeats", config)
       .then(res => res.json())
       .then(data => {
          alert("Reserved seats!")
@@ -62,7 +62,7 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/saveBooking", config)
+    fetch("/saveBooking", config)
       .then(res => res.json())
       .then(data => {
          alert("Booking saved!! "+data);
@@ -85,7 +85,7 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/savePassengerDetails", config)
+    fetch("/savePassengerDetails", config)
       .then(res => res.json())
       .then(data => {
          alert("Saved passenger! " + data);

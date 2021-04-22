@@ -78,7 +78,7 @@ const THome = () => {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/cancelBooking", config)
+    fetch("/cancelBooking", config)
       .then(res => res.json())
       .then(data => {
         setLoading(false);
@@ -91,14 +91,14 @@ const THome = () => {
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
       //removed localhost
-      fetch("http://uberappbe:5000/bookings-results", {
+      fetch("/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify( {
-          'user': 'mahitha'//localStorage.getItem('username')//change this later
+          'user': localStorage.getItem('username')//change this later
       })
     })  .then(res => res.json())
     .then(data =>{
@@ -122,8 +122,8 @@ const THome = () => {
     //     />
     //   ) : (
         // <TweetList tweets={tweets} />
-     /*    (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
-        Please login!</div>): */
+       (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
+        Please login!</div>): 
        ( <div className={classes.card}>
         <Grid
             container

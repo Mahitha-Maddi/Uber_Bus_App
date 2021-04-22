@@ -25,7 +25,7 @@ export default function Profile() {
   useEffect(() => {
     const username=localStorage.getItem('username');
     const fetchData = async () => {
-      fetch('http://localhost:5000/userDetails', {
+      fetch('/userDetails', {
         method: 'POST', headers: {
           'Content-Type': 'application/json'
         }, body: JSON.stringify({user:username })
@@ -76,7 +76,7 @@ const handleSave = (val) => {
 const handleSubmit = e => {
   e.preventDefault()
   const passwrd =(cpassword==='')?password:cpassword;
-  fetch('http://localhost:5000/updateUser', {
+  fetch('/updateUser', {
     method: 'POST', headers: {
       'Content-Type': 'application/json'
     }, body: JSON.stringify({user:localStorage.getItem('username'), contact:contact , password:passwrd

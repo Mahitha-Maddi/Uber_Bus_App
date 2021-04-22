@@ -62,7 +62,7 @@ export default function SeatSelection() {
             },
             body: JSON.stringify(paramdict)
         }
-        fetch("http://localhost:5000/availableseats", config)
+        fetch("/availableseats", config)
             .then(res => res.json())
             .then(data => {
                 setFA(data[0].FA)
