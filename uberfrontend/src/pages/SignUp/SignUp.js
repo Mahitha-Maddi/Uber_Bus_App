@@ -56,13 +56,30 @@ const SignUp = () => {
   const classes = useStyles()
   //const intl = useIntl()
   const history = useHistory()
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState("User")
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [cpassword, setCpassword] = useState('')
   const [dob, setDob] = useState('')
   const [contact, setContact] = useState('')
+  const [error, setError]= useState('')
+  const [helperuser, setHelperuser] = useState("");
+  const [helperpassword, setHelperpassword] = useState("");
+  const [helpercpassword, setHelpercpassword] = useState("");
+  const [helperemail, setHelperemail] = useState("");
+  const [helpercontact, setHelpercontact] = useState("");
+  const [helperdob, setHelperdob] = useState("");
+  // const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [errorusername, setErrorusername] = useState(false);
+  const [errorpassword, setErrorpassword] = useState(false);
+  const [erroremail, setErroremail] = useState(false);
+  const [errorcontact, setErrorcontact] = useState(false);
+  const [errordob, setErrordob] = useState(false);
+  const [errorcpassword, setErrorcpassword] = useState(false);
   //const { setAuthMenuOpen } = useContext(MenuContext)
+
+
   const postUser = async (username, password, email, contact, dob) => {
     console.log("email: ",email);
     const paramdict = {
@@ -127,10 +144,144 @@ const SignUp = () => {
     }
   };
 
+  const handleUsername = (event) => {
+    if (event.target.value == "") {
+      setErrorusername(true);
+      setHelperuser("Please enter Username");
+    } else {
+      setErrorusername(false);
+      setHelperuser("");
+    }
+    setUsername(event.target.value);
+  };
 
+  const handleEmail = (event) => {
+    if (event.target.value == "") {
+      setErroremail(true);
+      setHelperemail("Please enter Email");
+    } else {
+      setErroremail(false);
+      setHelperemail("");
+    }
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    if (event.target.value == "") {
+      setErrorpassword(true);
+      setHelperpassword("Please enter Password");
+    } else {
+      setErrorpassword(false);
+      setHelperpassword("");
+    }
+    setPassword(event.target.value);
+  };
+
+  const handleCPassword = (event) => {
+    if (event.target.value == "") {
+      setErrorcpassword(true);
+      setHelpercpassword("Please enter Confirmed Password");
+     } else {
+    //   if (event.handlePassword !== event.handleCPassword) {
+    //     setError(true);
+    //      setErrorText("Password and Confirm Password is not matching")
+    //   }
+    //  else{
+        setErrorcpassword(false);
+      setHelpercpassword("");
+      }
+      
+    //}
+    setCpassword(event.target.value);
+  };
+
+  const handleDob = (event) => {
+    if (event.target.value == "") {
+      setErrordob(true);
+      setHelperdob("Please enter Date of Birth");
+    } else {
+      setErrordob(false);
+      setHelperdob("");
+    }
+    setDob(event.target.value);
+  };
+
+  const handleContact = (event) => {
+    if (event.target.value == "") {
+      setErrorcontact(true);
+      setHelpercontact("Please enter Contact Number");
+    } else {
+      setErrorcontact(false);
+      setHelpercontact("");
+    }
+    setContact(event.target.value);
+  };
+  
   function handleSubmit(event) {
-    event.preventDefault()
-    postUser(username, password, email, contact, dob);
+    event.preventDefault();
+
+    //username validation
+    if (username == "User") {
+      setErrorusername(true);
+      setHelperuser("Please enter username");
+      return;
+    }
+
+    //Email Validation
+    var emailpattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    if (!emailpattern.test(email)) {
+      setErroremail(true);
+      setHelperemail("Please enter valid email address");
+      return;
+    }
+    //Password validation
+    var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!passwordpattern.test(password)) {
+      setErrorpassword(true);
+      setHelperpassword("Password should contain Minimum eight characters, at least one letter, one number");
+      return;
+    }
+
+    //confirm password validation
+    var cpasswordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!cpasswordpattern.test(cpassword)) {
+      setErrorcpassword(true);
+      setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number");
+      return;
+      
+    }
+
+    //validate confirm password
+    if (password == cpassword) {
+      setError(false);
+      setErrorText(""); 
+      return;
+    } else {
+      setError(true);
+      alert("Passwords don't match");  
+    }
+    
+    
+    //validate dob
+    var dobpattern= new RegExp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i);
+    if (!dobpattern.test(dob)) {
+      setErrordob(true);
+      setHelperdob("Date of birth should be in dd/mm/yyyy format");
+      return;
+    }
+
+    //validate phone number
+    var contactpattern= new RegExp (/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
+    if (!contactpattern.test(contact)) {
+      setErrorcontact(true);
+      setHelpercontact("Please enter valid contact number in format (123)123-1234");
+      return;
+    }
+
+  
+      postUser(username, password, email, contact, dob);
+    
+    
   }
 
   return (
@@ -151,8 +302,10 @@ const SignUp = () => {
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
+              error={errorusername}
+              onInput={handleUsername}
               value={username}
-              onInput={(e) => setUsername(e.target.value)}
+              // onInput={(e) => setUsername(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -162,10 +315,13 @@ const SignUp = () => {
               name="username"
               autoComplete="username"
               autoFocus
+              helperText={helperuser}
             />
             <TextField
               value={email}
-              onInput={(e) => setEmail(e.target.value)}
+              error={erroremail}
+              onInput={handleEmail}
+              // onInput={(e) => setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -174,10 +330,14 @@ const SignUp = () => {
               label={'E-Mail'}
               name="email"
               autoComplete="email"
+              autoFocus
+              helperText={helperemail}
             />
             <TextField
               value={password}
-              onInput={(e) => setPassword(e.target.value)}
+              error={errorpassword}
+              onInput={handlePassword}
+              // onInput={(e) => setPassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -187,10 +347,14 @@ const SignUp = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              autoFocus
+              helperText={helperpassword}
             />
             <TextField
               value={cpassword}
-              onInput={(e) => setCpassword(e.target.value)}
+              error={errorcpassword}
+              onInput={handleCPassword}
+              //onInput={(e) => setCpassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -200,22 +364,30 @@ const SignUp = () => {
               type="password"
               id="password_confirm"
               autoComplete="current-password"
+              autoFocus
+              helperText={helpercpassword}
             />
             <TextField
               value={dob}
-              onInput={(e) => setDob(e.target.value)}
+              error={errordob}
+              onInput={handleDob}
+              //onInput={(e) => setDob(e.target.value)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
               name="dob"
-              label={'Date of Birth(MM/DD/YYYY)'}
+              label={'Date of Birth(DD/MM/YYYY)'}
               id="dob"
               autoComplete="DOB"
+              autoFocus
+              helperText={helperdob}
             />
             <TextField
               value={contact}
-              onInput={(e) => setContact(e.target.value)}
+              error={errorcontact}
+              onInput={handleContact}
+              //onInput={(e) => setContact(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -224,6 +396,8 @@ const SignUp = () => {
               label={'Contact Number'}
               id="contact"
               autoComplete="contact"
+              autoFocus
+              helperText={helpercontact}
             />
             <Button
               type="submit"
