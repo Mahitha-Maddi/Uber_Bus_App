@@ -484,7 +484,7 @@ export default function Dashboard() {
             <Route path="/aboutus" component={aboutus} />
             <Route path="/contactus" component={contactus} />
             <Route path="/userprofile" component={profile} />
-            {/* <Route path="*" exact component={NotFoundPage} /> */}
+           {/*  <Route path="*" exact component={NotFoundPage} />  */}
           </Switch>
         </main>
       </Router>

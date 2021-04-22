@@ -1,4 +1,5 @@
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { saveAuthorisation, isAuthorised } from '../../utils/auth'
 //import { useIntl } from 'react-intl'
 //import Page from 'material-ui-shell/lib/containers/Page/Page'
@@ -10,6 +11,7 @@ import Button from '@material-ui/core/Button'
 //import Button from 'material-ui/Button'
 import Paper from '@material-ui/core/Paper'
 //import MenuContext from 'material-ui-shell/lib/providers/Menu/Context'
+import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,6 +64,7 @@ const SignUp = () => {
   const [contact, setContact] = useState('')
   //const { setAuthMenuOpen } = useContext(MenuContext)
   const postUser = async (username, password, email, contact, dob) => {
+    console.log("email: ",email);
     const paramdict = {
       'username': username,
       'password': password,
@@ -78,13 +81,25 @@ const SignUp = () => {
           },
           body: JSON.stringify(paramdict)
       }
-      const response = await fetch("/signup", config);
+      const response = await fetch("http://localhost:5000/signup", config);
       //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
       //const response = await fetch("/tweet", config);
       //const json = await response.json()
       if (response.ok) {
           //return json
           //return response
+        var templateParams = {
+            email_to: email
+        };
+         
+        emailjs.send('gmail', 'template_kjha7q8', templateParams,'user_LQUnilAw58Lv7SREimvSB')
+            .then(function(response) {
+               console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+               console.log('FAILED...', error);
+            });
+            
+          //alert("Congratulations! Successfully registered!");
           console.log("success on send.");
           
       } else {
@@ -95,9 +110,12 @@ const SignUp = () => {
         const data = await response.json();
         console.log("on reply:")
         console.log(data);
-        alert(data);
+        //alert(data);
+        alert("Congratulations! Successfully registered! Please login to book rides!");
         // back to landing page!
-        history.push("/");
+        //history.push("/");
+        history.push('/signin/');
+        return (<Redirect to="/signin/" />)
       } catch (err) {
         console.log(err);
         alert("exception on reply!");

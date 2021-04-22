@@ -19,7 +19,7 @@ export default function BusList({ value: dataInp }) {
     const history = useHistory()
     const handleSubmit = (bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => {
         const user = localStorage.getItem('username');
-        fetch('/overlapCheck', {
+        fetch('http://localhost:5000/overlapCheck', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({
@@ -54,7 +54,7 @@ export default function BusList({ value: dataInp }) {
 
                 SetClas(false)
                 setArrowDown(true)
-                alert("Hello")
+                //alert("Hello")
                 history.push('/seatSelection/');
 
                 return (<Redirect to="/seatSelection/" />)

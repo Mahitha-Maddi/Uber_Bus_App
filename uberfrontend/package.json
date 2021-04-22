@@ -11,6 +11,7 @@
     "@rocketseat/unform": "^1.6.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.6.0",
+    "emailjs-com": "^2.6.4",
     "github-markdown-css": "4.x",
     "react": "^16.12.0",
     "react-admin": "^3.14.4",

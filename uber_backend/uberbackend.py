@@ -111,16 +111,11 @@ def decode_token(token):
 ####################
 @app.route("/doc")
 def home(): 
-    return """Welcome to online mongo/twitter testing ground!<br />
+    return """Welcome to online mongo/Uber testing ground!<br />
         <br />
-        Run the following endpoints:<br />
+        Run the following endpoint:<br />
         From collection:<br/>
-        http://localhost:5000/tweets<br />
-        http://localhost:5000/tweets-week<br />
-        http://localhost:5000/tweets-week-results<br />
-        Create new data:<br />
-        http://localhost:5000/mock-tweets<br />
-        Optionally, to purge database: http://localhost:5000/purge-db"""
+        http://localhost:5000/doc<br />"""
 
 # Returns an encoded userid as jwt access and a refresh tokens. Requires username 
 # and password. Refresh token not used. Only meant to be used with token issuer,
@@ -487,6 +482,21 @@ def check_overlap():
         print(type(sorted_records))
     return jsonify(sorted_records)
 
+# endpoint to fetch email ID of the user
+@app.route("/userEmail", methods=["POST"])
+def getUserEmail():
+    username = request.json['username']
+    with mongo_client:
+        db = mongo_client['Uber']
+        mongo_collection = db['users']
+        myquery = {"username": str(username)}
+        cursor = dict()
+        cursor = mongo_collection.find(myquery)
+        records = list(cursor)
+        howmany = len(records)
+        print('found ' + str(howmany) + 'emails with username' + username)
+    return jsonify(records)
+
 # endpoint to check availability
 @app.route("/checkAvailability", methods=["POST"])
 def check_availability():
@@ -560,6 +570,24 @@ def update_user():
             print(e)
     return jsonify("successfully updated!")
 
+# endpoint to update user password #forgot password
+@app.route("/updateUserForgotPassword", methods=["POST"])
+def update_userPassword():
+    email = request.json['email']
+    password = request.json['password']
+    with mongo_client:
+        db = mongo_client['Uber']
+        try:
+            mongo_collection = db['users']
+            mongo_collection.update_one({"email" : email},
+                {"$set":{ "password": password}},
+                upsert=True)
+            print("...update_one() user forgot password:")#, result.modified_count)
+            return jsonify("successfully updated!")
+        except Exception as e:
+            print(e)
+    return jsonify("successfully updated!")
+
 # endpoint to create new booking
 @app.route("/saveBooking", methods=["POST"])
 def book_bus():
@@ -606,6 +634,19 @@ def user_signup():
     else:
         print('User Name or Email is already registered!!')
         return jsonify(("User with given email ID is already present!!", status.HTTP_401_UNAUTHORIZED))
+
+# endpoint to check if user with given email is present
+@app.route("/checkUserWithEmail", methods=["POST"])
+def check_userWithEmail():
+    email = request.json['email']
+
+    howmany = find_user(email)
+    if not howmany:
+        print('Email is not registered!!')
+        return jsonify(status.HTTP_401_UNAUTHORIZED) 
+
+    else:
+        return jsonify("user is present")
    
 # endpoint to view all the bookings
 @app.route("/bookings-results", methods=["POST"])

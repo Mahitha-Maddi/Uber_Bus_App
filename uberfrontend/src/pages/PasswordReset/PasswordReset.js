@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
+import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,19 +50,50 @@ const useStyles = makeStyles((theme) => ({
 const PasswordReset = () => {
   const classes = useStyles()
   const history = useHistory()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
   // const { setAuthMenuOpen } = useContext(MenuContext)
 
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
+    localStorage.setItem('passSetEmail',email);
+    const paramdict = {
+      'email': email
+    }
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paramdict)
+    }
+    fetch("http://localhost:5000/checkUserWithEmail", config)
+      .then(res => res.json())
+      .then(data => {
+        //alert("Saved passenger! " + data);
+        console.log(data);
+        if(data===401){
+          alert("Email is not registered! Please sign up!");
+          history.replace('/signup');
 
-    // fwo: send email to user with new temp password
-    //..
-
-    //..
+        }
+        else{
+     var templateParams = {
+      email_to: email
+  };
+   
+  emailjs.send('gmail', 'template_bar4hnx', templateParams,'user_84Ail5Gec6Hu3umTTuGdc')
+      .then(function(response) {
+        alert("A token has been sent to your email!");
+         console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+         console.log('FAILED...', error);
+      });
     
-    history.replace('/signin')
+      alert("A token has been sent to your email!");
+    history.replace('/password_change');
+      }
+      })
   }
 
   return (
@@ -73,8 +105,8 @@ const PasswordReset = () => {
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
-              value={username}
-              onInput={(e) => setUsername(e.target.value)}
+              value={email}
+              onInput={(e) => setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               required

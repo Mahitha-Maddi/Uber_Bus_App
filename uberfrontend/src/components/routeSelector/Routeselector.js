@@ -105,7 +105,7 @@ export default function Routeselector() {
 
 
        // fetch('http://localhost:5000/checkAvailability', {
-        fetch('/checkAvailability', {
+        fetch('http://localhost:5000/checkAvailability', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({

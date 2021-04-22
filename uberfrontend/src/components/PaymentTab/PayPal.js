@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import emailjs from 'emailjs-com';
 
 export default function Paypal() {
   const paypal = useRef();
@@ -10,9 +11,9 @@ export default function Paypal() {
 
   const saveBookedSeats = () => {
     console.log(localStorage.getItem('selectedBusId'))
-    
+
     const paramdict = {
-      'busid' :  localStorage.getItem('selectedBusId'),
+      'busid': localStorage.getItem('selectedBusId'),
       'seat1A': localStorage.getItem('1A'),
       'seat1B': localStorage.getItem('1B'),
       'seat1C': localStorage.getItem('1C'),
@@ -23,8 +24,8 @@ export default function Paypal() {
       'seat3B': localStorage.getItem('3B'),
       'seat3C': localStorage.getItem('3C')
     }
-    console.log("2c: ",localStorage.getItem("2C") )
-    alert("2c: "+ localStorage.getItem("2C"))
+    console.log("2c: ", localStorage.getItem("2C"))
+    //alert("2c: "+ localStorage.getItem("2C"))
     const config = {
       method: 'POST',
       headers: {
@@ -33,18 +34,18 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("/saveBookedSeats", config)
+    fetch("http://localhost:5000/saveBookedSeats", config)
       .then(res => res.json())
       .then(data => {
-         alert("Reserved seats!")
+        // alert("Reserved seats!")
       })
   }
 
   const saveBooking = () => {
-    console.log("username: ",localStorage.getItem('username'));
+    console.log("username: ", localStorage.getItem('username'));
 
     const paramdict = {
-      'busnumber' : localStorage.getItem('BusNum'),
+      'busnumber': localStorage.getItem('BusNum'),
       'user': localStorage.getItem('username'),
       'source': localStorage.getItem('source'),
       'destination': localStorage.getItem('destination'),
@@ -62,20 +63,20 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("/saveBooking", config)
+    fetch("http://localhost:5000/saveBooking", config)
       .then(res => res.json())
       .then(data => {
-         alert("Booking saved!! "+data);
-         localStorage.setItem('bookingID',data)
+        alert("Booking saved!! " + data);
+        localStorage.setItem('bookingID', data)
       })
   }
 
-  const savePassengerDetails = (fullname,gender) => {
-    alert("hello passenger");
+  const savePassengerDetails = (fullname, gender) => {
+    //alert("hello passenger");
     const paramdict = {
-      'bookingID' : localStorage.getItem('bookingID'),
-      'fullname'  : fullname,
-      'gender'    : gender
+      'bookingID': localStorage.getItem('bookingID'),
+      'fullname': fullname,
+      'gender': gender
     }
     const config = {
       method: 'POST',
@@ -85,14 +86,45 @@ export default function Paypal() {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("/savePassengerDetails", config)
+    fetch("http://localhost:5000/savePassengerDetails", config)
       .then(res => res.json())
       .then(data => {
-         alert("Saved passenger! " + data);
+        //alert("Saved passenger! " + data);
       })
   }
 
+  const sendEmail = () => {
+    var email='mahithareddy42@gmail.com';
+    const paramdict = {
+      'username': localStorage.getItem('username')
+    }
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paramdict)
+    }
+    fetch("http://localhost:5000/userEmail", config)
+      .then(res => res.json())
+      .then(data => {
+        //alert("Saved passenger! " + data);
+        console.log(data);
+        email=data[0].email;
+      })
 
+    var templateParams = {
+      email_to: email
+    };
+
+    emailjs.send('gmail', 'template_zyqahd1', templateParams, 'user_LQUnilAw58Lv7SREimvSB')
+      .then(function (response) {
+        console.log('SUCCESS!', response.status, response.text);
+      }, function (error) {
+        console.log('FAILED...', error);
+      });
+  }
 
   useEffect(() => {
     const price = localStorage.getItem('busPrice');
@@ -104,8 +136,8 @@ export default function Paypal() {
     const len = localStorage.getItem('numOfSeats');
     console.log("length: ", len)
     const t = price * len;
-    alert(t)
-    localStorage.setItem('totalPrice',t);
+    //alert(t)
+    localStorage.setItem('totalPrice', t);
     window.paypal
       .Buttons({
         createOrder: (data, actions, err) => {
@@ -123,19 +155,24 @@ export default function Paypal() {
           });
         },
         onApprove: async (data, actions) => {
-          setPaidFor(true);
+
           saveBookedSeats();
           saveBooking();
-          const passengers=JSON.parse(localStorage.getItem("passengers") || "[]");
-          alert(passengers);
-          console.log("passengers length: ",passengers.length);
+          const passengers = JSON.parse(localStorage.getItem("passengers") || "[]");
+          //alert(passengers);
+          console.log("passengers length: ", passengers.length);
           //passengers.forEach(d => console.log("mine:", { d }))
           passengers.map((passenger) => {
             console.log(passenger);
             console.log(passenger.passengerName);
             console.log(passenger.passengerGender);
-            savePassengerDetails(passenger.passengerName,passenger.passengerGender);
+            savePassengerDetails(passenger.passengerName, passenger.passengerGender);
           });
+
+          sendEmail();
+
+          //alert("Congratulations! Successfully registered!");
+          setPaidFor(true);
           const order = await actions.order.capture();
           console.log(order);
         },
