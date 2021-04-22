@@ -43,8 +43,8 @@ import SignIn from "../pages/SignIn/SignIn";
 import PasswordReset from "../pages/PasswordReset/PasswordReset";
 import PasswordChange from "../pages/PasswordChange/PasswordChange";
 import THome from "../pages/Bookings/Home";
-import Book from "../pages/Book/Book";
-import NotFoundPage from "../pages/Book/NotFoundPage";
+//import Book from "../pages/Book/Book";
+//import NotFoundPage from "../pages/Book/NotFoundPage";
 import RouteSelection from "./RouteSelection/RouteSelection"; ///RouteSelection/RouteSelection';
 import SeatSelection from "./SeatSelection/SeatSelection";
 import PayPal from "./PaymentTab/PayPal";
@@ -484,7 +484,7 @@ export default function Dashboard() {
             <Route path="/aboutus" component={aboutus} />
             <Route path="/contactus" component={contactus} />
             <Route path="/userprofile" component={profile} />
-            <Route path="*" exact component={NotFoundPage} />
+            {/* <Route path="*" exact component={NotFoundPage} /> */}
           </Switch>
         </main>
       </Router>
