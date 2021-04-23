@@ -56,7 +56,7 @@ const SignUp = () => {
   const classes = useStyles()
   //const intl = useIntl()
   const history = useHistory()
-  const [username, setUsername] = useState("User")
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [cpassword, setCpassword] = useState('')
@@ -221,7 +221,7 @@ const SignUp = () => {
     event.preventDefault();
 
     //username validation
-    if (username == "User") {
+    if (username === '') {
       setErrorusername(true);
       setHelperuser("Please enter username");
       return;
@@ -238,7 +238,7 @@ const SignUp = () => {
     var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
     if (!passwordpattern.test(password)) {
       setErrorpassword(true);
-      setHelperpassword("Password should contain Minimum eight characters, at least one letter, one number");
+      setHelperpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
       return;
     }
 
@@ -246,19 +246,21 @@ const SignUp = () => {
     var cpasswordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
     if (!cpasswordpattern.test(cpassword)) {
       setErrorcpassword(true);
-      setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number");
+      setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
       return;
       
     }
 
     //validate confirm password
-    if (password == cpassword) {
+    if (password === cpassword) {
       setError(false);
       setErrorText(""); 
-      return;
+      
     } else {
       setError(true);
-      alert("Passwords don't match");  
+      //alert("Passwords don't match");  
+      setErrorText("Passwords don't match"); 
+      return;
     }
     
     
@@ -365,7 +367,7 @@ const SignUp = () => {
               id="password_confirm"
               autoComplete="current-password"
               autoFocus
-              helperText={helpercpassword}
+              helperText={helpercpassword + errorText}
             />
             <TextField
               value={dob}

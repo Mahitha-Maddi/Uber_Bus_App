@@ -14,13 +14,13 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Router>
+      {/*   <Router>
           <Switch>
             <Route path="/" exact component={() => <Appbar />} />
             <Route path="*" exact component={() => <NotFoundPage />} />
           </Switch>
-        </Router>
-        {/* <Appbar /> */}
+        </Router> */}
+       <Appbar /> 
       </React.Fragment>
     );
   }

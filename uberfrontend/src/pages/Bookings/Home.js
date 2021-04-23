@@ -78,7 +78,7 @@ const THome = () => {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("/cancelBooking", config)
+    fetch("http://localhost:5000/cancelBooking", config)
       .then(res => res.json())
       .then(data => {
         setLoading(false);
@@ -91,7 +91,7 @@ const THome = () => {
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
       //removed localhost
-      fetch("/bookings-results", {
+      fetch("http://localhost:5000/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
