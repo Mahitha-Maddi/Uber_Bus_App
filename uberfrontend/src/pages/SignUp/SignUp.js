@@ -227,6 +227,12 @@ const SignUp = () => {
       return;
     }
 
+    // var userpattern = new RegExp(/^(?!_*\_*\_*)[A-Za-z]?$/i);
+    // if (!userpattern.test(username)) {
+    //   setErrorusername(true);
+    //   setHelperuser("Please enter valid username: It can contain only letters, numbers and an optional underscore, min length 4");
+    //   return;
+    // }
     //Email Validation
     var emailpattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
     if (!emailpattern.test(email)) {

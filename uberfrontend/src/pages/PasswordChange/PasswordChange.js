@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
   },
   form: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(10),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -53,10 +53,75 @@ const PasswordChange = () => {
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
   const [cpassword, setCpassword] = useState('')
+  const [errorcpassword, setErrorcpassword] = useState(false);
+  const [errorpassword, setErrorpassword] = useState(false);
+  const [helperpassword, setHelperpassword] = useState("");
+  const [helpercpassword, setHelpercpassword] = useState("");
+  const [errorText, setErrorText] = useState("");
+  const [error, setError]= useState('')
   // const { setAuthMenuOpen } = useContext(MenuContext)
+
+  const handlePassword = (event) => {
+    if (event.target.value == "") {
+      setErrorpassword(true);
+      setHelperpassword("Please enter Password");
+    } else {
+      setErrorpassword(false);
+      setHelperpassword("");
+    }
+    setPassword(event.target.value);
+  };
+
+  const handleCPassword = (event) => {
+    if (event.target.value == "") {
+      setErrorcpassword(true);
+      setHelpercpassword("Please enter Confirmed Password");
+     } else {
+    //   if (event.handlePassword !== event.handleCPassword) {
+    //     setError(true);
+    //      setErrorText("Password and Confirm Password is not matching")
+    //   }
+    //  else{
+        setErrorcpassword(false);
+      setHelpercpassword("");
+      }
+      
+    //}
+    setCpassword(event.target.value);
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
+    
+    //Password validation
+    var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!passwordpattern.test(password)) {
+      setErrorpassword(true);
+      setHelperpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
+      return;
+    }
+
+    //confirm password validation
+    var cpasswordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!cpasswordpattern.test(cpassword)) {
+      setErrorcpassword(true);
+      setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
+      return;
+      
+    }
+
+    //validate confirm password
+    if (password === cpassword) {
+      setError(false);
+      setErrorText(""); 
+      
+    } else {
+      setError(true);
+      //alert("Passwords don't match");  
+      setErrorText("Passwords don't match"); 
+      return;
+    }
+
     if(token==='1234'){
     const paramdict = {
       'email': localStorage.getItem('passSetEmail'),
@@ -130,7 +195,9 @@ const PasswordChange = () => {
             />
             <TextField
               value={password}
-              onInput={(e) => setPassword(e.target.value)}
+              error={errorpassword}
+              onInput={handlePassword}
+              //onInput={(e) => setPassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -140,10 +207,13 @@ const PasswordChange = () => {
               name="password"
               autoComplete="password"
               autoFocus
+              helperText={helperpassword}
             />
             <TextField
               value={cpassword}
-              onInput={(e) => setCpassword(e.target.value)}
+              error={errorcpassword}
+              onInput={handleCPassword}
+              //onInput={(e) => setCpassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -153,6 +223,7 @@ const PasswordChange = () => {
               name="cpassword"
               autoComplete="cpassword"
               autoFocus
+              helperText={helpercpassword + errorText}
             />
 
             <Button
@@ -160,6 +231,7 @@ const PasswordChange = () => {
               fullWidth
               variant="contained"
               color="primary"
+              style={{backgroundColor:'black'}}
               className={classes.submit}
             >
               {'Reset Password'}
@@ -171,6 +243,7 @@ const PasswordChange = () => {
               fullWidth
               variant="contained"
               color="primary"
+              style={{backgroundColor:'black'}}
               className={classes.submit}
             >
               {'Resend token'}
