@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 // import { darken } from 'polished';
 
+
+
 export const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
+
+  h1{
+    background: rgba(255, 255, 255, 0.2);
+  }
 
   form {
     display: flex;

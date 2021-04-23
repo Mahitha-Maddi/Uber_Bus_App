@@ -4,12 +4,24 @@ import RouteSelector from '../routeSelector/Routeselector'
 //import PaymentTab from '../PaymentTab/PaymentTab'
 
 export default function RouteSelection({ history }) {
+    const styleObj = {
+        // fontSize: 40,
+      
+        textAlign: "center",
+        paddingTop: "10px",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: `100%`,
+    }
 
  /*    const handleUserIcon = e => {
         e.preventDefault()
         history.push('/profile')
     }
-
+    
+    
 
     
 
@@ -29,7 +41,8 @@ export default function RouteSelection({ history }) {
     
     return (
         (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div>
-            <br/><br/><br/><br/><br/><br/>Please login!</div>):
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <h2 style={styleObj}>You have not logged in, Please Login!!!</h2></div>):
             (
         <div className="container">
          {/*    <div>

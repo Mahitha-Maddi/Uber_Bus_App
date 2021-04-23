@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import emailjs from 'emailjs-com';
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: 'auto',
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -51,10 +52,33 @@ const PasswordReset = () => {
   const classes = useStyles()
   const history = useHistory()
   const [email, setEmail] = useState('')
+  const [erroremail, setErroremail] = useState(false);
+  const [helperemail, setHelperemail] = useState("");
+ 
   // const { setAuthMenuOpen } = useContext(MenuContext)
+
+  const handleEmail = (event) => {
+    if (event.target.value == "") {
+      setErroremail(true);
+      setHelperemail("Please enter Email");
+    } else {
+      setErroremail(false);
+      setHelperemail("");
+    }
+    setEmail(event.target.value);
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    //Email Validation
+    var emailpattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    if (!emailpattern.test(email)) {
+      setErroremail(true);
+      setHelperemail("Please enter valid email address");
+      return;
+    }
+
     localStorage.setItem('passSetEmail',email);
     const paramdict = {
       'email': email
@@ -106,7 +130,9 @@ const PasswordReset = () => {
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               value={email}
-              onInput={(e) => setEmail(e.target.value)}
+              error={erroremail}
+              onInput={handleEmail}
+              //onInput={(e) => setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -116,6 +142,7 @@ const PasswordReset = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              helperText={helperemail}
             />
 
             <Button
@@ -123,10 +150,17 @@ const PasswordReset = () => {
               fullWidth
               variant="contained"
               color="primary"
+              style={{backgroundColor:'black'}}
               className={classes.submit}
             >
               {'Reset Password'}
             </Button>
+            <>
+          <Button fullWidth
+              variant="contained"
+              color="primary"
+              style={{backgroundColor:'black'}} onClick={() => history.goBack()}>Back</Button>
+        </>
           </form>
         </div>
       </Paper>

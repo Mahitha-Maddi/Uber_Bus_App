@@ -28,6 +28,18 @@ const useStyles = makeStyles(theme => ({
 }
 }));
 
+const styleObj = {
+  // fontSize: 40,
+
+  textAlign: "center",
+  paddingTop: "10px",
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: `100%`,
+}
+
 const getCurrentDate=(separator='/')=>{
 
   let newDate = new Date()
@@ -122,8 +134,8 @@ const THome = () => {
     //     />
     //   ) : (
         // <TweetList tweets={tweets} />
-       (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/>
-        Please login!</div>): 
+       (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <h2 style={styleObj}>You have not logged in, Please Login!!!</h2></div>): 
        ( <div className={classes.card}>
         <Grid
             container

@@ -22,8 +22,21 @@ export default function Profile() {
   const [npassword, setNpassword] = useState('')
   const [cpassword, setCpassword] = useState('')
 
+  const styleObj = {
+    // fontSize: 40,
+  
+    textAlign: "center",
+    paddingTop: "10px",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: `100%`,
+}
+
   useEffect(() => {
     const username=localStorage.getItem('username');
+    
     const fetchData = async () => {
       fetch('http://localhost:5000/userDetails', {
         method: 'POST', headers: {
@@ -99,8 +112,12 @@ const handleSubmit = e => {
 
 
   return (
-    (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div>
-      <br/><br/><br/><br/><br/><br/>Please login!</div>):
+    (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div >
+      
+     
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <h2 style={styleObj}>You have not logged in, Please Login!!!</h2>
+      </div>):
       (
     <Container>
       <form  onSubmit={e => handleSubmit(e)}>

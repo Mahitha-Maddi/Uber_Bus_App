@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import {Container,Col,Image,Row} from 'react-bootstrap';
+import BusinessIcon from '@material-ui/icons/Business';
+import PhoneIcon from '@material-ui/icons/Phone';
+import DialpadIcon from '@material-ui/icons/Dialpad';
+import EmailIcon from '@material-ui/icons/Email';
 import FormContact from './FormContact'
 
 import '../styles/contact.css'
@@ -16,7 +20,7 @@ export default class Home extends Component{
             </div>
                <Container>
             <Row className= "show-grid text-center">
-                    <Col xs={12} sm={4} >
+                    <Col xs={12} sm={6} >
                     <h3>Contact Our Agency</h3>
                     <p>
                     At Travel Agency we want to make sure that your trip is everything you could possibly dream of. Whether you want inspiration and guidance in planning your next adventure or need help with an existing booking, our travel experts are here to help.
@@ -24,21 +28,29 @@ Send us an email or give our team a call to book your flights, plan your adventu
                     </p>
                     </Col>
 
-                    <Col xs={12} sm={4} className="person-wrapper">
+                    <Col xs={12} sm={6} className="person-wrapper">
                     <h3>Our contacts </h3>
                         <ul className=" contact-list fa-ul">
-                            <li><i class="fas fa-map-marker-alt"></i> 123/21 First Street, Manchester, King Street, Kingston United Kingdom</li>
-                            <li><i class="fas fa-phone"></i> 345-677-554</li>
-                            <li><i class="fas fa-mobile-alt"></i> 323-678-567</li>
-                            <li><i class="far fa-envelope"></i> uberbus@gmail.com</li>                        
+                            <BusinessIcon/>123/21 First Street, Boston, Huntington Street, MA United States, 02115
+                            <br></br>
+                            <br></br>
+                            <PhoneIcon/>345-677-554
+                            <br></br>
+                            <br></br>
+                            <DialpadIcon/> 323-678-567
+                            <br></br>
+                            <br></br>
+                            <EmailIcon/>uberbus@gmail.com 
+                            <br></br> 
+                            <br></br>                   
                         </ul>
                     
                     </Col>
 
-                    <Col xs={12} sm={4} className="person-wrapper">
+                    {/* <Col xs={12} sm={4} className="person-wrapper">
                     <h3>Any Questions?</h3>
                     <FormContact/>
-                     </Col>
+                     </Col> */}
                 </Row>
                    </Container>
 
