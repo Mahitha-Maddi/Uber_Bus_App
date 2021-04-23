@@ -473,11 +473,7 @@ export default function Dashboard() {
               exact
               render={(props) => <SeatSelection {...props} />}
             />
-            <Route
-              path="/payment/"
-              exact
-              render={(props) => <PayPal {...props} />}
-            />
+            <Route path="/payment/" exact render={(props) => <PayPal {...props} />}/>
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route path="/password_reset" component={PasswordReset} />

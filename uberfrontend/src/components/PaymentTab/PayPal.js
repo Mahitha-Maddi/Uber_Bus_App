@@ -43,7 +43,34 @@ export default function Paypal() {
 
   const saveBooking = () => {
     console.log("username: ", localStorage.getItem('username'));
-
+    const seatsBooked=[];
+    if (localStorage.getItem('1A')!==0){
+      seatsBooked.push('1A');
+    }
+    if (localStorage.getItem('1B')!==0){
+      seatsBooked.push('1B');
+    }
+    if (localStorage.getItem('1C')!==0){
+      seatsBooked.push('1C');
+    }
+    if (localStorage.getItem('2A')!==0){
+      seatsBooked.push('2A');
+    }
+    if (localStorage.getItem('2B')!==0){
+      seatsBooked.push('2B');
+    }
+    if (localStorage.getItem('2C')!==0){
+      seatsBooked.push('2C');
+    }
+    if (localStorage.getItem('3A')!==0){
+      seatsBooked.push('3A');
+    }
+    if (localStorage.getItem('3B')!==0){
+      seatsBooked.push('3B');
+    }
+    if (localStorage.getItem('3C')!==0){
+      seatsBooked.push('3C');
+    }
     const paramdict = {
       'busnumber': localStorage.getItem('BusNum'),
       'user': localStorage.getItem('username'),
@@ -53,7 +80,8 @@ export default function Paypal() {
       'endTime': localStorage.getItem('endTime'),
       'date': localStorage.getItem('busDate'),
       'numOfSeats': localStorage.getItem('numOfSeats'),
-      'totalPrice': localStorage.getItem('totalPrice')
+      'totalPrice': localStorage.getItem('totalPrice'),
+      'seatsBooked': seatsBooked
     }
     const config = {
       method: 'POST',
@@ -71,12 +99,13 @@ export default function Paypal() {
       })
   }
 
-  const savePassengerDetails = (fullname, gender) => {
+  const savePassengerDetails = (fullname, gender,seatNum) => {
     //alert("hello passenger");
     const paramdict = {
       'bookingID': localStorage.getItem('bookingID'),
       'fullname': fullname,
-      'gender': gender
+      'gender': gender,
+      'seatNumber':seatNum
     }
     const config = {
       method: 'POST',
@@ -166,7 +195,7 @@ export default function Paypal() {
             console.log(passenger);
             console.log(passenger.passengerName);
             console.log(passenger.passengerGender);
-            savePassengerDetails(passenger.passengerName, passenger.passengerGender);
+            savePassengerDetails(passenger.passengerName, passenger.passengerGender, passenger.seatNo);
           });
 
           sendEmail();

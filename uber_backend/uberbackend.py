@@ -600,8 +600,9 @@ def book_bus():
     busnumber = request.json['busnumber']
     numOfSeats = request.json['numOfSeats']
     totalPrice = request.json['totalPrice']
+    seatsBooked =request.json['seatsBooked']
     
-    booking = dict( source=source, destination=destination,busnumber=busnumber,user=user,numOfSeats=numOfSeats,totalPrice=totalPrice,date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),_id=str(ObjectId()))
+    booking = dict( source=source,seatsBooked=seatsBooked, destination=destination,busnumber=busnumber,user=user,numOfSeats=numOfSeats,totalPrice=totalPrice,date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),_id=str(ObjectId()))
     result1=insert_one(booking)
     return jsonify(result1)
 
@@ -611,7 +612,8 @@ def add_passenger():
     bookingID = request.json['bookingID']
     fullname = request.json['fullname']
     gender = request.json['gender']
-    passenger = dict(bookingID=bookingID, fullname=fullname, gender=gender,_id=str(ObjectId()))
+    seatNumber = request.json['gender']
+    passenger = dict(bookingID=bookingID,seatNumber=seatNumber, fullname=fullname, gender=gender,_id=str(ObjectId()))
     insert_one_passenger(passenger)
     return jsonify("saved passenger!!")
 
