@@ -10,6 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Link } from "@material-ui/core/";
+import Button from '@material-ui/core/Button'
+import { useHistory } from 'react-router-dom'
 //import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -123,6 +125,16 @@ const THome = () => {
     };
     fetchData();
   }, []);
+  const history1 = useHistory();
+
+  const handleSignIn = () => {
+    console.log("doing something");
+    history1.push("/signin") 
+  }
+  const handleRegister = () => {
+    console.log("doing something");
+    history1.push("/signup") 
+  }
 
   return (
     // <ScrollView noSpacer={true} noScroll={true} style={styles.container}>
@@ -134,8 +146,20 @@ const THome = () => {
     //     />
     //   ) : (
         // <TweetList tweets={tweets} />
-       (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(<div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <h2 style={styleObj}>You have not logged in, Please Login!!!</h2></div>): 
+        (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(
+          <div >
+            <br/><br/><br/><br/>
+            
+            <h3 style={styleObj} >**You have not logged in, Please Login!!!</h3>
+            <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleSignIn} style={{backgroundColor:'black'}} >
+                  {'Sign In'} 
+                </Button>
+                <hr></hr>
+                <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleRegister} style={{backgroundColor:'black'}} >
+                  {'Register'} 
+                </Button>
+              
+            </div>): 
        ( <div className={classes.card}>
         <Grid
             container

@@ -38,8 +38,6 @@ const styles = (theme) => ({
   
 });
 
-
-
 function Home(props) {
   const { classes } = props;
   const [checkout, setCheckOut] = useState(false);
@@ -50,12 +48,12 @@ function Home(props) {
         <Carousel fade>
           <div>
             <img className="d-block w-100" src={uber1} alt="First slide" />
-            <h3>Adding a Joy to your Journey</h3>
+            <h4>Adding a Joy to your Journey</h4>
           </div>
-          <div>
+          {/* <div>
             <img className="d-block w-100" src={uber2} alt="Second slide" />
             <h3>Lets you Explore the Best</h3>
-          </div>
+          </div> */}
           <div>
             <img className="d-block w-100" src={uber3} alt="Fourth slide" />
             <h3>Bringing Joy From Every journey</h3>
@@ -81,30 +79,25 @@ function Home(props) {
               </Card.Text>
               <Typography>Know More!</Typography>
             </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
+
             </CardContent>
             </CardActionArea>
           </Card>
           <Card >
-          <CardActionArea href="https://www.planetware.com/tourist-attractions-/new-york-city-us-ny-nyc.htm">
+          <CardActionArea href="https://www.charlestoncvb.com/">
           <CardContent>
             <Card.Img variant="top" src={Charleston} width='100px' height='160px' />
             <Card.Body>
-              <Card.Title>New York</Card.Title>
+              <Card.Title>Charleston</Card.Title>
               <Card.Text>
-              New York is a city made up of five boroughs: 
-              Manhattan, Brooklyn, Queens, the Bronx, and Staten Island. 
-              Most tourist attractions are in Manhattan, 
-              with a few scattered across Brooklyn, Queens, and the Bronx. 
+              Charleston, the South Carolina port city founded in 1670, 
+              is defined by its cobblestone streets, horse-drawn carriages and pastel antebellum houses, 
+              particularly in the elegant French Quarter and Battery districts.  
               
               </Card.Text>
               <Typography>Know More!</Typography>
             </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
+
             </CardContent>
             </CardActionArea>
           </Card>
@@ -121,9 +114,7 @@ function Home(props) {
               </Card.Text>
               <Typography>Know More!</Typography>
             </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
+
             </CardContent>
             </CardActionArea>
           </Card>
@@ -131,63 +122,58 @@ function Home(props) {
         <hr></hr>
         <CardDeck>
           <Card >
-          <CardActionArea href="https://www.planetware.com/tourist-attractions-/new-york-city-us-ny-nyc.htm">
-          <CardContent>
-            <Card.Img variant="top" src={card1} width='100px' height='160px' />
-            <Card.Body>
-              <Card.Title>New York</Card.Title>
-              <Card.Text>
-              New York is a city made up of five boroughs: 
-              Manhattan, Brooklyn, Queens, the Bronx, and Staten Island. 
-              Most tourist attractions are in Manhattan, 
-              with a few scattered across Brooklyn, Queens, and the Bronx. 
-              
-              </Card.Text>
-              <Typography>Know More!</Typography>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
-            </CardContent>
-            </CardActionArea>
-          </Card>
-          <Card >
-          <CardActionArea href="https://www.planetware.com/tourist-attractions-/new-york-city-us-ny-nyc.htm">
+          <CardActionArea href="https://www.choosechicago.com/">
           <CardContent>
             <Card.Img variant="top" src={Chicago} width='100px' height='160px' />
             <Card.Body>
-              <Card.Title>New York</Card.Title>
+              <Card.Title>Chicago</Card.Title>
               <Card.Text>
-              New York is a city made up of five boroughs: 
-              Manhattan, Brooklyn, Queens, the Bronx, and Staten Island. 
-              Most tourist attractions are in Manhattan, 
-              with a few scattered across Brooklyn, Queens, and the Bronx. 
+              Chicago, on Lake Michigan in Illinois, is among the largest cities in the U.S. 
+              Famed for its bold architecture, it has a skyline punctuated by 
+              skyscrapers such as the iconic John Hancock Center, 
+              1,451-ft. Willis Tower (formerly the Sears Tower) and the neo-Gothic Tribune Tower. 
               
               </Card.Text>
               <Typography>Know More!</Typography>
             </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
+
             </CardContent>
             </CardActionArea>
           </Card>
           <Card >
-          <CardActionArea href="https://www.travelandleisure.com/travel-guide/san-francisco">
+          <CardActionArea href="https://www.visitsavannah.com/list/15-cant-miss-things-to-do-savannah">
           <CardContent>
-            <Card.Img variant="top" src={newOrleans} width='100px' height='160px' />
+            <Card.Img variant="top" src={savanna} width='100px' height='160px' />
             <Card.Body>
-              <Card.Title>San Francisco</Card.Title>
+              <Card.Title>Savanna</Card.Title>
               <Card.Text>
-              San Francisco is home to Golden Gate Park, 
-              which is the third most visited park in the U.S. 
-              and spans 1,017 acres. 
+              A savanna or savannah is a mixed woodland-grassland ecosystem characterised 
+              by the trees being sufficiently widely spaced so that the canopy does not close. 
+              The open canopy allows sufficient light to reach the ground to support an unbroken herbaceous 
+              layer consisting primarily of grasses 
+              
               </Card.Text>
               <Typography>Know More!</Typography>
             </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
+ 
+            </CardContent>
+            </CardActionArea>
+          </Card>
+          <Card >
+          <CardActionArea href="https://www.neworleans.com/">
+          <CardContent>
+            <Card.Img variant="top" src={newOrleans} width='100px' height='160px' />
+            <Card.Body>
+              <Card.Title>New Orleans</Card.Title>
+              <Card.Text>
+              New Orleans is a Louisiana city on the Mississippi River, 
+              near the Gulf of Mexico. Nicknamed the "Big Easy," it's known for its round-the-clock nightlife, 
+              vibrant live-music scene and spicy, singular cuisine reflecting its history as a melting pot of French, 
+              African and American cultures.  
+              </Card.Text>
+              <Typography>Know More!</Typography>
+            </Card.Body>
+    
             </CardContent>
             </CardActionArea>
           </Card>
