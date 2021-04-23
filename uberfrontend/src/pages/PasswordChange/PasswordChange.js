@@ -194,6 +194,7 @@ const PasswordChange = () => {
               autoFocus
             />
             <TextField
+              type="password"
               value={password}
               error={errorpassword}
               onInput={handlePassword}
@@ -210,6 +211,7 @@ const PasswordChange = () => {
               helperText={helperpassword}
             />
             <TextField
+              type="password"
               value={cpassword}
               error={errorcpassword}
               onInput={handleCPassword}

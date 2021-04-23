@@ -8,6 +8,8 @@ import './Tab.css';
 import PayPal from "../PaymentTab/PayPal";
 export default function SeatSelection() {
     const [name, setName] = useState([])
+    const [errorText, setErrorText] = useState('')
+    const [errorText1, setErrorText1] = useState('')
     const [fA, setFA] = useState([])
     const [fB, setFB] = useState([])
     const [fC, setFC] = useState([])
@@ -85,38 +87,7 @@ export default function SeatSelection() {
                 localStorage.setItem("3A", data[0].TA)
                 localStorage.setItem("3B", data[0].TB)
                 localStorage.setItem("3C", data[0].TC)
-                /*   const list = []
-                  if (data[0].FA === 1) {
-                      list.push("1A")
-                  }
-                  if (data[0].FB === 1) {
-                      list.push("1B")
-                  }
-                  if (data[0].FC == 1) {
-                      list.push("1C")
-                  }
-                  if (data[0].SA == 1) {
-                      list.push("2A")
-                  }
-                  if (data[0].SB == 1) {
-                      list.push("2B")
-                  }
-                  if (data[0].SC == 1) {
-                      list.push("2C")
-                  }
-                  if (data[0].TA == 1) {
-                      list.push("3A")
-                  }
-                  if (data[0].TB == 1) {
-                      list.push("3B")
-                  }
-                  if (data[0].TC == 1) {
-                      list.push("3C")
-                  } */
 
-                //setReservedSeat(list)
-
-                //console.log(reservedSeat)
             })
     })
 
@@ -176,14 +147,7 @@ export default function SeatSelection() {
     const handlePassengerName = (e, seatNo) => {
         e.preventDefault()
         let value = e.target.value
-        /* // console.log(value)
-        if (!value) {
-            return (setName("name is required"))
-        } else {
-            setName(name.concat(value))
-            setPassengerNames([...passengerNames, {seat:seatNo, name:value}  ])
-            console.log(passengerNames)
-        } */
+
         if (seatNo === "1A") {
             setPassengerName1A(value);
         }
@@ -216,43 +180,112 @@ export default function SeatSelection() {
 
     }
     const handleSubmitDetails = e => {
-        e.preventDefault()
+        e.preventDefault();
         //setCheckOut(true);
         //setArrowDown(true)
         //localStorage.setItem("reservedSeats", JSON.stringify(seatNumber))
         //localStorage.setItem("nameData", JSON.stringify(name))
+        var regex = /^[a-zA-Z\\s]+$/;
+        if(seatNumber.length===0){
+            setErrorText1("Please select seat and enter passenger details");
+            return;
+        }
         const x = []
         if (seatNumber.includes("1A")) {
+            if (regex.test(passengerName1A.trim()) == false || passengerName1A.trim().length === 0|| passengerGender1A.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "1A", passengerName: passengerName1A, passengerGender: passengerGender1A })
         }
         if (seatNumber.includes("1B")) {
+            if (regex.test(passengerName1B.trim()) == false || passengerName1B.trim().length === 0 || passengerGender1B.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "1B", passengerName: passengerName1B, passengerGender: passengerGender1B })
         }
         if (seatNumber.includes("1C")) {
+            if (regex.test(passengerName1C.trim()) == false || passengerName1C.trim().length === 0 || passengerGender1C.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "1C", passengerName: passengerName1C, passengerGender: passengerGender1C })
         }
 
         if (seatNumber.includes("2A")) {
+            if (regex.test(passengerName2A.trim()) == false || passengerName2A.trim().length === 0 || passengerGender2A.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "2A", passengerName: passengerName2A, passengerGender: passengerGender2A })
         }
         if (seatNumber.includes("2B")) {
+            if (regex.test(passengerName2B.trim()) == false || passengerName2B.trim().length === 0 || passengerGender2B.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "2B", passengerName: passengerName2B, passengerGender: passengerGender2B })
         }
         if (seatNumber.includes("2C")) {
+            if (regex.test(passengerName2C.trim()) == false || passengerName2C.trim().length === 0 || passengerGender2C.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "2C", passengerName: passengerName2C, passengerGender: passengerGender2C })
         }
 
         if (seatNumber.includes("3A")) {
+            if (regex.test(passengerName3A.trim()) == false || passengerName3A.trim().length === 0 || passengerGender3A.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "3A", passengerName: passengerName3A, passengerGender: passengerGender3A })
         }
         if (seatNumber.includes("3B")) {
+            if (regex.test(passengerName3B.trim()) == false || passengerName3B.trim().length === 0 || passengerGender3B.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "3B", passengerName: passengerName3B, passengerGender: passengerGender3B })
         }
         if (seatNumber.includes("3C")) {
+            if (regex.test(passengerName3C.trim()) == false || passengerName3C.trim().length === 0 || passengerGender3C.trim().length === 0) 
+            {
+                if (errorText.length === 0) {
+                    setErrorText("Please enter valid name and gender");
+                }
+                return;
+            }
             x.push({ seatNo: "3C", passengerName: passengerName3C, passengerGender: passengerGender3C })
         }
         //console.log(x)
         //setPassengers(x)
+        setErrorText('');
         localStorage.setItem('passengers', JSON.stringify(x));
         localStorage.setItem('seatNumber', seatNumber);
         localStorage.setItem('numOfSeats', x.length);
@@ -263,39 +296,39 @@ export default function SeatSelection() {
             console.log("minemap:", { seat: seat });
             if (seat.includes("1A")) {
                 localStorage.setItem("1A", 1);
-                alert("1A: "+localStorage.getItem("1A"))
+                //alert("1A: " + localStorage.getItem("1A"))
             }
             if (seat.includes("1B")) {
                 localStorage.setItem("1B", 1);
-                alert("1B: "+localStorage.getItem("1B"))
+                //alert("1B: " + localStorage.getItem("1B"))
             }
             if (seat.includes("1C")) {
                 localStorage.setItem("1C", 1);
-                alert("1C: "+localStorage.getItem("1C"))
+                //alert("1C: " + localStorage.getItem("1C"))
             }
             if (seat.includes("2A")) {
                 localStorage.setItem("2A", 1);
-                alert("2A: "+localStorage.getItem("2A"))
+               // alert("2A: " + localStorage.getItem("2A"))
             }
             if (seat.includes("2B")) {
                 localStorage.setItem("2B", 1);
-                alert("2B: "+localStorage.getItem("2B"))
+               // alert("2B: " + localStorage.getItem("2B"))
             }
             if (seat.includes("2C")) {
                 localStorage.setItem("2C", 1);
-                alert("2C: "+localStorage.getItem("2C"))
+                //alert("2C: " + localStorage.getItem("2C"))
             }
             if (seat.includes("3A")) {
                 localStorage.setItem("3A", 1);
-                alert("3A: "+localStorage.getItem("3A"))
+               // alert("3A: " + localStorage.getItem("3A"))
             }
             if (seat.includes("3B")) {
                 localStorage.setItem("3B", 1);
-                alert("3B: "+localStorage.getItem("3B"))
+               // alert("3B: " + localStorage.getItem("3B"))
             }
             if (seat.includes("3C")) {
                 localStorage.setItem("3C", 1);
-                alert("3C: "+localStorage.getItem("3C"))
+                //alert("3C: " + localStorage.getItem("3C"))
             }
 
 
@@ -403,6 +436,8 @@ export default function SeatSelection() {
                                     {checkout ? (<PayPal />) : (<button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">checkout
                                     </button>)}
                                 </div>
+                                {errorText} <br/>
+                                {errorText1}
                             </div>
                             <div className={arrowDown ? "activeArrow2" : "nonActive"}>
                                 <FaAngleDoubleDown />

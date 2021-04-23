@@ -102,7 +102,7 @@ export default function BusList({ value: dataInp }) {
                         <div class="col-6 col-sm-3 mb-4">{bus.endTime}</div>
                         <div class="col-6 col-sm-3 mb-4">{bus.price}</div>
                         <div class="col-6 col-sm-4 mb-2 ml-0">
-                            <button className={clas ? "btn btn-primary btn-md" : "btn btn-primary btn-md disabled"}
+                            <button className={clas ? "btn btn-dark btn-md" : "btn btn-dark btn-md disabled"}
                                 onClick={(bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => { handleSubmit(bus._id, bus.price, bus.source, bus.destination, bus.startTime, bus.endTime, bus.busnumber, bus.date) }} >
                                 Book Now</button>
                         </div>
