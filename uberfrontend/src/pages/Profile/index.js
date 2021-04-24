@@ -23,6 +23,15 @@ export default function Profile() {
   const [password, setPassword] = useState("");
   const [npassword, setNpassword] = useState("");
   const [cpassword, setCpassword] = useState("");
+  const [helperuser, setHelperuser] = useState("");
+  const [helpernewpassword, setHelpernewpassword] = useState("");
+  const [helpercpassword, setHelpercpassword] = useState("");
+  const [errornewpassword, setErrornewpassword] = useState(false);
+  const [errorcpassword, setErrorcpassword] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [error, setError]= useState('')
+  const [errorcontact, setErrorcontact] = useState(false);
+  const [helpercontact, setHelpercontact] = useState("");
 
   const styleObj = {
     // fontSize: 40,
@@ -79,25 +88,95 @@ export default function Profile() {
   }, []);
 
   const handlenewPasswordChange = (val) => {
-    setNpassword(val);
+    //setNpassword(val);
+    if (val.target.value == "") {
+      setErrornewpassword(true);
+      setHelpernewpassword("Please enter Password");
+    } else {
+      setErrornewpassword(false);
+      setHelpernewpassword("");
+    }
+    setNpassword(val.target.value);
   };
 
   const handleconfirmPasswordChange = (val) => {
-    setCpassword(val);
+    //setCpassword(val);
+    if (val.target.value == "") {
+      setErrorcpassword(true);
+      setHelpercpassword("Please enter Confirmed Password");
+     } else {
+    //   if (event.handlePassword !== event.handleCPassword) {
+    //     setError(true);
+    //      setErrorText("Password and Confirm Password is not matching")
+    //   }
+    //  else{
+        setErrorcpassword(false);
+      setHelpercpassword("");
+      }
+      
+    //}
+    setCpassword(val.target.value);
   };
   /* 
 const handleContactChange = e => {
   setContact({ contact: e.target.value })
 } */
+const handleSave = (val) => {
+  if (val.target.value == "") {
+    setErrorcontact(true);
+    setHelpercontact("Please enter Contact Number");
+  } else {
+    setErrorcontact(false);
+    setHelpercontact("");
+  }
+  setContact(val.target.value);
+};
 
-  const handleSave = (val) => {
-    setContact(val);
-    console.log("contactval: ", val);
-  };
+  // const handleSave = (val) => {
+  //   setContact(val);
+  //   console.log("contactval: ", val);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const passwrd = cpassword === "" ? password : cpassword;
+    //Password validation
+    var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!passwordpattern.test(npassword)) {
+      setErrornewpassword(true);
+      setHelpernewpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
+      return;
+    }
+
+    //confirm password validation
+    var cpasswordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
+    if (!cpasswordpattern.test(cpassword)) {
+      setErrorcpassword(true);
+      setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
+      return;
+      
+    }
+
+    //validate confirm password
+    if (npassword === cpassword) {
+      setError(false);
+      setErrorText(""); 
+      
+    } else {
+      setError(true);
+      //alert("Passwords don't match");  
+      setErrorText("Passwords don't match"); 
+      return;
+    }
+
+    //validate phone number
+    var contactpattern= new RegExp (/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
+    if (!contactpattern.test(contact)) {
+      setErrorcontact(true);
+      setHelpercontact("Please enter valid contact number in format (123)123-1234");
+      return;
+    }
+    
+    // const passwrd = cpassword === "" ? password : cpassword;
     fetch("http://localhost:5000/updateUser", {
       method: "POST",
       headers: {
@@ -106,7 +185,7 @@ const handleContactChange = e => {
       body: JSON.stringify({
         user: localStorage.getItem("username"),
         contact: contact,
-        password: passwrd,
+        password: password,
       }),
     })
       .then((response) => {
@@ -214,6 +293,7 @@ const handleContactChange = e => {
         <EditIcon />
         <TextField
           value={contact}
+          error={errorcontact}
           variant="outlined"
           margin="normal"
           required
@@ -221,13 +301,14 @@ const handleContactChange = e => {
           id="dob"
           label={"Contact Number"}
           name="contact"
-          autoComplete="contact"
           autoFocus
-          onSave={handleSave}
-          submitOnEnter
+          onInput={handleSave}
+          //onSave={handleSave}
+          helperText={helpercontact}
         />
         <TextField
           value={password}
+
           variant="outlined"
           margin="normal"
           required
@@ -243,6 +324,7 @@ const handleContactChange = e => {
         <EditIcon />
         <TextField
           value={npassword}
+          error={errornewpassword}
           variant="outlined"
           margin="normal"
           required
@@ -251,14 +333,16 @@ const handleContactChange = e => {
           id="npassword"
           label={"New Password"}
           name="npassword"
-          autoComplete="npassword"
-          onSave={handlenewPasswordChange}
-          submitOnEnter
+         
+          onInput={handlenewPasswordChange}
+          //onSave={handlenewPasswordChange}
+          helperText={helpernewpassword}
           autoFocus
         />
         <EditIcon />
         <TextField
           value={cpassword}
+          error={errorcpassword}
           variant="outlined"
           margin="normal"
           required
@@ -267,9 +351,11 @@ const handleContactChange = e => {
           id="cpassword"
           label={"Confirmed Password"}
           name="cpassword"
-          autoComplete="cpassword"
-          onSave={handleconfirmPasswordChange}
-          submitOnEnter
+          
+          onInput={handleconfirmPasswordChange}
+          //onSave={handleconfirmPasswordChange}
+          helperText={helpercpassword + errorText}
+          
           autoFocus
         />
 
