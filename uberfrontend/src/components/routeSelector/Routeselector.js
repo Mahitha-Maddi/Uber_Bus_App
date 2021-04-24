@@ -10,6 +10,7 @@ import { Container, Grid } from "@material-ui/core";
 //import * as apiCall from './routeApifunc'
 import BusList from "../BusList/BusList";
 import { FaAlignLeft } from "react-icons/fa";
+import Footer from "../../pages/Footer";
 export default function Routeselector() {
   const [dataInp, setData] = useState("");
   const [startCity, setStartCity] = useState("Source");
@@ -279,6 +280,11 @@ export default function Routeselector() {
         </form>
         <div>{renderBusList(dataInp)}</div>
       </div>
+      {/* <footer>
+            <div className="Footer">
+              <Footer />
+            </div>
+          </footer> */}
     </div>
   );
 }
