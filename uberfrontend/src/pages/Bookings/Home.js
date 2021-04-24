@@ -150,7 +150,7 @@ backgroundColor:'black',
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/cancelBooking", config)
+    fetch("/cancelBooking", config)
       .then(res => res.json())
       .then(data => {
         setLoading(false);
@@ -163,7 +163,7 @@ backgroundColor:'black',
     console.log("username:",localStorage.getItem('username'));
     const fetchData = async () => {
       //removed localhost
-      fetch("http://localhost:5000/bookings-results", {
+      fetch("/bookings-results", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

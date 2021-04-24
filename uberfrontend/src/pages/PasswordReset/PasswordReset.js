@@ -91,7 +91,7 @@ const PasswordReset = () => {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/checkUserWithEmail", config)
+    fetch("/checkUserWithEmail", config)
       .then(res => res.json())
       .then(data => {
         //alert("Saved passenger! " + data);

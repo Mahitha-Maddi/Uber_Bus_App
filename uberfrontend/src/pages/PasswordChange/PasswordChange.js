@@ -135,7 +135,7 @@ const PasswordChange = () => {
       },
       body: JSON.stringify(paramdict)
     }
-    fetch("http://localhost:5000/updateUserForgotPassword", config)
+    fetch("/updateUserForgotPassword", config)
       .then(res => res.json())
       .then(data => {
         alert("Successfully updated! you can now login!");

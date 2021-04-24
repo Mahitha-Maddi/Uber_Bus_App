@@ -132,7 +132,7 @@ const SignIn = () => {
     console.log(paramdict);
 
     // verify user/pwd, get encoded userid as access and refresh tokens in return
-    fetch("http://localhost:5000/login", config)
+    fetch("/login", config)
     //fetch(`${process.env.BE_NETWORK}:${process.env.BE_PORT}/login`, config)
     //fetch("/login", config)
       .then(response => response.json())
