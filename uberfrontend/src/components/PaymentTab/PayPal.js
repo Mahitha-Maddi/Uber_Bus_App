@@ -1,7 +1,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import emailjs from 'emailjs-com';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
+import Paper from '@material-ui/core/Paper'
 
+const useStyles = makeStyles((theme) =>({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },paper: {
+    width: 'auto',
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.up(620 + theme.spacing(6))]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
+      3
+    )}px`,
+  },
+}));
 export default function Paypal() {
+  const classes = useStyles();
   const paypal = useRef();
   const [totalPrice, setTotalPrice] = useState('')
   const [numOfSeats, setNumOfSeats] = useState([])
@@ -42,6 +77,7 @@ export default function Paypal() {
   }
 
   const saveBooking = () => {
+    const passengers = JSON.parse(localStorage.getItem("passengers") || "[]");
     console.log("username: ", localStorage.getItem('username'));
     const seatsBooked=[];
     if (localStorage.getItem('1A')!==0){
@@ -81,7 +117,8 @@ export default function Paypal() {
       'date': localStorage.getItem('busDate'),
       'numOfSeats': localStorage.getItem('numOfSeats'),
       'totalPrice': localStorage.getItem('totalPrice'),
-      'seatsBooked': seatsBooked
+      'seatsBooked': seatsBooked,
+      'passengers': passengers
     }
     const config = {
       method: 'POST',
@@ -220,8 +257,34 @@ export default function Paypal() {
       <div>
 
         <br /><br /><br /><br /><br /><br />
-        <h1>Congrats, your booking is successful!</h1>
+       
         {/* <img alt={product.description} src={gif} /> */}
+        <React.Fragment>
+      <Paper className={classes.paper} elevation={6}>
+        <div className={classes.container}>
+        <Card className={classes.root}>
+      <CardActionArea>{/* 
+        <CardMedia
+          className={classes.media}
+          image="/static/images/cards/contemplative-reptile.jpg"
+          title="Contemplative Reptile"
+        /> */}
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="h6">
+            Awesome!
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+           Your booking has been confirmed! <br/><br/>
+           Check your email for details! <br/>
+           
+      <Link to="/aboutus/">Learn More</Link>
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+        </div>
+      </Paper>
+      </React.Fragment>
       </div>
     );
   }

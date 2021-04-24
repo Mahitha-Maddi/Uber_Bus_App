@@ -12,6 +12,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Link } from "@material-ui/core/";
 import Button from '@material-ui/core/Button'
 import { useHistory } from 'react-router-dom'
+import TextField from '@material-ui/core/TextField';
+import clsx from 'clsx';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import { red } from '@material-ui/core/colors';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 //import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -27,6 +35,24 @@ const useStyles = makeStyles(theme => ({
   card: {
     flexGrow: 1,
     padding: theme.spacing(2)
+},
+expand: {
+  transform: 'rotate(0deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+},
+expandOpen: {
+  transform: 'rotate(180deg)',
+},
+avatar: {
+  backgroundColor: red[500],
+},
+input: {
+  "&:disabled": {
+    color: "black"
+  }
 }
 }));
 
@@ -41,6 +67,8 @@ const styleObj = {
   justifyContent: 'center',
   height: `100%`,
 }
+
+
 
 const getCurrentDate=(separator='/')=>{
 
@@ -78,6 +106,11 @@ const THome = () => {
   const [tweets, setTweets] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [todayDate,setTodayDate] = React.useState('');
+  const [expanded, setExpanded] = React.useState(false);
+
+const handleExpandClick = () => {
+  setExpanded(!expanded);
+};
 
   const cancelBooking = (e,bookingid) =>{
     e.preventDefault();
@@ -172,33 +205,151 @@ const THome = () => {
         tweets.map((link) => (
           <Grid item xs={12} sm={6} md={4}>
             <Card className={classes.root}>
-              <CardMedia
+             {/*  <CardMedia
                 className={classes.media}
                 image={
                   "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ieN2q3c75kbM/v0/1000x-1.jpg"
                 }
                 title="UBER BUS"
-              />
+              /> */}
+              <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            U
+          </Avatar>
+        }
+        title={link.date}
+        subheader={link.source +">>>>>>"+link.destination}
+      />
+
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+                {/* <Typography gutterBottom variant="h5" component="h2">
                   {link.user}
-                </Typography>
+                </Typography> */}{/* 
                 <Typography gutterBottom variant="h6" component="h6">
                   Source : {link.source}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
                   Destination : {link.destination}
+                </Typography> */}
+                <Typography gutterBottom variant="h6" component="h6">
+                  
+                  <TextField
+                  className={classes.input}
+              value={link.startTime}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="filled"
+              label={'Start Time'}
+              name="Start Time"
+              autoComplete="Start Time"
+              autoFocus
+              disabled 
+            />
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
-                  Date of Journey : {link.date}
+                <TextField
+              value={link.endTime}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="filled"
+              label={'End Time'}
+              name="End Time"
+              autoComplete="End Time"
+              autoFocus
+              disabled = {true}
+            />
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
-                  Total Price : {link.totalPrice}
+                <TextField
+              value={link.totalPrice}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="filled"
+              label={'Total Price'}
+              name="Total Price"
+              autoComplete="Total Price"
+              autoFocus
+              disabled = {true}
+            />
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
-                  Number of seats booked: {link.numOfSeats}
+                  <TextField
+              value={link.numOfSeats}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="filled"
+              label={'Seats Booked'}
+              name="Seats Booked"
+              autoComplete="Seats Booked"
+              autoFocus
+              disabled = {true}
+            />
                 </Typography>
-                <button disabled={checkDisabled(link.date)} onClick={(e,bookingid)=>cancelBooking(e,link._id)} >cancel</button>
+                <CardActions disableSpacing>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+       { link.passengers.map((passenger) => 
+         (<div>
+           <TextField
+              value={passenger.passengerName}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="outlined"
+              label={'Seats Booked'}
+              name="Seats Booked"
+              autoComplete="Seats Booked"
+              autoFocus
+              disabled = {true}
+            />
+         <TextField
+              value={passenger.passengerGender}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="outlined"
+              label={'Seats Booked'}
+              name="Seats Booked"
+              autoComplete="Seats Booked"
+              autoFocus
+              disabled = {true}
+            />
+         
+         <TextField
+              value={passenger.seatNo}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="outlined"
+              label={'Seats Booked'}
+              name="Seats Booked"
+              autoComplete="Seats Booked"
+              autoFocus
+              disabled = {true}
+            />
+       </div>
+       ))
+       }
+        </CardContent>
+      </Collapse>
+                <button className="btn btn-dark btn-md" disabled={checkDisabled(link.date)} onClick={(e,bookingid)=>cancelBooking(e,link._id)} >Cancel Ride</button>
               </CardContent>
             </Card>
           </Grid>

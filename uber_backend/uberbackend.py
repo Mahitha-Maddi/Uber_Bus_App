@@ -601,8 +601,9 @@ def book_bus():
     numOfSeats = request.json['numOfSeats']
     totalPrice = request.json['totalPrice']
     seatsBooked =request.json['seatsBooked']
+    passengers =request.json['passengers']
     
-    booking = dict( source=source,seatsBooked=seatsBooked, destination=destination,busnumber=busnumber,user=user,numOfSeats=numOfSeats,totalPrice=totalPrice,date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),_id=str(ObjectId()))
+    booking = dict( source=source,passengers=passengers,seatsBooked=seatsBooked, destination=destination,busnumber=busnumber,user=user,numOfSeats=numOfSeats,totalPrice=totalPrice,date=date, startTime=startTime,endTime=endTime,bookeddate=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),_id=str(ObjectId()))
     result1=insert_one(booking)
     return jsonify(result1)
 
