@@ -123,6 +123,9 @@ export default function Routeselector() {
           setError1("invalid");
         } else {
           setError1("");
+          if(data.length<=0){
+            alert("Sorry no buses are available for this combination!!")
+          }
         }
 
         /* this.setState({
