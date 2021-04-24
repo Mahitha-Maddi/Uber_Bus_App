@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import clsx from "clsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Router, Route, Link, Switch } from "react-router-dom";
@@ -165,6 +165,17 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   const [collapsed, setCollapsed] = React.useState(false);
   const [title, setTitle] = React.useState("Home");
+  const [toolUser, setToolUser] = React.useState('');
+
+  useEffect(() => {
+    const u=localStorage.getItem('username');
+    //alert("hell0" + toolUser+u);
+    if(u!=null && u!=undefined)
+    {setToolUser("Hello "+u+"!");
+      
+    }
+
+  })
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -272,9 +283,9 @@ export default function Dashboard() {
             noWrap
             align="right"
           >
-            Logout
-            <ErrorOutlineIcon />
-            <IconButton onClick={handleSignOut}></IconButton>
+            
+            {toolUser}
+            <IconButton color='inherit' size='small' onClick={handleSignOut}><ErrorOutlineIcon />Logout</IconButton>
           </Typography>
 
           {/* </IconButton> */}
