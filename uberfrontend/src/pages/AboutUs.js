@@ -4,6 +4,9 @@ import {Container,Col,Image,Button, Row, Grid} from 'react-bootstrap';
 import '../styles/about.css'
 import Footer from './Footer'
 import ubar3 from '../styles/images/uber5.jpeg'
+import about1 from '../styles/images/about1.jpeg'
+import sayali from '../styles/images/sayali.jpeg'
+import mahitha from '../styles/images/mahitha.jpeg'
 
 
 export default class About extends Component{
@@ -14,7 +17,7 @@ export default class About extends Component{
     paddingTop: '80px'
     
   }} >    
-                <Image src="/assets/img/about.jpg" />
+                <Image src={about1} />
                 <h2 className="heading">About Us</h2>              
                 
             </div>
@@ -55,15 +58,15 @@ export default class About extends Component{
                 <Container>
             <Row className= "show-grid text-center">
                     <Col xs={12} sm={4} className="person-wrapper">
-                    <Image src="/assets/img/person1.jpg" circle className="profile-pic" height="200" width="200"/>
-                    <h3>Mari Johnson</h3>
+                    <Image src={sayali} circle className="profile-pic" height="200" width="200"/>
+                    <h3>Sayali Pathare</h3>
                     <h5>Founder and Director</h5>
-                    <p>“Nina was an excellent Travel Agent for us and considered our unique needs as she planned our itinerary. Every suggestion she made was excellent.” </p>
+                    <p>“Sayali was an excellent Travel Agent for us and considered our unique needs as she planned our itinerary. Every suggestion she made was excellent.” </p>
                     </Col>
 
                     <Col xs={12} sm={4} className="person-wrapper">
-                    <Image src="/assets/img/person3.jpg" circle className="profile-pic" height="200" width="200"/>
-                    <h3>James Anderson</h3>
+                    <Image src={mahitha} circle className="profile-pic" height="200" width="200"/>
+                    <h3>Shiva Mahitha Maddi</h3>
                     <h5>Senior Travel Agent</h5>
                     <p>“I would highly recommend Andy because everything on my month long trip to New Zealand, Australia and French Polynesia went without a hitch.”</p>
                     </Col>

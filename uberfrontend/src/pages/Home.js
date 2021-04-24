@@ -7,6 +7,7 @@ import { CardActionArea } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
+
 import home from "../icons/home.jpeg";
 
 import uber1 from "../styles/images/uber1.jpeg";
@@ -22,6 +23,7 @@ import Chicago from "../styles/images/chicago.jpeg";
 import newOrleans from "../styles/images/new-orleans-hero.jpeg";
 import savanna from "../styles/images/savannah-georgia-SAVANNAH0519.jpeg"
 import Footer from "./Footer";
+//import Carousel from 'react-bootstrap/Carousel'
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -48,24 +50,28 @@ function Home(props) {
   return (
     <div className={classes.root}>
       <div class="container-fluid">
-        <Carousel fade>
-          <div>
-            <img className="d-block w-100" src={uber1} alt="First slide" />
+        <Carousel fade> 
+      
+            <div >
+            <img class="d-block w-100" src={uber3} alt="First slide" />
             <h4>Adding a Joy to your Journey</h4>
           </div>
-          <div>
-            <img className="d-block w-100" src={uber6} alt="Second slide" />
+          <div >
+            <img class="d-block w-100" src={uber6} alt="Second slide" />
             <h3>Lets you Explore the Best</h3>
           </div>
-          <div>
-            <img className="d-block w-100" src={uber3} alt="Fourth slide" />
+          <div >
+            <img class="d-block w-100" src={uber1} alt="Fourth slide" />
             <h3>Bringing Joy From Every journey</h3>
           </div>
-          <div>
-            <img className="d-block w-100" src={uber4} alt="Fourth slide" />
+          <div >
+            <img class="d-block w-100" src={uber4} alt="Fourth slide" />
             <h3>Quality Travelling, Quality Service</h3>
           </div>
-        </Carousel>
+ 
+         </Carousel> 
+
+
         <CardDeck>
           <Card >
           <CardActionArea href="https://www.planetware.com/tourist-attractions-/new-york-city-us-ny-nyc.htm">
