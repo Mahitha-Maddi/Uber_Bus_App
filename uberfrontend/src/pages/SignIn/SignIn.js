@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 //import MenuContext from 'material-ui-shell/lib/providers/Menu/Context'
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 // save keys to local storage
 const localStorageAuthKey = 'twtr:auth';
@@ -47,6 +48,7 @@ function logout() {
         localStorage.removeItem(localStorageAuthKey);
         localStorage.removeItem('userid');
         localStorage.removeItem('username');
+        window.location.reload();
     } catch (ex) {
         console.log(ex);
     }
@@ -105,61 +107,12 @@ const SignIn = () => {
   const history = useHistory()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [helperuser, setHelperuser] = useState("");
-  const [helperpassword, setHelperpassword] = useState("");
-  const [errorText, setErrorText] = useState("");
-  const [errorusername, setErrorusername] = useState(false);
-  const [errorpassword, setErrorpassword] = useState(false);
-
-  const handleUsername = (event) => {
-    if (event.target.value == "") {
-      setErrorusername(true);
-      setHelperuser("Please enter Username");
-    } else {
-      setErrorusername(false);
-      setHelperuser("");
-    }
-    setUsername(event.target.value);
-  };
-
-  const handlePassword = (event) => {
-    if (event.target.value == "") {
-      setErrorpassword(true);
-      setHelperpassword("Please enter Password");
-    } else {
-      setErrorpassword(false);
-      setHelperpassword("");
-    }
-    setPassword(event.target.value);
-  };
 
   // we submit username and password, we receive
   // access and refresh tokens in return. These
   // tokens encode the userid
   function handleSubmit(event) {
     event.preventDefault()
-
-      //username validation
-    // if (username === '') {
-    //   setErrorusername(true);
-    //   setHelperuser("Please enter username");
-    //   return;
-    // }
-
-    // var userpattern = new RegExp(/^(?!_*\_*\_*)[A-Za-z]?$/i);
-    // if (!userpattern.test(username)) {
-    //   setErrorusername(true);
-    //   setHelperuser("Please enter valid username: It can contain only letters, numbers and an optional underscore, min length 4");
-    //   return;
-    // }
-
-    //  //Password validation
-    //  var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
-    //  if (!passwordpattern.test(password)) {
-    //    setErrorpassword(true);
-    //    setHelperpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
-    //    return;
-    //  }
 
     //console.log(username);
     //console.log(password);
@@ -198,6 +151,7 @@ const SignIn = () => {
 
         // back to landing page!
         history.push("/");
+        return (<Redirect to="/" />);
       })
       .catch( (err) => {
         alert(err);
@@ -283,9 +237,7 @@ const SignIn = () => {
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               value={username}
-              error={errorusername}
-              onInput={handleUsername}
-              //onInput={(e) => setUsername(e.target.value)}
+              onInput={(e) => setUsername(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -295,13 +247,10 @@ const SignIn = () => {
               name="username"
               autoComplete="username"
               autoFocus
-              helperText={helperuser}
             />
             <TextField
               value={password}
-              error={errorpassword}
-              onInput={handlePassword}
-              //onInput={(e) => setPassword(e.target.value)}
+              onInput={(e) => setPassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -311,7 +260,6 @@ const SignIn = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              helperText={helperpassword}
             />
             <Button
               type="submit"

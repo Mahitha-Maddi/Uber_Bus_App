@@ -56,7 +56,7 @@ input: {
 }
 }));
 
-const styleObj = {
+/* const styleObj = {
   // fontSize: 40,
 
   textAlign: "center",
@@ -67,7 +67,7 @@ const styleObj = {
   justifyContent: 'center',
   height: `100%`,
 }
-
+ */
 
 
 const getCurrentDate=(separator='/')=>{

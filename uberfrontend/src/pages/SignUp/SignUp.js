@@ -292,17 +292,44 @@ const SignUp = () => {
     
   }
 
+  const handleBooking = () => {
+    console.log("doing something");
+    history.push("/Book") 
+  }
+
+  const styleObj = {
+    paddingTop: "40px",
+    paddingBottom: "40px",
+    fontStyle: 'italic',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    height: `100%`,
+    backgroundColor: '#C0C0C0',
+    
+  }
+
+  const buttonS ={
+    backgroundColor:'black',
+      paddingTop: "10px",
+      width: '50%',
+      justifyContent: 'center',
+      marginLeft:'25%',
+    }
+
   return (
-    // <Page
-    //   pageTitle={intl.formatMessage({
-    //     id: 'sign_up',
-    //     defaultMessage: ' Sign up',
-    //   })}
-    //   onBackClick={() => {
-    //     history.goBack()
-    //   }}
-    // >
-    <React.Fragment>
+    (localStorage.getItem('userid')!==null && localStorage.getItem('userid')!==undefined)?(
+      <div >
+        <br/><br/><br/><br/>
+        
+        <h3 style={styleObj} >**You are already registered and logged in to the app!!</h3>
+        <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleBooking} style={buttonS} >
+              {'Wanna book a ride?'} 
+            </Button>
+          
+        </div>):
+   ( <React.Fragment>
       <Paper className={classes.paper} elevation={6}>
         <div className={classes.container}>
           <Typography component="h1" variant="h5">
@@ -421,7 +448,7 @@ const SignUp = () => {
         </div>
       </Paper>
     </React.Fragment>
-  )
+  ))
 }
 
 export default SignUp
