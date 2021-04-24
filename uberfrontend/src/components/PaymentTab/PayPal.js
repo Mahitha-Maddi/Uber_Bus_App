@@ -179,10 +179,22 @@ export default function Paypal() {
         console.log(data);
         email=data[0].email;
       })
-
+   
+      const sTime=localStorage.getItem('startTime');
+      const s=sTime.split(' ')[1];
+      const eTime=localStorage.getItem('endTime');
+      const e=eTime.split(' ')[1];
     var templateParams = {
       email_to: email,
-      message: localStorage.getItem('passengers')
+      busnumber: localStorage.getItem('BusNum'),
+      user: localStorage.getItem('username'),
+      source: localStorage.getItem('source'),
+      destination: localStorage.getItem('destination'),
+      startTime: s,
+      endTime:e ,
+      date: localStorage.getItem('busDate'),
+      numOfSeats: localStorage.getItem('numOfSeats'),
+      totalPrice: localStorage.getItem('totalPrice')
     };
 
     emailjs.send('gmail', 'template_zyqahd1', templateParams, 'user_LQUnilAw58Lv7SREimvSB')

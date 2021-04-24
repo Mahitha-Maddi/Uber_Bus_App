@@ -44,7 +44,7 @@ import PasswordReset from "../pages/PasswordReset/PasswordReset";
 import PasswordChange from "../pages/PasswordChange/PasswordChange";
 import THome from "../pages/Bookings/Home";
 //import Book from "../pages/Book/Book";
-//import NotFoundPage from "../pages/Book/NotFoundPage";
+import NotFoundPage from "./NotFoundPage";
 import RouteSelection from "./RouteSelection/RouteSelection"; ///RouteSelection/RouteSelection';
 import SeatSelection from "./SeatSelection/SeatSelection";
 import PayPal from "./PaymentTab/PayPal";
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
-    
+
   },
   toolbarIcon: {
     display: "flex",
@@ -461,27 +461,17 @@ export default function Dashboard() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/bookings" exact component={THome} />
-            {/*  <Route path="/Book" exact component={Book} /> */}
-            {/* <Route path="/bookings" exact component={ListUserComponent} /> */}
-            <Route
-              path="/Book"
-              exact
-              render={(props) => <RouteSelection {...props} />}
-            />
-            <Route
-              path="/seatSelection/"
-              exact
-              render={(props) => <SeatSelection {...props} />}
-            />
-            <Route path="/payment/" exact render={(props) => <PayPal {...props} />}/>
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/password_reset" component={PasswordReset} />
-            <Route path="/password_change" component={PasswordChange} />
-            <Route path="/aboutus" component={aboutus} />
-            <Route path="/contactus" component={contactus} />
-            <Route path="/userprofile" component={profile} />
-           {/*  <Route path="*" exact component={NotFoundPage} />  */}
+            <Route path="/Book" exact render={(props) => <RouteSelection {...props} />}/>
+            <Route path="/seatSelection/" exact render={(props) => <SeatSelection {...props} />}/>
+            <Route path="/payment/" exact render={(props) => <PayPal {...props} />} />
+            <Route path="/signin" exact component={SignIn} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/password_reset" exact component={PasswordReset} />
+            <Route path="/password_change" exact component={PasswordChange} />
+            <Route path="/aboutus" exact component={aboutus} />
+            <Route path="/contactus" exact component={contactus} />
+            <Route path="/userprofile" exact component={profile} />
+            <Route path="*" exact component={() => <NotFoundPage />} /> 
           </Switch>
         </main>
       </Router>

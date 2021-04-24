@@ -232,6 +232,22 @@ const handleExpandClick = () => {
                 <Typography gutterBottom variant="h6" component="h6">
                   Destination : {link.destination}
                 </Typography> */}
+                 <Typography gutterBottom variant="h6" component="h6">
+                  
+                  <TextField
+                  className={classes.input}
+              value={link.busnumber}
+              margin="normal"
+              fullWidth
+              id="filled-basic"
+              variant="filled"
+              label={'Bus Number'}
+              name="Bus Number"
+              autoComplete="Bus Number"
+              autoFocus
+              disabled 
+            />
+                </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
                   
                   <TextField
