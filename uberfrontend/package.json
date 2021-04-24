@@ -13,6 +13,7 @@
     "bootstrap": "^4.6.0",
     "emailjs-com": "^2.6.4",
     "github-markdown-css": "4.x",
+    "mdbreact": "^5.0.2",
     "react": "^16.12.0",
     "react-admin": "^3.14.4",
     "react-bootstrap": "^1.5.2",

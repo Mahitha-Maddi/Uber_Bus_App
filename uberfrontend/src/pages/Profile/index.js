@@ -1,203 +1,283 @@
-import React, { Component, useState, useEffect } from 'react';
-import EdiText from 'react-editext';
-import { useHistory } from 'react-router-dom'
+import React, { Component, useState, useEffect } from "react";
+import EdiText from "react-editext";
+import { useHistory } from "react-router-dom";
+import EditIcon from "@material-ui/icons/Edit";
 
 // import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button'
+import { Form, Input } from "@rocketseat/unform";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 // import { updateProfileRequest } from '~/store/modules/user/actions';
 
-import AvatarInput from './AvatarInput';
-
-import { Container } from './styles';
+import { Container } from "./styles";
 
 export default function Profile() {
   // const dispatch = useDispatch();
   // const profile = useSelector(state => state.user.profile);
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [dob, setDob] = useState('')
-  const [contact, setContact] = useState('')
-  const [password, setPassword] = useState('')
-  const [npassword, setNpassword] = useState('')
-  const [cpassword, setCpassword] = useState('')
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [dob, setDob] = useState("");
+  const [contact, setContact] = useState("");
+  const [password, setPassword] = useState("");
+  const [npassword, setNpassword] = useState("");
+  const [cpassword, setCpassword] = useState("");
 
   const styleObj = {
     // fontSize: 40,
-  
-    textAlign: "center",
-    paddingTop: "10px",
-    display: 'block',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: `100%`,
-    backgroundColor: '#C0C0C0',
-    
-}
 
-const buttonW = {
-  width: '100px',
-  height: '50px',
-}
+    paddingTop: "40px",
+    paddingBottom: "40px",
+    fontStyle: "italic",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    height: `100%`,
+    backgroundColor: "#C0C0C0",
+  };
+
+  const buttonS = {
+    backgroundColor: "black",
+    paddingTop: "10px",
+    width: "50%",
+    justifyContent: "center",
+    marginLeft: "25%",
+  };
 
   useEffect(() => {
-    const username=localStorage.getItem('username');
-    
+    const username = localStorage.getItem("username");
+
     const fetchData = async () => {
-      fetch('http://localhost:5000/userDetails', {
-        method: 'POST', headers: {
-          'Content-Type': 'application/json'
-        }, body: JSON.stringify({user:username })
+      fetch("http://localhost:5000/userDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: username }),
       })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           return response.json();
         })
-        .then(data => {
-          console.log("our date:",data)
-          console.log("contact: ",data[0].contact)
-          setUsername(data[0].username)
-          setEmail(data[0].email)
-          setDob(data[0].dob)
-          setContact(data[0].contact)
-          setPassword(data[0].password)
-          })
-        .catch(error => {
-          console.log('Request failed', error)
+        .then((data) => {
+          console.log("our date:", data);
+          console.log("contact: ", data[0].contact);
+          setUsername(data[0].username);
+          setEmail(data[0].email);
+          setDob(data[0].dob);
+          setContact(data[0].contact);
+          setPassword(data[0].password);
+        })
+        .catch((error) => {
+          console.log("Request failed", error);
           //alert(error);
         });
-  
-    
     };
     fetchData();
-  }, []
-  );
+  }, []);
 
-   
-const handlenewPasswordChange = (val) => {
-  setNpassword(val)
-}
+  const handlenewPasswordChange = (val) => {
+    setNpassword(val);
+  };
 
-const handleconfirmPasswordChange = (val) => {
-  setCpassword(val)
-}
-/* 
+  const handleconfirmPasswordChange = (val) => {
+    setCpassword(val);
+  };
+  /* 
 const handleContactChange = e => {
   setContact({ contact: e.target.value })
 } */
 
-const handleSave = (val) => {
-  setContact(val)
-  console.log("contactval: ",val);
+  const handleSave = (val) => {
+    setContact(val);
+    console.log("contactval: ", val);
+  };
 
-}
-
-const handleSubmit = e => {
-  e.preventDefault()
-  const passwrd =(cpassword==='')?password:cpassword;
-  fetch('http://localhost:5000/updateUser', {
-    method: 'POST', headers: {
-      'Content-Type': 'application/json'
-    }, body: JSON.stringify({user:localStorage.getItem('username'), contact:contact , password:passwrd
-  })})
-    .then(response => {
-      console.log(response);
-      return response.json();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const passwrd = cpassword === "" ? password : cpassword;
+    fetch("http://localhost:5000/updateUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: localStorage.getItem("username"),
+        contact: contact,
+        password: passwrd,
+      }),
     })
-    .then(data => {
-      console.log("our date:",data)
-      alert("Successfully updated!!")
-      window.location.reload();
+      .then((response) => {
+        console.log(response);
+        return response.json();
       })
-    .catch(error => {
-      console.log('Request failed', error)
-      alert(error);
-    });
-  
-}
+      .then((data) => {
+        console.log("our date:", data);
+        alert("Successfully updated!!");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Request failed", error);
+        alert(error);
+      });
+  };
 
-const history = useHistory();
+  const history = useHistory();
 
-const handleSignIn = () => {
-  console.log("doing something");
-  history.push("/signin") 
-}
-const handleRegister = () => {
-  console.log("doing something");
-  history.push("/signup") 
-}
+  const handleSignIn = () => {
+    console.log("doing something");
+    history.push("/signin");
+  };
+  const handleRegister = () => {
+    console.log("doing something");
+    history.push("/signup");
+  };
 
+  return localStorage.getItem("userid") === null ||
+    localStorage.getItem("userid") === undefined ? (
+    <div>
+      <br />
+      <br />
+      <br />
+      <br />
 
-  return (
-    (localStorage.getItem('userid')===null ||localStorage.getItem('userid')===undefined)?(
-    <div >
-      <br/><br/><br/><br/>
-      
-      <h3 style={styleObj} >**You have not logged in, Please Login!!!</h3>
-      <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleSignIn} style={{backgroundColor:'black'}} >
-            {'Sign In'} 
-          </Button>
-          <hr></hr>
-          <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleRegister} style={{backgroundColor:'black'}} >
-            {'Register'} 
-          </Button>
-        
-      </div>):
-      (
+      <h3 style={styleObj}>**You have not logged in, Please Login!!!</h3>
+      <Button
+        variant="contained"
+        margin="normal"
+        color="primary"
+        onClick={handleSignIn}
+        style={buttonS}
+      >
+        {"Sign In"}
+      </Button>
+      <br></br>
+      <br></br>
+      <Button
+        variant="contained"
+        margin="normal"
+        color="primary"
+        onClick={handleRegister}
+        style={buttonS}
+      >
+        {"Register"}
+      </Button>
+    </div>
+  ) : (
     <Container>
-      <form  onSubmit={e => handleSubmit(e)}>
-        <AvatarInput name="avatar_id" /> 
-      {/* Update the value field to the value from db. */}
-      <TextField
-              value={username}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label={'Username'}
-              name="username"
-              autoComplete="username"
-              autoFocus
-              disabled = {true}
-            />
-          <TextField
-              value={email}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={'Email'}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              disabled = {true}
-            />
-            <TextField
-              value={dob}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="dob"
-              label={'Birth Date'}
-              name="dob"
-              autoComplete="dob"
-              autoFocus
-              disabled = {true}
-            />
-            
-            
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <br></br>
+        <br></br>
+        <br></br>
+        {/* Update the value field to the value from db. */}
+        <TextField
+          value={username}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label={"Username"}
+          name="username"
+          autoComplete="username"
+          autoFocus
+          disabled={true}
+        />
+        <TextField
+          value={email}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label={"Email"}
+          name="email"
+          autoComplete="email"
+          autoFocus
+          disabled={true}
+        />
+        <TextField
+          value={dob}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="dob"
+          label={"Birth Date"}
+          name="dob"
+          autoComplete="dob"
+          autoFocus
+          disabled={true}
+        />
+        <EditIcon />
+        <TextField
+          value={contact}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="dob"
+          label={"Contact Number"}
+          name="contact"
+          autoComplete="contact"
+          autoFocus
+          onSave={handleSave}
+          submitOnEnter
+        />
+        <TextField
+          value={password}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          type="password"
+          id="password"
+          label={"Password"}
+          name="password"
+          autoComplete="password"
+          autoFocus
+          disabled={true}
+        />
+        <EditIcon />
+        <TextField
+          value={npassword}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          type="password"
+          id="npassword"
+          label={"New Password"}
+          name="npassword"
+          autoComplete="npassword"
+          onSave={handlenewPasswordChange}
+          submitOnEnter
+          autoFocus
+        />
+        <EditIcon />
+        <TextField
+          value={cpassword}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          type="password"
+          id="cpassword"
+          label={"Confirmed Password"}
+          name="cpassword"
+          autoComplete="cpassword"
+          onSave={handleconfirmPasswordChange}
+          submitOnEnter
+          autoFocus
+        />
+
         {/* UserName:<input name="username" placeholder="Username" value={username} disabled = {true}/>
         Email:<input name="email" type="email" placeholder="Email address" value={email} disabled = {true}/>
         Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/> */}
         {/* Contact Number:<input name="contact"   onChange={(e) => {handleContactChange(e)}} /> */}
-       Contact Number<EdiText name="contact" variant="outlined"
+        {/* Contact Number<EdiText name="contact" variant="outlined"
               margin="normal"
               required
               fullWidth 
@@ -208,13 +288,12 @@ const handleRegister = () => {
         Password<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
 
         New Password<EdiText name="password" type="password"  value={npassword} onSave={handlenewPasswordChange} submitOnEnter placeholder="New password" />
-        Confirm Password<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/>
+        Confirm Password<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/> */}
 
-        <button type="submit"  style={{backgroundColor:'black'}} >Update profile</button>
-      </form> 
-
-    
+        <button type="submit" style={{ backgroundColor: "black" }}>
+          Update profile
+        </button>
+      </form>
     </Container>
-  ))
+  );
 }
-

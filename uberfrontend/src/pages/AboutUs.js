@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Container,Col,Image,Button, Row, Grid} from 'react-bootstrap';
 import '../styles/about.css'
+import Footer from './Footer'
 
 
 export default class About extends Component{
@@ -74,9 +75,11 @@ export default class About extends Component{
                     </Col>
                 </Row>
                    </Container>
-                   <footer class="footer">
-
-                   </footer>
+                   <footer>
+        <div className="Footer">
+          <Footer />
+        </div>
+      </footer>
                
                 </Container>
 

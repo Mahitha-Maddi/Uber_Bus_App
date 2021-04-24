@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
+import { Container, Grid} from "@material-ui/core";
 //import * as apiCall from './routeApifunc'
 import BusList from '../BusList/BusList'
 export default function Routeselector() {
@@ -158,10 +159,8 @@ export default function Routeselector() {
     }
 
     return (
-
-
         <div className="rdc">
-            <div className="form-group inline"></div>
+            <div className="form-group inline "></div>
             <div className="main-container">
                 <form className="form-inline" onSubmit={e => getRoutes(e)}>
                     {/* <select name="ad_account_selected" data-style="btn-new" class="selectpicker" onChange={e => { handleFromCity(e) }}>
@@ -200,8 +199,8 @@ export default function Routeselector() {
                     <div
                         style={{
                             display: "inline",
-                            float: "right",
-                            paddingLeft: "200px",
+                            // float: "right",
+                            paddingLeft: "20px",
                         }}
                     ></div>
                     {/* <select name="ad_account_selected" data-style="btn-new" class="selectpicker" onChange={e => { handleToCity(e) }}>
@@ -239,7 +238,11 @@ export default function Routeselector() {
                         </Select>
                         <FormHelperText>{helperdestination}</FormHelperText>
                     </FormControl>
-                    <div style={{ paddingLeft: "200px" }} >
+                    <div style={{
+                            
+                            // float: "right",
+                            paddingLeft: "20px",
+                        } }>
                         <TextField
                             id="date"
                             label="Date of Journey"
@@ -256,7 +259,13 @@ export default function Routeselector() {
                             required
                         />
                     </div>
-                    <input type="submit" className="btn btn-dark btn-md getRoute" />
+                    <br></br>
+                    <div style={{
+                            
+                            // float: "right",
+                            paddingLeft: "20px",
+                        } }><input type="submit" className="btn btn-dark btn-md getRoute" /></div>
+         
                 </form>
                 <div>
                     {renderBusList(dataInp)}
