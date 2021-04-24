@@ -112,6 +112,30 @@ const handleExpandClick = () => {
   setExpanded(!expanded);
 };
 
+const styleObj = {
+  // fontSize: 40,
+
+
+  paddingTop: "40px",
+  paddingBottom: "40px",
+  fontStyle: 'italic',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  justifyContent: 'center',
+  height: `100%`,
+  backgroundColor: '#C0C0C0',
+  
+}
+
+const buttonS ={
+backgroundColor:'black',
+  paddingTop: "10px",
+  width: '50%',
+  justifyContent: 'center',
+  marginLeft:'25%',
+}
+
   const cancelBooking = (e,bookingid) =>{
     e.preventDefault();
     const paramdict = {
@@ -184,11 +208,11 @@ const handleExpandClick = () => {
             <br/><br/><br/><br/>
             
             <h3 style={styleObj} >**You have not logged in, Please Login!!!</h3>
-            <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleSignIn} style={{backgroundColor:'black'}} >
+            <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleSignIn} style={buttonS} >
                   {'Sign In'} 
                 </Button>
-                <hr></hr>
-                <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleRegister} style={{backgroundColor:'black'}} >
+                <br></br><br></br>
+                <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleRegister} style={buttonS} >
                   {'Register'} 
                 </Button>
               

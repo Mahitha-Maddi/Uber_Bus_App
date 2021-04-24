@@ -10,15 +10,18 @@ import { Typography } from '@material-ui/core';
 import home from "../icons/home.jpeg";
 
 import uber1 from "../styles/images/uber1.jpeg";
-import uber2 from "../styles/images/uber2.jpeg";
+import uber5 from "../styles/images/uber5.jpeg";
 import uber3 from "../styles/images/uber3.jpeg";
 import uber4 from "../styles/images/uber4.jpeg";
+import uber2 from "../styles/images/uber2.jpeg";
 import card1 from "../styles/images/card1.jpeg";
+import uber6 from "../styles/images/uber6.jpeg";
 import SF from "../styles/images/card2.jpeg";
 import Charleston from "../styles/images/Charleston.jpeg";
 import Chicago from "../styles/images/chicago.jpeg";
 import newOrleans from "../styles/images/new-orleans-hero.jpeg";
 import savanna from "../styles/images/savannah-georgia-SAVANNAH0519.jpeg"
+import Footer from "./Footer";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -50,10 +53,10 @@ function Home(props) {
             <img className="d-block w-100" src={uber1} alt="First slide" />
             <h4>Adding a Joy to your Journey</h4>
           </div>
-          {/* <div>
-            <img className="d-block w-100" src={uber2} alt="Second slide" />
+          <div>
+            <img className="d-block w-100" src={uber6} alt="Second slide" />
             <h3>Lets you Explore the Best</h3>
-          </div> */}
+          </div>
           <div>
             <img className="d-block w-100" src={uber3} alt="Fourth slide" />
             <h3>Bringing Joy From Every journey</h3>
@@ -178,6 +181,11 @@ function Home(props) {
             </CardActionArea>
           </Card>
         </CardDeck>
+        <footer>
+        <div className="Footer">
+          <Footer />
+        </div>
+      </footer>
       </div>
     </div>
   );
