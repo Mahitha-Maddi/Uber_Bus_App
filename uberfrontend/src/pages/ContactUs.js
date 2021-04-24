@@ -6,6 +6,7 @@ import DialpadIcon from '@material-ui/icons/Dialpad';
 import EmailIcon from '@material-ui/icons/Email';
 import FormContact from './FormContact'
 import contactus from '../styles/images/contactus.jpeg'
+import Footer from "./Footer";
 
 import '../styles/contact.css'
 export default class Home extends Component{
@@ -53,6 +54,11 @@ Send us an email or give our team a call to book your flights, plan your adventu
                     <FormContact/>
                      </Col> */}
                 </Row>
+                <footer>
+            <div className="Footer">
+              <Footer />
+            </div>
+          </footer>
                    </Container>
 
 

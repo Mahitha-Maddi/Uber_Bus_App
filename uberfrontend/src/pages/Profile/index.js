@@ -3,6 +3,7 @@ import EdiText from "react-editext";
 import { useHistory } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 
+
 // import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from "@rocketseat/unform";
 import TextField from "@material-ui/core/TextField";
@@ -175,7 +176,7 @@ const handleSave = (val) => {
       setHelpercontact("Please enter valid contact number in format (123)123-1234");
       return;
     }
-    
+
     // const passwrd = cpassword === "" ? password : cpassword;
     fetch("http://localhost:5000/updateUser", {
       method: "POST",
@@ -380,6 +381,11 @@ const handleSave = (val) => {
           Update profile
         </button>
       </form>
+      {/* <footer>
+            <div className="Footer">
+              <Footer />
+            </div>
+          </footer> */}
     </Container>
   );
 }
