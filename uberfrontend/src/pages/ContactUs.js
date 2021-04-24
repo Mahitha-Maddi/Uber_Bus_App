@@ -5,6 +5,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import EmailIcon from '@material-ui/icons/Email';
 import FormContact from './FormContact'
+import contactus from '../styles/images/contactus.jpeg'
 
 import '../styles/contact.css'
 export default class Home extends Component{
@@ -14,7 +15,7 @@ export default class Home extends Component{
     paddingTop: '80px'
     
   }} >    
-                <Image src="/assets/img/contact.jpg"/>
+                <Image src={contactus}/>
                 <h2 className="heading">Contact Us</h2>              
                 
             </div>
