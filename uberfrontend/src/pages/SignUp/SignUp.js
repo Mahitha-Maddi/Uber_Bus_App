@@ -98,7 +98,7 @@ const SignUp = () => {
           },
           body: JSON.stringify(paramdict)
       }
-      const response = await fetch("http://localhost:5000/signup", config);
+      const response = await fetch("/signup", config);
       //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
       //const response = await fetch("/tweet", config);
       //const json = await response.json()

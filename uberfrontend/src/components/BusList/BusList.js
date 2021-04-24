@@ -19,7 +19,7 @@ export default function BusList({ value: dataInp }) {
     const history = useHistory()
     const handleSubmit = (bId, busPrice, source, destination, startTime, endTime, BusNum, busDate) => {
         const user = localStorage.getItem('username');
-        fetch('http://localhost:5000/overlapCheck', {
+        fetch('/overlapCheck', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({

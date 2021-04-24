@@ -60,7 +60,7 @@ export default function Profile() {
     const username = localStorage.getItem("username");
 
     const fetchData = async () => {
-      fetch("http://localhost:5000/userDetails", {
+      fetch("/userDetails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ const handleSave = (val) => {
     }
 
     // const passwrd = cpassword === "" ? password : cpassword;
-    fetch("http://localhost:5000/updateUser", {
+    fetch("/updateUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
