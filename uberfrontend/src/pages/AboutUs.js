@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Container,Col,Image,Button, Row, Grid} from 'react-bootstrap';
 import '../styles/about.css'
 import Footer from './Footer'
+import ubar3 from '../styles/images/uber5.jpeg'
 
 
 export default class About extends Component{
@@ -26,7 +27,7 @@ export default class About extends Component{
                 </div> */}
                 <Container>
             {/* <Col xs={12} sm={8} smOffset={2}    > */}
-            <Image src="/assets/img/travel.jpg" className="about-pc" rounded height="300" width="500" class="center"/>
+            <Image src={ubar3} className="about-pc" rounded height="300" width="500" class="center"/>
             <h3 className="text-center">Traveling. Tours. Adventure.</h3>
 
             <p>We are committed to offering travel services of the highest quality, 

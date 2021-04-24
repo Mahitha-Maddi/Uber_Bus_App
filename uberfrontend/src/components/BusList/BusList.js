@@ -86,7 +86,7 @@ export default function BusList({ value: dataInp }) {
             return (
                 <div key={idx} className="card mt-5 buslist">
                     <br /><br /><br /><br />
-                    <div class="row ml-3">{/* 
+                    <div class="row">{/* 
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Brand</div> */}
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Bus Number</div>
                         <div class="col-6 col-sm-3 mt-2 font-weight-bold ">Start Time</div>
