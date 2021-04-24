@@ -181,7 +181,8 @@ export default function Paypal() {
       })
 
     var templateParams = {
-      email_to: email
+      email_to: email,
+      message: localStorage.getItem('passengers')
     };
 
     emailjs.send('gmail', 'template_zyqahd1', templateParams, 'user_LQUnilAw58Lv7SREimvSB')
@@ -262,7 +263,7 @@ export default function Paypal() {
         <React.Fragment>
       <Paper className={classes.paper} elevation={6}>
         <div className={classes.container}>
-        <Card className={classes.root}>
+          <Card className={classes.root}>
       <CardActionArea>{/* 
         <CardMedia
           className={classes.media}

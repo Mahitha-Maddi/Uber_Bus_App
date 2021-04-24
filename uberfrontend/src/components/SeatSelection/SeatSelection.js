@@ -433,7 +433,7 @@ export default function SeatSelection() {
 
                                 <div className="App">
 
-     {checkout ? (<PayPal />) : (<button onClick={e => { if (window.confirm('Are you sure you wish to  this item?'))handleSubmitDetails(e)}} className="btn btn-info seatBT">checkout
+     {checkout ? (<PayPal />) : (<button onClick={e => { if (window.confirm('Are you sure you want to book a ride?'))handleSubmitDetails(e)}} className="btn btn-info seatBT">checkout
                                     </button>)} 
  
                                 </div>
