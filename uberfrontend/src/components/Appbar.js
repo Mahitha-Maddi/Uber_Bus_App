@@ -174,6 +174,9 @@ export default function Dashboard() {
     {setToolUser("Hello "+u+"!");
       
     }
+    else{
+      setToolUser("");
+    }
 
   })
 
