@@ -192,11 +192,12 @@ const handleRegister = () => {
               disabled = {true}
             />
             
+            
         {/* UserName:<input name="username" placeholder="Username" value={username} disabled = {true}/>
         Email:<input name="email" type="email" placeholder="Email address" value={email} disabled = {true}/>
         Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/> */}
         {/* Contact Number:<input name="contact"   onChange={(e) => {handleContactChange(e)}} /> */}
-       Contact Number:<EdiText name="contact" variant="outlined"
+       Contact Number<EdiText name="contact" variant="outlined"
               margin="normal"
               required
               fullWidth 
@@ -204,10 +205,10 @@ const handleRegister = () => {
               label={'Contact Number'}
               value={contact} onSave={handleSave} submitOnEnter placeholder="Contact Number"  />
 
-        Password:<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
+        Password<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
 
         New Password<EdiText name="password" type="password"  value={npassword} onSave={handlenewPasswordChange} submitOnEnter placeholder="New password" />
-        Confirm Password:<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/>
+        Confirm Password<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/>
 
         <button type="submit"  style={{backgroundColor:'black'}} >Update profile</button>
       </form> 

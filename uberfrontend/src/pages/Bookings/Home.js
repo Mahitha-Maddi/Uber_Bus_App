@@ -236,7 +236,7 @@ const handleExpandClick = () => {
                   
                   <TextField
                   className={classes.input}
-              value={link.startTime}
+              value={link.startTime.split(' ')[1]}
               margin="normal"
               fullWidth
               id="filled-basic"
@@ -250,7 +250,7 @@ const handleExpandClick = () => {
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h6">
                 <TextField
-              value={link.endTime}
+              value={link.endTime.split(' ')[1]}
               margin="normal"
               fullWidth
               id="filled-basic"
