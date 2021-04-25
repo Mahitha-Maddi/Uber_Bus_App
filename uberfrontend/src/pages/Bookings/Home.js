@@ -329,9 +329,9 @@ const THome = () => {
                             fullWidth
                             id="filled-basic"
                             variant="outlined"
-                            label={'Seats Booked'}
-                            name="Seats Booked"
-                            autoComplete="Seats Booked"
+                            label={'Passenger Name'}
+                            name="Passenger Name"
+                            autoComplete="Passenger Name"
                             autoFocus
                             disabled={true}
                           />
@@ -341,9 +341,9 @@ const THome = () => {
                             fullWidth
                             id="filled-basic"
                             variant="outlined"
-                            label={'Seats Booked'}
-                            name="Seats Booked"
-                            autoComplete="Seats Booked"
+                            label={'Passenger Gender'}
+                            name="Passenger Gender"
+                            autoComplete="Passenger Gender"
                             autoFocus
                             disabled={true}
                           />
@@ -354,9 +354,9 @@ const THome = () => {
                             fullWidth
                             id="filled-basic"
                             variant="outlined"
-                            label={'Seats Booked'}
-                            name="Seats Booked"
-                            autoComplete="Seats Booked"
+                            label={'Seat Booked'}
+                            name="Seat Booked"
+                            autoComplete="Seat Booked"
                             autoFocus
                             disabled={true}
                           />
