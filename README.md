@@ -9,7 +9,7 @@
 6.	[Load Testing K6]( https://github.com/MahithaMaddi/Uber_Bus_App/tree/main/LoadTesting_K6)
 7.	[Kubernetes CD]( https://github.com/MahithaMaddi/Uber_Bus_App/tree/main/Kubernetes_CD)
 
-#About Application
+# About Application
 
 1.	Token based authentication for user Sign in and Sign up
 2.	Web application where user can book a bus and view the bookings history
@@ -30,7 +30,7 @@
 •	Application scaling
 •	Deployed app on cloud with a single command (automation)
 
-#Application Architecture
+# Application Architecture
 
  ![image](https://user-images.githubusercontent.com/60076505/116013887-7e0e2880-a600-11eb-9c64-d4721bc74c8e.png)
 
