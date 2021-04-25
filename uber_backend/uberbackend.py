@@ -815,9 +815,9 @@ def applyCollectionLevelUpdates():
 def home1():
     return """Welcome to online mongo/Uber testing ground!<br />
         <br />
-        Run the following endpoints:<br />
+        Run the following endpoint:<br />
         From collection:<br/>
-        http://localhost:5000/bookings-results<br />"""
+        http://localhost:5000/doc<br />"""
 
 ##################
 # ADMINISTRATION #
