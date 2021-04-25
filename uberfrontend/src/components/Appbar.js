@@ -167,7 +167,7 @@ export default function Dashboard() {
   useEffect(() => {
     const u = localStorage.getItem('username');
     //alert("hell0" + toolUser+u);
-    if (u != null && u != undefined) {
+    if (u !== null && u !== undefined) {
       setToolUser("Hello " + u + "!");
 
     }

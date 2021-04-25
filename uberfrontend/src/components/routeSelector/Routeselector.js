@@ -1,16 +1,36 @@
-import React, { useState, useStyles } from "react";
+import React, { useState } from "react";
+//import React, { useState, useStyles } from "react";
 import "./Routeselector.css";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import { makeStyles } from "@material-ui/core/styles";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import { Container, Grid } from "@material-ui/core";
+//import * as apiCall from './routeApifunc'
 import BusList from "../BusList/BusList";
 import { FaAlignLeft } from "react-icons/fa";
-import Footer from "../../pages/Footer";
+
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    width: 200,
+    margin: 10,
+    // height:10
+  },
+  //style for font size
+  resize: {
+    fontSize: 15
+  },
+}))
 export default function Routeselector() {
+  const classes = useStyles();
   const [dataInp, setData] = useState("");
   const [startCity, setStartCity] = useState("Source");
   const [destination, setDestination] = useState("Destination");
@@ -24,6 +44,8 @@ export default function Routeselector() {
   const [helperdestination, setHelperdestination] = useState("");
 
   const handleToCity = (e) => {
+    // e.preventDefault()
+
     if (e.target.value == "") {
       setErrordestination(true);
       setHelperdestination("Please select the destination");
@@ -31,6 +53,7 @@ export default function Routeselector() {
       setErrordestination(false);
       setHelperdestination("");
     }
+    // setDestination({ destination: e.target.value })
     setDestination(e.target.value);
     localStorage.setItem("destination", e.target.value);
     console.log("destination", e.target.value);
@@ -95,6 +118,7 @@ export default function Routeselector() {
       setErrorText("");
     }
 
+    // fetch('http://localhost:5000/checkAvailability', {
     fetch("/checkAvailability", {
       method: "POST",
       headers: {
@@ -123,9 +147,9 @@ export default function Routeselector() {
             alert("Sorry no buses are available for this combination!!")
           }
         }
-
       })
       .catch((error) => {
+        // this.setState({ availableBuses: "This is an error page!!" })
         console.log("Request failed", error);
         alert(error);
         //setError(error);
@@ -143,80 +167,120 @@ export default function Routeselector() {
     return [year, month, day].join("-");
   }
 
+
+
   return (
     <div className="rdc">
       <div className="form-group inline "></div>
       <div className="main-container">
         <form className="form-inline" onSubmit={(e) => getRoutes(e)}>
 
-          <FormControl
-            error={errorsource}
-          >
-            Source City
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
+          <div>
+            <TextField
+              id="standard-select-Source"
+              select
+              label="Source City"
+              required
+              //margin="normal"
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
               value={startCity}
+              className={classes.textField}
+              autoFocus={true}
               onChange={(e) => {
                 handleFromCity(e);
               }}
+              /* SelectProps={{
+                native: true,
+              }}  */
+              helperText={helpersource}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"New York"}>New York</MenuItem>
-              <MenuItem value={"Boston"}>Boston</MenuItem>
-              <MenuItem value={"Chicago"}>Chicago</MenuItem>
-              <MenuItem value={"Charleston"}>Charleston</MenuItem>
-              <MenuItem value={"New-Orleans"}>New-Orleans</MenuItem>
-              <MenuItem value={"San-Fransisco"}>San-Fransisco</MenuItem>
-              <MenuItem value={"Savannah"}>Savannah</MenuItem>
-            </Select>
-            <FormHelperText>{helpersource}</FormHelperText>
-          </FormControl>
+              <option value={"New York"}>New York</option>
+              <option value={"Boston"}>Boston</option>
+              <option value={"Chicago"}>Chicago</option>
+              <option value={"Charleston"}>Charleston</option>
+              <option value={"New-Orleans"}>New-Orleans</option>
+              <option value={"San-Fransisco"}>San-Fransisco</option>
+              <option value={"Savannah"}>Savannah</option>
+
+            </TextField>
+
+          </div>
 
           <div
             style={{
               display: "inline",
-              paddingLeft: "20px",
+              // float: "right",
+              paddingLeft: "40px",
             }}
           ></div>
-          <FormControl
-            error={errordestination}
-          >
-            Destination City
-            <Select
-              labelId="demo-simple-select-helper-label"
-              label=" Destination City "
-              id="demo-simple-select-helper"
-              value={destination}
-              onChange={(e) => {
-                handleToCity(e);
-              }}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"New York"}>New York</MenuItem>
-              <MenuItem value={"Boston"}>Boston</MenuItem>
-              <MenuItem value={"Chicago"}>Chicago</MenuItem>
-              <MenuItem value={"Charleston"}>Charleston</MenuItem>
-              <MenuItem value={"New-Orleans"}>New-Orleans</MenuItem>
-              <MenuItem value={"San-Fransisco"}>San-Fransisco</MenuItem>
-              <MenuItem value={"Savannah"}>Savannah</MenuItem>
-            </Select>
-            <FormHelperText>{helperdestination}</FormHelperText>
-          </FormControl>
+
           <div
             style={{
+              display: "inline",
               // float: "right",
               paddingLeft: "20px",
             }}
-          >
+          ></div>
 
+
+          <div>
+            <TextField
+              id="standard-select-Destination"
+              select
+              label="Destination City"
+              required
+              //margin="normal"
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              value={destination}
+              className={classes.textField}
+              autoFocus={true}
+              onChange={(e) => {
+                handleToCity(e);
+              }}
+              /* SelectProps={{
+                native: true,
+              }}  */
+              helperText={helperdestination}
+            >
+              <option value={"Boston"}>Boston</option>
+              <option value={"New York"}>New York</option>
+              <option value={"Chicago"}>Chicago</option>
+              <option value={"Charleston"}>Charleston</option>
+              <option value={"New-Orleans"}>New-Orleans</option>
+              <option value={"San-Fransisco"}>San-Fransisco</option>
+              <option value={"Savannah"}>Savannah</option>
+
+            </TextField>
+
+          </div>
+
+          <div
+            style={{
+              display: "inline",
+              // float: "right",
+              paddingLeft: "30px",
+            }}
+          ></div>
+
+          <div
+            style={{
+              display: "inline",
+              // float: "right",
+              paddingLeft: "30px",
+            }}
+          ></div>
+          <div>
             <TextField
               id="date"
-              label="Date of Journey"
+              label="Travel Date"
               type="date"
               onChange={(e) => {
                 handleDate(e);
@@ -224,20 +288,27 @@ export default function Routeselector() {
               defaultValue={date}
               // className={classes.textField}
               inputProps={{
+                classes: {
+                  input: classes.textField,
+                },
                 min: formatDate(new Date()),
               }}
               InputLabelProps={{
                 shrink: true,
               }}
               required
+              autoFocus={true}
             />
           </div>
           <br></br>
-          <hr></hr>
-          <div class="container">
-            <br></br>
-            <br></br>
-            <input type="submit" className="btn btn-dark" />
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <div>
+
+            <input type="submit" className="btn btn-dark classes.resize" />
+
           </div>
         </form>
         <div>{renderBusList(dataInp)}</div>
