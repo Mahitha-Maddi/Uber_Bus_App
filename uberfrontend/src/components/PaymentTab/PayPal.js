@@ -11,13 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper'
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
   media: {
     height: 140,
-  },paper: {
+  }, paper: {
     width: 'auto',
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
@@ -60,7 +60,6 @@ export default function Paypal() {
       'seat3C': localStorage.getItem('3C')
     }
     console.log("2c: ", localStorage.getItem("2C"))
-    //alert("2c: "+ localStorage.getItem("2C"))
     const config = {
       method: 'POST',
       headers: {
@@ -72,39 +71,39 @@ export default function Paypal() {
     fetch("/saveBookedSeats", config)
       .then(res => res.json())
       .then(data => {
-        // alert("Reserved seats!")
+
       })
   }
 
   const saveBooking = () => {
     const passengers = JSON.parse(localStorage.getItem("passengers") || "[]");
     console.log("username: ", localStorage.getItem('username'));
-    const seatsBooked=[];
-    if (localStorage.getItem('1A')!==0){
+    const seatsBooked = [];
+    if (localStorage.getItem('1A') !== 0) {
       seatsBooked.push('1A');
     }
-    if (localStorage.getItem('1B')!==0){
+    if (localStorage.getItem('1B') !== 0) {
       seatsBooked.push('1B');
     }
-    if (localStorage.getItem('1C')!==0){
+    if (localStorage.getItem('1C') !== 0) {
       seatsBooked.push('1C');
     }
-    if (localStorage.getItem('2A')!==0){
+    if (localStorage.getItem('2A') !== 0) {
       seatsBooked.push('2A');
     }
-    if (localStorage.getItem('2B')!==0){
+    if (localStorage.getItem('2B') !== 0) {
       seatsBooked.push('2B');
     }
-    if (localStorage.getItem('2C')!==0){
+    if (localStorage.getItem('2C') !== 0) {
       seatsBooked.push('2C');
     }
-    if (localStorage.getItem('3A')!==0){
+    if (localStorage.getItem('3A') !== 0) {
       seatsBooked.push('3A');
     }
-    if (localStorage.getItem('3B')!==0){
+    if (localStorage.getItem('3B') !== 0) {
       seatsBooked.push('3B');
     }
-    if (localStorage.getItem('3C')!==0){
+    if (localStorage.getItem('3C') !== 0) {
       seatsBooked.push('3C');
     }
     const paramdict = {
@@ -136,13 +135,12 @@ export default function Paypal() {
       })
   }
 
-  const savePassengerDetails = (fullname, gender,seatNum) => {
-    //alert("hello passenger");
+  const savePassengerDetails = (fullname, gender, seatNum) => {
     const paramdict = {
       'bookingID': localStorage.getItem('bookingID'),
       'fullname': fullname,
       'gender': gender,
-      'seatNumber':seatNum
+      'seatNumber': seatNum
     }
     const config = {
       method: 'POST',
@@ -160,7 +158,7 @@ export default function Paypal() {
   }
 
   const sendEmail = () => {
-    var email='mahithareddy42@gmail.com';
+    var email = 'mahithareddy42@gmail.com';
     const paramdict = {
       'username': localStorage.getItem('username')
     }
@@ -177,13 +175,13 @@ export default function Paypal() {
       .then(data => {
         //alert("Saved passenger! " + data);
         console.log(data);
-        email=data[0].email;
+        email = data[0].email;
       })
-   
-      const sTime=localStorage.getItem('startTime');
-      const s=sTime.split(' ')[1];
-      const eTime=localStorage.getItem('endTime');
-      const e=eTime.split(' ')[1];
+
+    const sTime = localStorage.getItem('startTime');
+    const s = sTime.split(' ')[1];
+    const eTime = localStorage.getItem('endTime');
+    const e = eTime.split(' ')[1];
     var templateParams = {
       email_to: email,
       busnumber: localStorage.getItem('BusNum'),
@@ -191,7 +189,7 @@ export default function Paypal() {
       source: localStorage.getItem('source'),
       destination: localStorage.getItem('destination'),
       startTime: s,
-      endTime:e ,
+      endTime: e,
       date: localStorage.getItem('busDate'),
       numOfSeats: localStorage.getItem('numOfSeats'),
       totalPrice: localStorage.getItem('totalPrice')
@@ -209,9 +207,6 @@ export default function Paypal() {
     const price = localStorage.getItem('busPrice');
     console.log("price: ", price)
     console.log("local2: ", localStorage.getItem('passengers'));
-    //setNumOfSeats(localStorage.getItem('passengers'));
-    // console.log("numOfSeats: ",numOfSeats)
-    //setTotalPrice(price*numOfSeats); 
     const len = localStorage.getItem('numOfSeats');
     console.log("length: ", len)
     const t = price * len;
@@ -240,7 +235,6 @@ export default function Paypal() {
           const passengers = JSON.parse(localStorage.getItem("passengers") || "[]");
           //alert(passengers);
           console.log("passengers length: ", passengers.length);
-          //passengers.forEach(d => console.log("mine:", { d }))
           passengers.map((passenger) => {
             console.log(passenger);
             console.log(passenger.passengerName);
@@ -250,7 +244,6 @@ export default function Paypal() {
 
           sendEmail();
 
-          //alert("Congratulations! Successfully registered!");
           setPaidFor(true);
           const order = await actions.order.capture();
           console.log(order);
@@ -270,34 +263,28 @@ export default function Paypal() {
       <div>
 
         <br /><br /><br /><br /><br /><br />
-       
-        {/* <img alt={product.description} src={gif} /> */}
+
         <React.Fragment>
-      <Paper className={classes.paper} elevation={6}>
-        <div className={classes.container}>
-          <Card className={classes.root}>
-      <CardActionArea>{/* 
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        /> */}
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="h6">
-            Awesome!
+          <Paper className={classes.paper} elevation={6}>
+            <div className={classes.container}>
+              <Card className={classes.root}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="h6">
+                      Awesome!
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-           Your booking has been confirmed! <br/><br/>
-           Check your email for details! <br/>
-           
-      <Link to="/aboutus/">Learn More</Link>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-        </div>
-      </Paper>
-      </React.Fragment>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      Your booking has been confirmed! <br /><br />
+           Check your email for details! <br />
+
+                      <Link to="/aboutus/">Learn More</Link>
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </div>
+          </Paper>
+        </React.Fragment>
       </div>
     );
   }
@@ -307,17 +294,10 @@ export default function Paypal() {
 
       <br /><br /><br /><br /><br /><br />
       {error && <div>Uh oh, an error occurred! {error.message}</div>}
-      {/* <h1>
-        {product.description} for ${product.price}
-      </h1> */}
+
       <div ref={paypal} />
     </div>
   );
 
-  // return (
-  //   <div>
-  //     <br/><br/><br/><br/>
-  //     <div ref={paypal}></div>
-  //   </div>
-  // );
+
 }

@@ -62,7 +62,7 @@ const SignUp = () => {
   const [cpassword, setCpassword] = useState('')
   const [dob, setDob] = useState('')
   const [contact, setContact] = useState('')
-  const [error, setError]= useState('')
+  const [error, setError] = useState('')
   const [helperuser, setHelperuser] = useState("");
   const [helperpassword, setHelperpassword] = useState("");
   const [helpercpassword, setHelpercpassword] = useState("");
@@ -81,7 +81,7 @@ const SignUp = () => {
 
 
   const postUser = async (username, password, email, contact, dob) => {
-    console.log("email: ",email);
+    console.log("email: ", email);
     const paramdict = {
       'username': username,
       'password': password,
@@ -91,36 +91,31 @@ const SignUp = () => {
     }
     try {
       const config = {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(paramdict)
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paramdict)
       }
       const response = await fetch("/signup", config);
-      //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
-      //const response = await fetch("/tweet", config);
-      //const json = await response.json()
       if (response.ok) {
-          //return json
-          //return response
         var templateParams = {
-            email_to: email
+          email_to: email
         };
-         
-        emailjs.send('gmail', 'template_kjha7q8', templateParams,'user_LQUnilAw58Lv7SREimvSB')
-            .then(function(response) {
-               console.log('SUCCESS!', response.status, response.text);
-            }, function(error) {
-               console.log('FAILED...', error);
-            });
-            
-          //alert("Congratulations! Successfully registered!");
-          console.log("success on send.");
-          
+
+        emailjs.send('gmail', 'template_kjha7q8', templateParams, 'user_LQUnilAw58Lv7SREimvSB')
+          .then(function (response) {
+            console.log('SUCCESS!', response.status, response.text);
+          }, function (error) {
+            console.log('FAILED...', error);
+          });
+
+        //alert("Congratulations! Successfully registered!");
+        console.log("success on send.");
+
       } else {
-          alert("response: " + response.toString());
+        alert("response: " + response.toString());
       }
 
       try {
@@ -181,17 +176,11 @@ const SignUp = () => {
     if (event.target.value == "") {
       setErrorcpassword(true);
       setHelpercpassword("Please enter Confirmed Password");
-     } else {
-    //   if (event.handlePassword !== event.handleCPassword) {
-    //     setError(true);
-    //      setErrorText("Password and Confirm Password is not matching")
-    //   }
-    //  else{
-        setErrorcpassword(false);
+    } else {
+      setErrorcpassword(false);
       setHelpercpassword("");
-      }
-      
-    //}
+    }
+
     setCpassword(event.target.value);
   };
 
@@ -216,17 +205,9 @@ const SignUp = () => {
     }
     setContact(event.target.value);
   };
-  
+
   function handleSubmit(event) {
     event.preventDefault();
-
-    //username validation
-    // if (username === '') {
-    //   setErrorusername(true);
-    //   setHelperuser("Please enter username");
-    //   return;
-    // }
-
     var userpattern = new RegExp(/^(?!_*\_*\_*)[A-Za-z]?$/i);
     if (!userpattern.test(username)) {
       setErrorusername(true);
@@ -254,24 +235,24 @@ const SignUp = () => {
       setErrorcpassword(true);
       setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
       return;
-      
+
     }
 
     //validate confirm password
     if (password === cpassword) {
       setError(false);
-      setErrorText(""); 
-      
+      setErrorText("");
+
     } else {
       setError(true);
       //alert("Passwords don't match");  
-      setErrorText("Passwords don't match"); 
+      setErrorText("Passwords don't match");
       return;
     }
-    
-    
+
+
     //validate dob
-    var dobpattern= new RegExp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i);
+    var dobpattern = new RegExp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i);
     if (!dobpattern.test(dob)) {
       setErrordob(true);
       setHelperdob("Date of birth should be in dd/mm/yyyy format");
@@ -279,22 +260,22 @@ const SignUp = () => {
     }
 
     //validate phone number
-    var contactpattern= new RegExp (/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
+    var contactpattern = new RegExp(/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
     if (!contactpattern.test(contact)) {
       setErrorcontact(true);
       setHelpercontact("Please enter valid contact number in format (123)123-1234");
       return;
     }
 
-  
-      postUser(username, password, email, contact, dob);
-    
-    
+
+    postUser(username, password, email, contact, dob);
+
+
   }
 
   const handleBooking = () => {
     console.log("doing something");
-    history.push("/Book") 
+    history.push("/Book")
   }
 
   const styleObj = {
@@ -307,148 +288,148 @@ const SignUp = () => {
     justifyContent: 'center',
     height: `100%`,
     backgroundColor: '#C0C0C0',
-    
+
   }
 
-  const buttonS ={
-    backgroundColor:'black',
-      paddingTop: "10px",
-      width: '50%',
-      justifyContent: 'center',
-      marginLeft:'25%',
-    }
+  const buttonS = {
+    backgroundColor: 'black',
+    paddingTop: "10px",
+    width: '50%',
+    justifyContent: 'center',
+    marginLeft: '25%',
+  }
 
   return (
-    (localStorage.getItem('userid')!==null && localStorage.getItem('userid')!==undefined)?(
+    (localStorage.getItem('userid') !== null && localStorage.getItem('userid') !== undefined) ? (
       <div >
-        <br/><br/><br/><br/>
-        
+        <br /><br /><br /><br />
+
         <h3 style={styleObj} >**You are already registered and logged in to the app!!</h3>
         <Button fullWidth variant="contained" margin="normal" color="primary" onClick={handleBooking} style={buttonS} >
-              {'Wanna book a ride?'} 
-            </Button>
-          
-        </div>):
-   ( <React.Fragment>
-      <Paper className={classes.paper} elevation={6}>
-        <div className={classes.container}>
-          <Typography component="h1" variant="h5">
-            {'Sign up'}
-          </Typography>
-          <form className={classes.form} onSubmit={handleSubmit} noValidate>
-            <TextField
-              error={errorusername}
-              onInput={handleUsername}
-              value={username}
-              // onInput={(e) => setUsername(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label={'Username'}
-              name="username"
-              autoComplete="username"
-              autoFocus
-              helperText={helperuser}
-            />
-            <TextField
-              value={email}
-              error={erroremail}
-              onInput={handleEmail}
-              // onInput={(e) => setEmail(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={'E-Mail'}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              helperText={helperemail}
-            />
-            <TextField
-              value={password}
-              error={errorpassword}
-              onInput={handlePassword}
-              // onInput={(e) => setPassword(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label={'Password'}
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              autoFocus
-              helperText={helperpassword}
-            />
-            <TextField
-              value={cpassword}
-              error={errorcpassword}
-              onInput={handleCPassword}
-              //onInput={(e) => setCpassword(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password_confirm"
-              label={'Confirm Password'}
-              type="password"
-              id="password_confirm"
-              autoComplete="current-password"
-              autoFocus
-              helperText={helpercpassword + errorText}
-            />
-            <TextField
-              value={dob}
-              error={errordob}
-              onInput={handleDob}
-              //onInput={(e) => setDob(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="dob"
-              label={'Date of Birth(DD/MM/YYYY)'}
-              id="dob"
-              autoComplete="DOB"
-              autoFocus
-              helperText={helperdob}
-            />
-            <TextField
-              value={contact}
-              error={errorcontact}
-              onInput={handleContact}
-              //onInput={(e) => setContact(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="contact"
-              label={'Contact Number'}
-              id="contact"
-              autoComplete="contact"
-              autoFocus
-              helperText={helpercontact}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              style={{backgroundColor:'black'}}
-              className={classes.submit}
-            >
+          {'Wanna book a ride?'}
+        </Button>
+
+      </div>) :
+      (<React.Fragment>
+        <Paper className={classes.paper} elevation={6}>
+          <div className={classes.container}>
+            <Typography component="h1" variant="h5">
               {'Sign up'}
-            </Button>
-          </form>
-        </div>
-      </Paper>
-    </React.Fragment>
-  ))
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit} noValidate>
+              <TextField
+                error={errorusername}
+                onInput={handleUsername}
+                value={username}
+                // onInput={(e) => setUsername(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label={'Username'}
+                name="username"
+                autoComplete="username"
+                autoFocus
+                helperText={helperuser}
+              />
+              <TextField
+                value={email}
+                error={erroremail}
+                onInput={handleEmail}
+                // onInput={(e) => setEmail(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label={'E-Mail'}
+                name="email"
+                autoComplete="email"
+                autoFocus
+                helperText={helperemail}
+              />
+              <TextField
+                value={password}
+                error={errorpassword}
+                onInput={handlePassword}
+                // onInput={(e) => setPassword(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label={'Password'}
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                autoFocus
+                helperText={helperpassword}
+              />
+              <TextField
+                value={cpassword}
+                error={errorcpassword}
+                onInput={handleCPassword}
+                //onInput={(e) => setCpassword(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password_confirm"
+                label={'Confirm Password'}
+                type="password"
+                id="password_confirm"
+                autoComplete="current-password"
+                autoFocus
+                helperText={helpercpassword + errorText}
+              />
+              <TextField
+                value={dob}
+                error={errordob}
+                onInput={handleDob}
+                //onInput={(e) => setDob(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="dob"
+                label={'Date of Birth(DD/MM/YYYY)'}
+                id="dob"
+                autoComplete="DOB"
+                autoFocus
+                helperText={helperdob}
+              />
+              <TextField
+                value={contact}
+                error={errorcontact}
+                onInput={handleContact}
+                //onInput={(e) => setContact(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="contact"
+                label={'Contact Number'}
+                id="contact"
+                autoComplete="contact"
+                autoFocus
+                helperText={helpercontact}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                style={{ backgroundColor: 'black' }}
+                className={classes.submit}
+              >
+                {'Sign up'}
+              </Button>
+            </form>
+          </div>
+        </Paper>
+      </React.Fragment>
+      ))
 }
 
 export default SignUp

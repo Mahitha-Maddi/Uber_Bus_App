@@ -2,20 +2,14 @@ import React, { Component, useState, useEffect } from "react";
 import EdiText from "react-editext";
 import { useHistory } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
-
-
-// import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from "@rocketseat/unform";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-// import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container } from "./styles";
 
 export default function Profile() {
-  // const dispatch = useDispatch();
-  // const profile = useSelector(state => state.user.profile);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -30,7 +24,7 @@ export default function Profile() {
   const [errornewpassword, setErrornewpassword] = useState(false);
   const [errorcpassword, setErrorcpassword] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [error, setError]= useState('')
+  const [error, setError] = useState('')
   const [errorcontact, setErrorcontact] = useState(false);
   const [helpercontact, setHelpercontact] = useState("");
 
@@ -105,39 +99,23 @@ export default function Profile() {
     if (val.target.value == "") {
       setErrorcpassword(true);
       setHelpercpassword("Please enter Confirmed Password");
-     } else {
-    //   if (event.handlePassword !== event.handleCPassword) {
-    //     setError(true);
-    //      setErrorText("Password and Confirm Password is not matching")
-    //   }
-    //  else{
-        setErrorcpassword(false);
+    } else {
+      setErrorcpassword(false);
       setHelpercpassword("");
-      }
-      
-    //}
+    }
+
     setCpassword(val.target.value);
   };
-  /* 
-const handleContactChange = e => {
-  setContact({ contact: e.target.value })
-} */
-const handleSave = (val) => {
-  if (val.target.value == "") {
-    setErrorcontact(true);
-    setHelpercontact("Please enter Contact Number");
-  } else {
-    setErrorcontact(false);
-    setHelpercontact("");
-  }
-  setContact(val.target.value);
-};
-
-  // const handleSave = (val) => {
-  //   setContact(val);
-  //   console.log("contactval: ", val);
-  // };
-
+  const handleSave = (val) => {
+    if (val.target.value == "") {
+      setErrorcontact(true);
+      setHelpercontact("Please enter Contact Number");
+    } else {
+      setErrorcontact(false);
+      setHelpercontact("");
+    }
+    setContact(val.target.value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     //Password validation
@@ -154,23 +132,23 @@ const handleSave = (val) => {
       setErrorcpassword(true);
       setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
       return;
-      
+
     }
 
     //validate confirm password
     if (npassword === cpassword) {
       setError(false);
-      setErrorText(""); 
-      
+      setErrorText("");
+
     } else {
       setError(true);
       //alert("Passwords don't match");  
-      setErrorText("Passwords don't match"); 
+      setErrorText("Passwords don't match");
       return;
     }
 
     //validate phone number
-    var contactpattern= new RegExp (/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
+    var contactpattern = new RegExp(/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/i);
     if (!contactpattern.test(contact)) {
       setErrorcontact(true);
       setHelpercontact("Please enter valid contact number in format (123)123-1234");
@@ -334,7 +312,7 @@ const handleSave = (val) => {
           id="npassword"
           label={"New Password"}
           name="npassword"
-         
+
           onInput={handlenewPasswordChange}
           //onSave={handlenewPasswordChange}
           helperText={helpernewpassword}
@@ -352,40 +330,18 @@ const handleSave = (val) => {
           id="cpassword"
           label={"Confirmed Password"}
           name="cpassword"
-          
+
           onInput={handleconfirmPasswordChange}
-          //onSave={handleconfirmPasswordChange}
           helperText={helpercpassword + errorText}
-          
+
           autoFocus
         />
 
-        {/* UserName:<input name="username" placeholder="Username" value={username} disabled = {true}/>
-        Email:<input name="email" type="email" placeholder="Email address" value={email} disabled = {true}/>
-        Date Of Birth:<input name="dob"  placeholder="Birth Date" value={dob} disabled = {true}/> */}
-        {/* Contact Number:<input name="contact"   onChange={(e) => {handleContactChange(e)}} /> */}
-        {/* Contact Number<EdiText name="contact" variant="outlined"
-              margin="normal"
-              required
-              fullWidth 
-              autoFocus
-              label={'Contact Number'}
-              value={contact} onSave={handleSave} submitOnEnter placeholder="Contact Number"  />
-
-        Password<input name="oldPassword" type="password" value={password} placeholder="Current password" disabled = {true}/> 
-
-        New Password<EdiText name="password" type="password"  value={npassword} onSave={handlenewPasswordChange} submitOnEnter placeholder="New password" />
-        Confirm Password<EdiText name="confirmPassword" type="password" value={cpassword} submitOnEnter onSave={handleconfirmPasswordChange} placeholder="Confirm new password"/> */}
 
         <button type="submit" style={{ backgroundColor: "black" }}>
           Update profile
         </button>
       </form>
-      {/* <footer>
-            <div className="Footer">
-              <Footer />
-            </div>
-          </footer> */}
     </Container>
   );
 }

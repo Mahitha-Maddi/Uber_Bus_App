@@ -7,7 +7,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import { Container, Grid } from "@material-ui/core";
-//import * as apiCall from './routeApifunc'
 import BusList from "../BusList/BusList";
 import { FaAlignLeft } from "react-icons/fa";
 import Footer from "../../pages/Footer";
@@ -25,8 +24,6 @@ export default function Routeselector() {
   const [helperdestination, setHelperdestination] = useState("");
 
   const handleToCity = (e) => {
-    // e.preventDefault()
-
     if (e.target.value == "") {
       setErrordestination(true);
       setHelperdestination("Please select the destination");
@@ -34,7 +31,6 @@ export default function Routeselector() {
       setErrordestination(false);
       setHelperdestination("");
     }
-    // setDestination({ destination: e.target.value })
     setDestination(e.target.value);
     localStorage.setItem("destination", e.target.value);
     console.log("destination", e.target.value);
@@ -99,7 +95,6 @@ export default function Routeselector() {
       setErrorText("");
     }
 
-    // fetch('http://localhost:5000/checkAvailability', {
     fetch("/checkAvailability", {
       method: "POST",
       headers: {
@@ -124,20 +119,13 @@ export default function Routeselector() {
           setError1("invalid");
         } else {
           setError1("");
-          if(data.length<=0){
+          if (data.length <= 0) {
             alert("Sorry no buses are available for this combination!!")
           }
         }
 
-        /* this.setState({
-                  availableBuses: <tbody>{data.map((item, index) => (<tr><td key={index}>{item.source}</td><td key={index}>{item.destination}</td><td key={index}>{item.busnumber}</td><td key={index}>{item.date}</td><td key={index}>{item.startTime}</td><td key={index}>{item.endTime}</td>
-                    <td><input type="button" value="Book" onClick={this.book.bind(this, item)} /></td></tr>))}</tbody>
-                })
-                console.log('Request successful', data);
-                //alert(data); */
       })
       .catch((error) => {
-        // this.setState({ availableBuses: "This is an error page!!" })
         console.log("Request failed", error);
         alert(error);
         //setError(error);
@@ -160,18 +148,11 @@ export default function Routeselector() {
       <div className="form-group inline "></div>
       <div className="main-container">
         <form className="form-inline" onSubmit={(e) => getRoutes(e)}>
-          {/* <select name="ad_account_selected" data-style="btn-new" class="selectpicker" onChange={e => { handleFromCity(e) }}>
-                        <option>FROM</option>
-                        <option>Chennai</option>
-                        <option>Bangalore</option>
-                    </select> */}
+
           <FormControl
-            // className={classes.formControl}
             error={errorsource}
           >
-            {/*  <InputLabel id="demo-simple-select-helper-label"> */}
             Source City
-            {/*  </InputLabel> */}
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
@@ -197,26 +178,13 @@ export default function Routeselector() {
           <div
             style={{
               display: "inline",
-              // float: "right",
               paddingLeft: "20px",
             }}
           ></div>
-          {/* <select name="ad_account_selected" data-style="btn-new" class="selectpicker" onChange={e => { handleToCity(e) }}>
-                        <option>TO</option>
-                        <option>Hyderabad</option>
-                        <option>Coimbatore</option>
-                        <option>Vishakapatnam</option>
-                        <option>Bangalore</option>
-                        <option>Chenai</option>
-                    </select>
-                    <input onChange={e => { handleDate(e) }} type="date"></input> */}
           <FormControl
-            //   className={classes.formControl}
             error={errordestination}
           >
-            {/* <InputLabel id="demo-simple-select-helper-label"> */}
             Destination City
-            {/*   </InputLabel> */}
             <Select
               labelId="demo-simple-select-helper-label"
               label=" Destination City "
@@ -245,7 +213,7 @@ export default function Routeselector() {
               paddingLeft: "20px",
             }}
           >
-            
+
             <TextField
               id="date"
               label="Date of Journey"
@@ -266,12 +234,6 @@ export default function Routeselector() {
           </div>
           <br></br>
           <hr></hr>
-          {/* <div style={{
-                            
-                            // float: "right",
-                            paddingLeft: "20px",
-                        } }> */}
-
           <div class="container">
             <br></br>
             <br></br>
@@ -280,11 +242,6 @@ export default function Routeselector() {
         </form>
         <div>{renderBusList(dataInp)}</div>
       </div>
-      {/* <footer>
-            <div className="Footer">
-              <Footer />
-            </div>
-          </footer> */}
     </div>
   );
 }

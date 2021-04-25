@@ -58,7 +58,7 @@ const PasswordChange = () => {
   const [helperpassword, setHelperpassword] = useState("");
   const [helpercpassword, setHelpercpassword] = useState("");
   const [errorText, setErrorText] = useState("");
-  const [error, setError]= useState('')
+  const [error, setError] = useState('')
   // const { setAuthMenuOpen } = useContext(MenuContext)
 
   const handlePassword = (event) => {
@@ -76,24 +76,18 @@ const PasswordChange = () => {
     if (event.target.value == "") {
       setErrorcpassword(true);
       setHelpercpassword("Please enter Confirmed Password");
-     } else {
-    //   if (event.handlePassword !== event.handleCPassword) {
-    //     setError(true);
-    //      setErrorText("Password and Confirm Password is not matching")
-    //   }
-    //  else{
-        setErrorcpassword(false);
+    } else {
+      setErrorcpassword(false);
       setHelpercpassword("");
-      }
-      
+    }
+
     //}
     setCpassword(event.target.value);
   };
 
   function handleSubmit(event) {
     event.preventDefault();
-    
-    //Password validation
+
     var passwordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
     if (!passwordpattern.test(password)) {
       setErrorpassword(true);
@@ -101,76 +95,75 @@ const PasswordChange = () => {
       return;
     }
 
-    //confirm password validation
     var cpasswordpattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i);
     if (!cpasswordpattern.test(cpassword)) {
       setErrorcpassword(true);
       setHelpercpassword("Password should contain Minimum eight characters, at least one letter, one number, no special characters");
       return;
-      
+
     }
 
     //validate confirm password
     if (password === cpassword) {
       setError(false);
-      setErrorText(""); 
-      
+      setErrorText("");
+
     } else {
       setError(true);
       //alert("Passwords don't match");  
-      setErrorText("Passwords don't match"); 
+      setErrorText("Passwords don't match");
       return;
     }
 
-    if(token==='1234'){
-    const paramdict = {
-      'email': localStorage.getItem('passSetEmail'),
-      'password': password
+    if (token === '1234') {
+      const paramdict = {
+        'email': localStorage.getItem('passSetEmail'),
+        'password': password
+      }
+      const config = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paramdict)
+      }
+      fetch("/updateUserForgotPassword", config)
+        .then(res => res.json())
+        .then(data => {
+          alert("Successfully updated! you can now login!");
+          history.replace('/signin');
+        }).catch(error => {
+          // this.setState({ availableBuses: "This is an error page!!" })
+          console.log('Request failed', error)
+
+          alert("Please try again!")
+          window.location.reload();
+        });
     }
-    const config = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(paramdict)
+    else {
+      alert("Invalid token! Please try again!");
+      window.location.reload();
     }
-    fetch("/updateUserForgotPassword", config)
-      .then(res => res.json())
-      .then(data => {
-        alert("Successfully updated! you can now login!");
-        history.replace('/signin');
-      }).catch(error => {
-        // this.setState({ availableBuses: "This is an error page!!" })
-        console.log('Request failed', error)
-        
-    alert("Please try again!")
-    window.location.reload();
-    });
-  }
-  else{
-    alert("Invalid token! Please try again!");
-    window.location.reload();
-  }
 
   }
 
-  function resendToken(event){
+  function resendToken(event) {
     event.preventDefault();
     var templateParams = {
       email_to: localStorage.getItem('passSetEmail')
-  };
-   
-  emailjs.send('gmail', 'template_bar4hnx', templateParams,'user_84Ail5Gec6Hu3umTTuGdc')
-      .then(function(response) {
+    };
+
+    emailjs.send('gmail', 'template_bar4hnx', templateParams, 'user_84Ail5Gec6Hu3umTTuGdc')
+      .then(function (response) {
         alert("A token has been sent to your email!");
-         console.log('SUCCESS!', response.status, response.text);
-      }, function(error) {
-         console.log('FAILED...', error);
+        console.log('SUCCESS!', response.status, response.text);
+      }, function (error) {
+        console.log('FAILED...', error);
       });
-    
-      alert("A token has been sent to your email!");
-      window.location.reload();
+
+    alert("A token has been sent to your email!");
+    window.location.reload();
   }
   return (
     <React.Fragment>
@@ -180,7 +173,7 @@ const PasswordChange = () => {
             {'Password change'}
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
-          <TextField
+            <TextField
               value={token}
               onInput={(e) => setToken(e.target.value)}
               variant="outlined"
@@ -233,23 +226,23 @@ const PasswordChange = () => {
               fullWidth
               variant="contained"
               color="primary"
-              style={{backgroundColor:'black'}}
+              style={{ backgroundColor: 'black' }}
               className={classes.submit}
             >
               {'Reset Password'}
             </Button>
           </form>
           <form className={classes.form} onSubmit={resendToken}>
-          <Button
+            <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              style={{backgroundColor:'black'}}
+              style={{ backgroundColor: 'black' }}
               className={classes.submit}
             >
               {'Resend token'}
-          </Button>
+            </Button>
           </form>
         </div>
       </Paper>

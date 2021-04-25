@@ -13,47 +13,47 @@ import { Redirect } from 'react-router-dom';
 
 // save keys to local storage
 const localStorageAuthKey = 'twtr:auth';
-function saveAuthorisation(keys,userid,username) {
+function saveAuthorisation(keys, userid, username) {
   if (typeof Storage !== 'undefined') {
-      try {
-          localStorage.setItem(localStorageAuthKey, JSON.stringify(keys));
-          localStorage.setItem('userid',userid);
-          localStorage.setItem('username',username);
-          console.log("username: ",localStorage.getItem('username'));
+    try {
+      localStorage.setItem(localStorageAuthKey, JSON.stringify(keys));
+      localStorage.setItem('userid', userid);
+      localStorage.setItem('username', username);
+      console.log("username: ", localStorage.getItem('username'));
 
-      } catch (ex) {
-          console.log(ex);
-      }
+    } catch (ex) {
+      console.log(ex);
+    }
   } else {
-      // No web storage Support :-(
+    // No web storage Support :-(
   }
 }
 function getAuthorisation() {
   if (typeof Storage !== 'undefined') {
-      try {
-        var keys = JSON.parse(localStorage.getItem(localStorageAuthKey));
-        console.log(keys);
-        return keys;
+    try {
+      var keys = JSON.parse(localStorage.getItem(localStorageAuthKey));
+      console.log(keys);
+      return keys;
 
-      } catch (ex) {
-          console.log(ex);
-      }
+    } catch (ex) {
+      console.log(ex);
+    }
   } else {
-      // No web storage Support :-(
+    // No web storage Support :-(
   }
 }
 function logout() {
   if (typeof Storage !== 'undefined') {
     try {
-        localStorage.removeItem(localStorageAuthKey);
-        localStorage.removeItem('userid');
-        localStorage.removeItem('username');
-        window.location.reload();
+      localStorage.removeItem(localStorageAuthKey);
+      localStorage.removeItem('userid');
+      localStorage.removeItem('username');
+      window.location.reload();
     } catch (ex) {
-        console.log(ex);
+      console.log(ex);
     }
   } else {
-      // No web storage Support :-(
+    // No web storage Support :-(
   }
 }
 
@@ -95,9 +95,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: `100%`,
   },
-  buttonPadding: {    
+  buttonPadding: {
     //padding: '30px',  
-    marginBottom: '30px', 
+    marginBottom: '30px',
   },
 }))
 
@@ -114,8 +114,6 @@ const SignIn = () => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    //console.log(username);
-    //console.log(password);
     const paramdict = {
       'name': username,
       'password': password
@@ -123,18 +121,14 @@ const SignIn = () => {
     const config = {
       method: 'POST',
       headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(paramdict)
     }
     console.log("sending out:");
     console.log(paramdict);
-
-    // verify user/pwd, get encoded userid as access and refresh tokens in return
     fetch("/login", config)
-    //fetch(`${process.env.BE_NETWORK}:${process.env.BE_PORT}/login`, config)
-    //fetch("/login", config)
       .then(response => response.json())
       .then(data => {
 
@@ -147,13 +141,13 @@ const SignIn = () => {
         saveAuthorisation({
           access: data[0].access_token,
           refresh: data[0].refresh_token,
-        },data[0].userid,data[0].username);
+        }, data[0].userid, data[0].username);
 
         // back to landing page!
         history.push("/");
         return (<Redirect to="/" />);
       })
-      .catch( (err) => {
+      .catch((err) => {
         alert(err);
         console.log(err);
       });
@@ -169,16 +163,14 @@ const SignIn = () => {
     const config = {
       method: 'POST',
       headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(paramdict)
     }
 
     // verify user/pwd, get encoded userid as access and refresh tokens in return
     fetch("/fastlogin", config)
-    //fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/fastlogin`, config)
-    //fetch("/fastlogin", config)
       .then(response => response.json())
       .then(data => {
 
@@ -190,19 +182,19 @@ const SignIn = () => {
         saveAuthorisation({
           access: data[0].access_token,
           refresh: data[0].refresh_token,
-        },data[0].userid,data[0].username);
+        }, data[0].userid, data[0].username);
 
         // back to landing page!
         history.push("/");
       })
-      .catch( (err) => {
+      .catch((err) => {
         alert(err);
         console.log(err);
       });
   }
 
   // Logout attempt
-  const handleSignOut = () => { 
+  const handleSignOut = () => {
     logout();
 
     // back to landing page!
@@ -216,9 +208,9 @@ const SignIn = () => {
         <div className={classes.container}>
           <Typography component="h1" variant="h5" className={classes.padding}>
             {'Sign Out'}
-          </Typography> 
+          </Typography>
           <Typography gutterBottom>If you are not the only one on this device.</Typography>
-          <Button fullWidth variant="contained" margin="normal" color="secondary" style={{backgroundColor:'gray'}} onClick={handleSignOut} className={classes.buttonPadding}>
+          <Button fullWidth variant="contained" margin="normal" color="secondary" style={{ backgroundColor: 'gray' }} onClick={handleSignOut} className={classes.buttonPadding}>
             {'Sign Out'}
           </Button>
 
@@ -226,8 +218,8 @@ const SignIn = () => {
             {'Fast Sign In'}
           </Typography>
           <Typography gutterBottom>If this is your device.</Typography>
-          <Button fullWidth variant="contained" margin="normal" color="primary" style={{backgroundColor:'black'}} onClick={handleFastSignIn} className={classes.buttonPadding}>
-            {'Sign In'} 
+          <Button fullWidth variant="contained" margin="normal" color="primary" style={{ backgroundColor: 'black' }} onClick={handleFastSignIn} className={classes.buttonPadding}>
+            {'Sign In'}
           </Button>
 
           <Typography component="h1" variant="h5">
@@ -266,7 +258,7 @@ const SignIn = () => {
               fullWidth
               variant="contained"
               color="primary"
-              style={{backgroundColor:'black'}}
+              style={{ backgroundColor: 'black' }}
               className={classes.submit}
             >
               {'Sign in'}

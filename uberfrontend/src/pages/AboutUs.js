@@ -22,14 +22,7 @@ export default class About extends Component {
           <h2 className="heading">About Us</h2>
         </div>
 
-        {/* <div className="content-wrapper">    
-                    <Image src="/assets/img/about.jpg" height="400" width="100%"/>
-                    <h2 className="heading" className="text-center">About Us </h2>
-                    <hr></hr>
-                    
-                </div> */}
         <Container>
-          {/* <Col xs={12} sm={8} smOffset={2}    > */}
           <Image
             src={ubar3}
             className="about-pc"

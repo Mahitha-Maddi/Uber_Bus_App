@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Router, Route, Link, Switch } from "react-router-dom";
@@ -157,9 +157,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//~dk
-//const isAuthorised = config.auth.isAuthenticated()
-
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -168,13 +165,13 @@ export default function Dashboard() {
   const [toolUser, setToolUser] = React.useState('');
 
   useEffect(() => {
-    const u=localStorage.getItem('username');
+    const u = localStorage.getItem('username');
     //alert("hell0" + toolUser+u);
-    if(u!=null && u!=undefined)
-    {setToolUser("Hello "+u+"!");
-      
+    if (u != null && u != undefined) {
+      setToolUser("Hello " + u + "!");
+
     }
-    else{
+    else {
       setToolUser("");
     }
 
@@ -270,14 +267,6 @@ export default function Dashboard() {
             {title}
           </Typography>
 
-          {/*             
-            <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >  */}
 
           <Typography
             component="h1"
@@ -286,19 +275,11 @@ export default function Dashboard() {
             noWrap
             align="right"
           >
-            
+
             {toolUser}
             <IconButton color='inherit' size='small' onClick={handleSignOut}><ErrorOutlineIcon />Logout</IconButton>
           </Typography>
 
-          {/* </IconButton> */}
-
-          {/* For kicks */}
-          {/* <IconButton color="inherit">
-            <Badge badgeContent={2} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
         </Toolbar>
       </AppBar>
 
@@ -475,8 +456,8 @@ export default function Dashboard() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/bookings" exact component={THome} />
-            <Route path="/Book" exact render={(props) => <RouteSelection {...props} />}/>
-            <Route path="/seatSelection/" exact render={(props) => <SeatSelection {...props} />}/>
+            <Route path="/Book" exact render={(props) => <RouteSelection {...props} />} />
+            <Route path="/seatSelection/" exact render={(props) => <SeatSelection {...props} />} />
             <Route path="/payment/" exact render={(props) => <PayPal {...props} />} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/signup" exact component={SignUp} />
@@ -485,7 +466,7 @@ export default function Dashboard() {
             <Route path="/aboutus" exact component={aboutus} />
             <Route path="/contactus" exact component={contactus} />
             <Route path="/userprofile" exact component={profile} />
-            <Route path="*" exact component={() => <NotFoundPage />} /> 
+            <Route path="*" exact component={() => <NotFoundPage />} />
           </Switch>
         </main>
       </Router>

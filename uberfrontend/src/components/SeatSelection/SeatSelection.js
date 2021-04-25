@@ -54,22 +54,22 @@ export default function SeatSelection() {
     //let bId = localStorage.getItem('selectedBusId')
     console.log(localStorage.getItem("selectedBusId"));
     const styleObj = {
-        // fontSize: 40,
-        paddingTop: "40px",
-        paddingBottom: "40px",
-        fontStyle: 'italic',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        justifyContent: 'center',
-        height: `100%`,
-        backgroundColor: '#C0C0C0',
-        
+      // fontSize: 40,
+      paddingTop: "40px",
+      paddingBottom: "40px",
+      fontStyle: 'italic',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center',
+      height: `100%`,
+      backgroundColor: '#C0C0C0',
+
     }
     const paramdict = {
       busid: localStorage.getItem("selectedBusId"),
     };
-    
+
     const config = {
       method: "POST",
       headers: {
@@ -121,10 +121,6 @@ export default function SeatSelection() {
   };
   const handleGender = (e, seatNo) => {
     const { value } = e.target;
-    /*  setGender(gender.concat(value))
-        // console.log(value)
-        setPassengerGenders([...passengerGenders, {seat:seatNo, gender:value} ])
-        console.log(passengerGenders) */
     if (seatNo === "1A") {
       setPassengerGender1A(value);
     } else if (seatNo === "1B") {
@@ -176,10 +172,6 @@ export default function SeatSelection() {
   };
   const handleSubmitDetails = (e) => {
     e.preventDefault();
-    //setCheckOut(true);
-    //setArrowDown(true)
-    //localStorage.setItem("reservedSeats", JSON.stringify(seatNumber))
-    //localStorage.setItem("nameData", JSON.stringify(name))
     var regex = /^[a-zA-Z\\s]+$/;
     if (seatNumber.length === 0) {
       setErrorText1("Please select seat and enter passenger details");
@@ -341,15 +333,12 @@ export default function SeatSelection() {
         passengerGender: passengerGender3C,
       });
     }
-    //console.log(x)
-    //setPassengers(x)
     setErrorText("");
     localStorage.setItem("passengers", JSON.stringify(x));
     localStorage.setItem("seatNumber", seatNumber);
     localStorage.setItem("numOfSeats", x.length);
     console.log("x:length: ", x.length);
     console.log("Passengers: ", localStorage.getItem("passengers"));
-    //seatNumber.forEach(d => console.log("mine:", { d }))
     seatNumber.map((seat) => {
       console.log("minemap:", { seat: seat });
       if (seat.includes("1A")) {
@@ -446,7 +435,7 @@ export default function SeatSelection() {
       <br />
       {/* <Link to="/Book">back</Link> */}
 
-      <div className="ss">       
+      <div className="ss">
         <br />
         <h3>Select Your Seat</h3>
         <div className="row">
@@ -557,9 +546,6 @@ export default function SeatSelection() {
                 {renderPassengerData(seatNumber)}
               </form>
               <div>
-                {/*   <button onClick={e => handleSubmitDetails(e)} className="btn btn-info seatBT">
-                                    Save and pay
-                            </button> */}
                 <div className="App">
                   {checkout ? (
                     <PayPal />

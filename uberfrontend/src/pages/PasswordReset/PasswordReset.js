@@ -54,7 +54,7 @@ const PasswordReset = () => {
   const [email, setEmail] = useState('')
   const [erroremail, setErroremail] = useState(false);
   const [helperemail, setHelperemail] = useState("");
- 
+
   // const { setAuthMenuOpen } = useContext(MenuContext)
 
   const handleEmail = (event) => {
@@ -79,7 +79,7 @@ const PasswordReset = () => {
       return;
     }
 
-    localStorage.setItem('passSetEmail',email);
+    localStorage.setItem('passSetEmail', email);
     const paramdict = {
       'email': email
     }
@@ -96,27 +96,27 @@ const PasswordReset = () => {
       .then(data => {
         //alert("Saved passenger! " + data);
         console.log(data);
-        if(data===401){
+        if (data === 401) {
           alert("Email is not registered! Please sign up!");
           history.replace('/signup');
 
         }
-        else{
-     var templateParams = {
-      email_to: email
-  };
-   
-  emailjs.send('gmail', 'template_bar4hnx', templateParams,'user_84Ail5Gec6Hu3umTTuGdc')
-      .then(function(response) {
-        alert("A token has been sent to your email!");
-         console.log('SUCCESS!', response.status, response.text);
-      }, function(error) {
-         console.log('FAILED...', error);
-      });
-    
-      alert("A token has been sent to your email!");
-    history.replace('/password_change');
-      }
+        else {
+          var templateParams = {
+            email_to: email
+          };
+
+          emailjs.send('gmail', 'template_bar4hnx', templateParams, 'user_84Ail5Gec6Hu3umTTuGdc')
+            .then(function (response) {
+              alert("A token has been sent to your email!");
+              console.log('SUCCESS!', response.status, response.text);
+            }, function (error) {
+              console.log('FAILED...', error);
+            });
+
+          alert("A token has been sent to your email!");
+          history.replace('/password_change');
+        }
       })
   }
 
@@ -150,17 +150,17 @@ const PasswordReset = () => {
               fullWidth
               variant="contained"
               color="primary"
-              style={{backgroundColor:'black'}}
+              style={{ backgroundColor: 'black' }}
               className={classes.submit}
             >
               {'Reset Password'}
             </Button>
             <>
-          <Button fullWidth
-              variant="contained"
-              color="primary"
-              style={{backgroundColor:'black'}} onClick={() => history.goBack()}>Back</Button>
-        </>
+              <Button fullWidth
+                variant="contained"
+                color="primary"
+                style={{ backgroundColor: 'black' }} onClick={() => history.goBack()}>Back</Button>
+            </>
           </form>
         </div>
       </Paper>
