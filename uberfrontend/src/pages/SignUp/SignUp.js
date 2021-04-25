@@ -208,10 +208,10 @@ const SignUp = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    var userpattern = new RegExp(/^(?!_*\_*\_*)[A-Za-z]?$/i);
+    var userpattern = new RegExp(/^[a-zA-Z0-9]+$/);//(/^(?!_*\_*\_*)[A-Za-z]?$/i);
     if (!userpattern.test(username)) {
       setErrorusername(true);
-      setHelperuser("Please enter valid username: It can contain only letters, numbers and an optional underscore, min length 4");
+      setHelperuser("Please enter valid username");
       return;
     }
     //Email Validation
