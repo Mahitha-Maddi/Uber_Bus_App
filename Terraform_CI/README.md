@@ -19,3 +19,4 @@ This is terraform script to provision AWS CodeBuild Continuous Integration Servi
        terraform plan
        terraform apply
     ```
+Note: AUTH token should be replaced by your Github AUTH token
