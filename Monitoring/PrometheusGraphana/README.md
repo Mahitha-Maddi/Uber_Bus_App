@@ -1,6 +1,6 @@
 # Deploy Prometheus 
 ## Go to Monitoring/PrometheusGrafana and run below commands sequentially
-
+```
 $ kubectl create namespace monitoring 
 $ kubectl create -f clusterRole.yaml 
 $ kubectl create -f config-map.yaml 
@@ -10,26 +10,33 @@ $ kubectl get deployments --all-namespaces
 $ kubectl create -f prometheus-service.yaml --namespace=monitoring 
 $ kubectl get svc --namespace=monitoring
 Note: Now you can access the Prometheus dashboard using the Load Balancer’s IP on port 80
-
+```
 # Deploy Grafana
 ## Follow below command sequentially
+```
 $ kubectl create -f grafana-datasource-config.yaml 
 $ kubectl create -f grafana-datasource-deploy.yaml 
 $ kubectl create -f grafana-datasource-service.yaml 
 $ kubectl get svc --namespace=monitoring
+```
 
 Note: Now you should be able to access the Grafana dashboard using the service’s External IP on port 3000 
 •	User:admin 
 •	Password:admin
 
 # To view Logging and Monitoring Dashboard
+```
 $ kubectl get pods --namespace monitoring 
-# to view all the pods in prometheus monitoring dashboard
+```
+# To view all the pods in prometheus monitoring dashboard
+```
 $ kubectl port-forward prometheus-prometheus-prometheus-oper-prometheus-0 9090 --namespace monitoring or use Prometheus dashboard using the Load Balancer’s IP on port 80
-# to view the grafana dashboard on localhost:3000 All the configuration has been built in and fully functional
+```
+# To view the grafana dashboard on localhost:3000 All the configuration has been built in and fully functional
 # port forward the grafana pod as mentioned below
+```
 $ kubectl port-forward prometheus-grafana-85b4dbb556-kjpsv 3000 --namespace monitoring or Grafana dashboard using the service’s External IP on port 3000
-
+```
 
 # Kubernetes autoscaling with custom metrics
 
