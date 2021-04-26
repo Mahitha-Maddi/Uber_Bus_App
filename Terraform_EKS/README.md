@@ -30,7 +30,6 @@ This is terraform script to provision EKS cluster and worker nodes on AWS
     ```
 5. Run the following commands to create the worker configMap
    ```bash
-    terraform output config_map_aws_auth > ./config-map-aws-auth.yml
     
     kubectl apply -f config-map-aws-auth.yml
 
