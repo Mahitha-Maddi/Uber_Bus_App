@@ -1,14 +1,14 @@
-# Rockstar_App_AWS
+# Uber_Bus_App
 
-This is a web application built using ReactJS and the purpose of this web application is to display lyrics of three favorite songs by fetching the lyrics from DotNetCore Web API.
+This is terraform script to provision EKS cluster and worker nodes on AWS
 
-## How to run the web app:
+## How to run the terraform script:
 
 1.  You’ll need to have terraform Terraform v0.14.7 installed on your machine.
 
 2.  Clone the repository
     ```bash
-    git clone https://github.com/Mahitha-Maddi/Rockstar_App_AWS.git
+    git clone https://github.com/Mahitha-Maddi/Uber_Bus_App.git
     ```
 
 3.  Open the project in any of the IDE e.g VS Code
